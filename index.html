@@ -75,6 +75,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tab{flex:1 1 0;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;font-weight:700;min-height:48px}
 .tab[aria-selected="true"]{background:var(--c);border-color:var(--c);color:var(--on)}
 
+.extra{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:2px solid var(--c);border-radius:12px;background:var(--surface);color:var(--fg);text-decoration:none;min-height:52px}
+.extra b{color:var(--c)}
+.extra span{color:var(--muted);font-size:.92rem}
+.extra:hover{background:color-mix(in srgb,var(--c) 8%,var(--surface))}
+
 /* Karteikarten */
 .deck{display:flex;flex-direction:column;gap:14px}
 .prog{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.95rem;font-variant-numeric:tabular-nums}
@@ -139,6 +144,7 @@ var MODULES = [
   {
     id:"asien", title:"Asien", fach:"erdkunde", stufe:"5–7",
     desc:"Hauptstädte, Berge, Flüsse und Klima des größten Kontinents.",
+    link:{label:"Lernquiz mit Karte öffnen", note:"Berge, Flüsse, Seen und Länder auf der Karte zuordnen", url:"asien-quiz.html"},
     cards:[
       ["Wie groß ist Asien im Vergleich zu den anderen Kontinenten?","Asien ist der größte Kontinent: fast ein Drittel der Landfläche der Erde, und hier leben mehr als die Hälfte aller Menschen."],
       ["Wie heißt der höchste Berg der Erde und wo liegt er?","Mount Everest im Himalaya, rund 8.849 m hoch, an der Grenze zwischen Nepal und China (Tibet)."],
@@ -292,6 +298,7 @@ function renderMod(){
   h += '<div class="tabs" role="tablist" data-fach="'+m.fach+'">'
     + '<button class="tab" role="tab" data-a="tab" data-v="cards" aria-selected="'+(S.tab==="cards")+'">Karteikarten</button>'
     + '<button class="tab" role="tab" data-a="tab" data-v="quiz" aria-selected="'+(S.tab==="quiz")+'">Quiz</button></div>';
+  if (m.link) h += '<a class="extra" data-fach="'+m.fach+'" href="'+esc(m.link.url)+'" target="_blank" rel="noopener"><b>'+esc(m.link.label)+' ↗</b><span>'+esc(m.link.note)+'</span></a>';
   h += '<div data-fach="'+m.fach+'" id="body"></div>';
   app.innerHTML = h;
   if (S.tab==="cards") renderCards(); else renderQuiz();
