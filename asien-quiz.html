@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
 <title>Asien Lernquiz</title>
 <style>
 :root{
@@ -14,6 +15,8 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,"Segoe UI",sans-serif}
 header{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:10px 20px;background:var(--card);border-bottom:1px solid var(--line)}
 header h1{font-size:18px;margin:0;font-weight:700}
+.back{color:var(--accent);font-weight:700;text-decoration:none;padding:8px 0}
+#who{font-weight:600;color:var(--ink)}
 .tabs{display:flex;background:#ece9df;border-radius:10px;padding:3px}
 .tabs button{border:0;background:transparent;padding:7px 16px;border-radius:8px;font:inherit;font-weight:600;color:var(--muted);cursor:pointer}
 .tabs button.on{background:var(--accent);color:#fff}
@@ -75,12 +78,14 @@ aside h2{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(
 </head>
 <body>
 <header>
+  <a class="back" href="./#asien">← Lernportal</a>
   <h1>Asien-Quiz</h1>
   <div class="tabs">
     <button id="m1" class="on">Spiel 1 · Zuordnen</button>
     <button id="m2">Spiel 2 · Eintragen</button>
   </div>
   <span class="hint" id="desc"></span>
+  <span class="hint" id="who"></span>
 </header>
 <div class="bar">
   <button id="start">Start</button>
@@ -173,7 +178,7 @@ function resetSlots(){
   });
 }
 function mark(it){
-  solved.add(it.id);ok++;
+  solved.add(it.id);ok++;track(it.id);
   it.el.className='slot done';it.el.textContent=it.name;it.chip.classList.add('gone');
   update();if(solved.size===active().length)finish();
 }
@@ -289,6 +294,46 @@ function startDrag(e,it){
   document.addEventListener('pointermove',move);document.addEventListener('pointerup',up);
   document.addEventListener('pointercancel',up);
 }
+// ---- Lernportal: gefundene Begriffe pro Nutzer speichern (gleiche Domain wie das Portal)
+const LP={url:"https://rorcvgomcufpdmigoyvf.supabase.co",key:"sb_publishable_52LO4V2NIfARRyFagtxvhg_45XOPnsp"};
+let lpT=null;
+const lpCall=(fn,body)=>fetch(LP.url+'/rest/v1/rpc/'+fn,{method:'POST',keepalive:true,headers:{apikey:LP.key,'Content-Type':'application/json'},body:JSON.stringify(body)}).then(r=>r.json());
+function lpStore(){try{const s=JSON.parse(localStorage.getItem('lernportal-v3'));return s&&s.cur&&s.cur.name?s:null}catch(e){return null}}
+function lpSave(s){try{localStorage.setItem('lernportal-v3',JSON.stringify(s))}catch(e){}}
+function lpFound(s){return new Set(((s.prog||{}).asien||{}).found||[])}
+function lpShow(note){
+  const s=lpStore(),w=$('who');
+  if(!s){w.textContent='Nicht angemeldet: Fortschritt wird nicht gespeichert.';return}
+  w.textContent=s.cur.name+' · insgesamt gefunden: '+lpFound(s).size+' / '+ITEMS.length+(note?' · '+note:'');
+}
+function lpAdd(s,ids){
+  s.prog=s.prog||{};const a=s.prog.asien||(s.prog.asien={best:null,tries:0,cards:0});
+  const u=lpFound(s);ids.forEach(i=>u.add(i));a.found=[...u];
+}
+function track(id){
+  const s=lpStore();if(!s||lpFound(s).has(id))return;
+  lpAdd(s,[id]);lpSave(s);lpShow();
+  clearTimeout(lpT);lpT=setTimeout(lpPush,700);
+}
+// Immer auf dem Online-Stand aufbauen, damit nichts von anderen Geräten überschrieben wird.
+function lpPush(){
+  lpT=null;const s=lpStore();if(!s)return;
+  lpCall('lp_login',{p_name:s.cur.name,p_pin:s.cur.pin}).then(r=>{
+    if(!r||!r.ok)throw 0;
+    const base=r.prog||{};const tmp={prog:base};
+    lpAdd(tmp,[...lpFound(s)]);
+    const cur=lpStore();if(cur){lpAdd(cur,[...lpFound(tmp)]);lpSave(cur)}
+    return lpCall('lp_save',{p_name:s.cur.name,p_pin:s.cur.pin,p_prog:base});
+  }).then(r=>{if(r&&r.ok)lpShow();else throw 0}).catch(()=>lpShow('online speichern fehlgeschlagen'));
+}
+addEventListener('pagehide',()=>{if(lpT)lpPush()});
+lpShow();
+(function(){const s=lpStore();if(!s)return;
+  lpCall('lp_login',{p_name:s.cur.name,p_pin:s.cur.pin}).then(r=>{
+    if(!r||!r.ok)return;const cur=lpStore();if(!cur)return;
+    const tmp={prog:r.prog||{}};lpAdd(cur,[...lpFound(tmp)]);lpSave(cur);lpShow();
+  }).catch(()=>{});
+})();
 setMode(1);view();
 </script>
 </body>

@@ -144,7 +144,7 @@ var MODULES = [
   {
     id:"asien", title:"Asien", fach:"erdkunde", stufe:"5–7",
     desc:"Hauptstädte, Berge, Flüsse und Klima des größten Kontinents.",
-    link:{label:"Lernquiz mit Karte öffnen", note:"Berge, Flüsse, Seen und Länder auf der Karte zuordnen", url:"asien-quiz.html"},
+    map:{url:"asien-quiz.html", total:59},
     cards:[
       ["Wie groß ist Asien im Vergleich zu den anderen Kontinenten?","Asien ist der größte Kontinent: fast ein Drittel der Landfläche der Erde, und hier leben mehr als die Hälfte aller Menschen."],
       ["Wie heißt der höchste Berg der Erde und wo liegt er?","Mount Everest im Himalaya, rund 8.849 m hoch, an der Grenze zwischen Nepal und China (Tibet)."],
@@ -163,16 +163,7 @@ var MODULES = [
       ["Wie heißt der höchste Berg Japans?","Der Fuji, 3.776 m hoch."],
       ["Liegt Russland in Europa oder Asien?","Beides: Der größte Teil der Fläche (Sibirien) liegt in Asien. Die Hauptstadt Moskau liegt in Europa."]
     ],
-    quiz:[
-      {q:"Wie heißt die Hauptstadt von Japan?",a:["Tokio","Osaka","Peking","Seoul"],c:0,e:"Tokio ist Hauptstadt und eine der größten Städte der Welt."},
-      {q:"In welchem Gebirge liegt der Mount Everest?",a:["Alpen","Anden","Himalaya","Rocky Mountains"],c:2,e:"Der Himalaya erstreckt sich durch Nepal, Indien, Bhutan, China und Pakistan."},
-      {q:"Welches Land hat die Hauptstadt Hanoi?",a:["Thailand","Vietnam","Japan","Indien"],c:1,e:"Hanoi liegt im Norden Vietnams."},
-      {q:"Wie heißt die Hauptstadt von Indien?",a:["Mumbai","Dhaka","Neu-Delhi","Bangkok"],c:2,e:"Mumbai ist größer, aber die Hauptstadt ist Neu-Delhi."},
-      {q:"Welcher See ist der tiefste der Erde?",a:["Bodensee","Baikalsee","Victoriasee","Toten Meer"],c:1,e:"Der Baikalsee ist rund 1.600 m tief."},
-      {q:"Welcher Fluss ist der längste in Asien?",a:["Rhein","Nil","Jangtse","Donau"],c:2,e:"Der Jangtse fließt durch China bis ins Ostchinesische Meer."},
-      {q:"Welche Wüste liegt in der Mongolei und in China?",a:["Sahara","Gobi","Namib","Kalahari"],c:1,e:"Sahara, Namib und Kalahari liegen in Afrika."},
-      {q:"Was bringt der Sommermonsun nach Südasien?",a:["Schnee","Starken Regen","Sandstürme","Nebel"],c:1,e:"Der Monsun bringt starke Regenfälle. Reis wächst dadurch gut."}
-    ]
+    quiz:[]
   },
   {
     id:"luther", title:"Martin Luther", fach:"geschichte", stufe:"5–8",
@@ -236,7 +227,8 @@ function mergeProg(a,b){
   Object.keys(a).concat(Object.keys(b)).forEach(function(k){
     var x = a[k]||{}, y = b[k]||{};
     var n = (y.at||0) > (x.at||0) ? y : x;
-    out[k] = {best: x.best==null ? (y.best==null ? null : y.best) : (y.best==null ? x.best : Math.max(x.best,y.best)), tries:Math.max(x.tries||0,y.tries||0), cards:Math.max(x.cards||0,y.cards||0), last:n.last==null ? null : n.last, at:n.at||0};
+    var fo = {}; (x.found||[]).concat(y.found||[]).forEach(function(i){ fo[i] = 1; });
+    out[k] = {best: x.best==null ? (y.best==null ? null : y.best) : (y.best==null ? x.best : Math.max(x.best,y.best)), tries:Math.max(x.tries||0,y.tries||0), cards:Math.max(x.cards||0,y.cards||0), last:n.last==null ? null : n.last, at:n.at||0, found:Object.keys(fo).map(Number)};
   });
   return out;
 }
@@ -246,6 +238,9 @@ function P(modId){
   if (!store.cur) return {best:null,tries:0,cards:0};
   return store.prog[modId] || (store.prog[modId] = {best:null,tries:0,cards:0});
 }
+/* Quiz-Fortschritt: Kartenquiz = gefundene Begriffe, sonst letzter Durchlauf */
+function qTot(m){ return m.map ? m.map.total : m.quiz.length; }
+function qDone(m){ var p = P(m.id); return m.map ? (p.found||[]).length : p.last; }
 function topbar(){
   var u = me();
   return '<div class="topbar"><button class="brand" data-a="home">Lernportal</button>'
@@ -276,13 +271,13 @@ function renderHub(){
   else {
     h += '<div class="grid" id="grid">';
     list.forEach(function(m){
-      var last = P(m.id).last, nq = m.quiz.length;
+      var last = qDone(m), nq = qTot(m);
       h += '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
         + '<span class="tag">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span>'
         + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
-        + '<span class="prog"><span>Letztes Quiz</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
-        + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+' Fragen richtig')+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
-        + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+nq+'</b> Fragen</span></span></button>';
+        + '<span class="prog"><span>'+(m.map ? 'Auf der Karte gefunden' : 'Letztes Quiz')+'</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
+        + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+(m.map ? ' gefunden' : ' Fragen richtig'))+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
+        + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+nq+'</b> '+(m.map ? 'Begriffe' : 'Fragen')+'</span></span></button>';
     });
     h += '</div>';
   }
@@ -297,8 +292,8 @@ function renderMod(){
     + '<span class="tag" style="color:var(--c)">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span><h1>'+esc(m.title)+'</h1></div>';
   h += '<div class="tabs" role="tablist" data-fach="'+m.fach+'">'
     + '<button class="tab" role="tab" data-a="tab" data-v="cards" aria-selected="'+(S.tab==="cards")+'">Karteikarten</button>'
-    + '<button class="tab" role="tab" data-a="tab" data-v="quiz" aria-selected="'+(S.tab==="quiz")+'">Quiz</button></div>';
-  if (m.link) h += '<a class="extra" data-fach="'+m.fach+'" href="'+esc(m.link.url)+'" target="_blank" rel="noopener"><b>'+esc(m.link.label)+' ↗</b><span>'+esc(m.link.note)+'</span></a>';
+    + (m.map ? '<a class="tab" href="'+esc(m.map.url)+'" style="display:grid;place-items:center;text-decoration:none;color:inherit">Kartenquiz · '+qDone(m)+'/'+qTot(m)+' →</a>'
+             : '<button class="tab" role="tab" data-a="tab" data-v="quiz" aria-selected="'+(S.tab==="quiz")+'">Quiz</button>') + '</div>';
   h += '<div data-fach="'+m.fach+'" id="body"></div>';
   app.innerHTML = h;
   if (S.tab==="cards") renderCards(); else renderQuiz();
@@ -310,7 +305,9 @@ function renderCards(){
   var m = mod(S.mod), d = S.d, el = document.getElementById("body");
   if (!d.queue.length){
     el.innerHTML = '<div class="res"><div class="score">'+d.total+'/'+d.total+'</div><h2>Alle Karten gewusst</h2><p class="hint">Gut gemacht. Teste dich jetzt im Quiz oder mische den Stapel neu.</p>'
-      + '<div class="row" style="width:100%"><button class="btn" data-a="redeck">Neu mischen</button><button class="btn primary" data-a="tab" data-v="quiz" style="background:var(--c);border-color:var(--c);color:var(--on)">Zum Quiz</button></div></div>';
+      + '<div class="row" style="width:100%"><button class="btn" data-a="redeck">Neu mischen</button>'
+      + (m.map ? '<a class="btn primary" href="'+esc(m.map.url)+'" style="background:var(--c);border-color:var(--c);color:var(--on);text-decoration:none;display:grid;place-items:center">Zum Quiz mit Karte</a>'
+               : '<button class="btn primary" data-a="tab" data-v="quiz" style="background:var(--c);border-color:var(--c);color:var(--on)">Zum Quiz</button>') + '</div></div>';
     return;
   }
   var c = m.cards[d.queue[0]];
@@ -381,10 +378,12 @@ function renderMe(){
   h += '<div class="head"><button class="back" data-a="home">← Alle Module</button><div class="who-h"><span class="av big" style="--h:'+u.hue+'">'+esc(ini(u))+'</span><h1 class="plain" style="overflow-wrap:anywhere">Hallo, '+esc(u.name)+'</h1></div></div>';
   h += '<div class="grid">';
   MODULES.forEach(function(m){
-    var p = P(m.id), nc = m.cards.length, nq = m.quiz.length;
+    var p = P(m.id), nc = m.cards.length, nq = qTot(m), fd = (p.found||[]).length;
     h += '<div class="prow" data-fach="'+m.fach+'"><span class="tag">'+FACH[m.fach]+'</span><h2>'+esc(m.title)+'</h2>'
       + '<div class="prog"><span>Karten gewusst</span><span>'+p.cards+' von '+nc+'</span></div><div class="bar"><i style="width:'+Math.round(p.cards/nc*100)+'%"></i></div>'
-      + '<div class="prog"><span>Quiz Bestwert</span><span>'+(p.best==null?'noch nicht gespielt':p.best+' von '+nq+' · '+p.tries+'×')+'</span></div><div class="bar"><i style="width:'+(p.best==null?0:Math.round(p.best/nq*100))+'%"></i></div>'
+      + (m.map
+        ? '<div class="prog"><span>Auf der Karte gefunden</span><span>'+fd+' von '+nq+'</span></div><div class="bar"><i style="width:'+Math.round(fd/nq*100)+'%"></i></div>'
+        : '<div class="prog"><span>Quiz Bestwert</span><span>'+(p.best==null?'noch nicht gespielt':p.best+' von '+nq+' · '+p.tries+'×')+'</span></div><div class="bar"><i style="width:'+(p.best==null?0:Math.round(p.best/nq*100))+'%"></i></div>')
       + '<button class="btn" data-a="open" data-v="'+m.id+'">Üben</button></div>';
   });
   h += '</div>';
