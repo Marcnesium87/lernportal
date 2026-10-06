@@ -80,6 +80,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .extra span{color:var(--muted);font-size:.92rem}
 .extra:hover{background:color-mix(in srgb,var(--c) 8%,var(--surface))}
 
+/* Lernkarten */
+.learn{display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:240px;padding:28px 24px;border-radius:18px;background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--c)}
+.learn .lbl{font-family:var(--font-display);font-weight:800;font-size:clamp(1.4rem,5vw,1.9rem);line-height:1.15;color:var(--c);overflow-wrap:anywhere}
+.learn .txt{font-size:clamp(1.1rem,3.6vw,1.3rem);line-height:1.5;overflow-wrap:anywhere}
+
 /* Karteikarten */
 .deck{display:flex;flex-direction:column;gap:14px}
 .prog{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.95rem;font-variant-numeric:tabular-nums}
@@ -166,23 +171,57 @@ var MODULES = [
     quiz:[]
   },
   {
-    id:"luther", title:"Martin Luther", fach:"geschichte", stufe:"5–8",
+    id:"neuzeit", thema:"reformation", lern:true, title:"Aufbruch in die Neuzeit", fach:"geschichte", stufe:"7",
+    desc:"Renaissance, Humanismus und ein neues Bild von der Welt.",
+    cards:[
+      ["Mittelalter und Neuzeit","Um 1500 beginnt in Europa die Neuzeit. Die Menschen erklären die Welt jetzt immer öfter durch Beobachten und Forschen und nicht mehr nur durch den Glauben."],
+      ["Renaissance","Renaissance heißt „Wiedergeburt“. Künstler und Gelehrte entdecken die Kunst und das Wissen der Antike neu und nehmen sie zum Vorbild."],
+      ["Humanismus","Die Humanisten stellen den Menschen in den Mittelpunkt. Ihnen sind Bildung und eigenes Denken wichtig. Sie lesen die alten Schriften im Original."],
+      ["Nikolaus Kopernikus","Kopernikus erkannte, dass die Sonne im Mittelpunkt steht und sich die Erde um sie bewegt. Das widersprach dem Weltbild, das bis dahin galt."],
+      ["Leonardo da Vinci","Leonardo da Vinci war Maler, Erfinder und Naturforscher. Er malte die Mona Lisa und zeichnete Entwürfe für Maschinen und Flugapparate."],
+      ["Fragen statt glauben","Auch Entdecker wie Kolumbus erweitern das Wissen über die Erde. Die Menschen fragen nun öfter: Stimmt das wirklich, was bisher galt?"]
+    ],
+    quiz:[
+      {q:"Was bedeutet das Wort „Renaissance“?",a:["Wiedergeburt","Erfindung","Entdeckung","Reformation"],c:0,e:"Gemeint ist die Wiedergeburt der Kunst und des Wissens der Antike."},
+      {q:"Wer erkannte, dass die Sonne im Mittelpunkt steht?",a:["Nikolaus Kopernikus","Johannes Gutenberg","Martin Luther","Christoph Kolumbus"],c:0,e:"Kopernikus beschrieb, dass sich die Erde um die Sonne bewegt."},
+      {q:"Was war Leonardo da Vinci?",a:["Maler, Erfinder und Naturforscher","Kaiser und Feldherr","Mönch und Prediger","Kaufmann und Seefahrer"],c:0,e:"Leonardo malte die Mona Lisa und entwarf viele Maschinen."},
+      {q:"Was war den Humanisten besonders wichtig?",a:["Der Mensch, Bildung und eigenes Denken","Möglichst viel Land zu erobern","Der Handel mit Gewürzen","Strenger Gehorsam gegenüber allen Herrschern"],c:0,e:"Humanisten wollten, dass Menschen gebildet sind und selbst denken."},
+      {q:"Was ist ein typischer Unterschied der Neuzeit zum Mittelalter?",a:["Man erklärt die Welt zunehmend durch Beobachten und Forschen","Es gibt keine Kirche mehr","Alle Menschen können lesen und schreiben","Es gibt keine Könige mehr"],c:0,e:"Die Menschen fragen mehr nach Beweisen und prüfen, was bisher galt."}
+    ]
+  },
+  {
+    id:"gutenberg", thema:"reformation", lern:true, title:"Gutenberg und der Buchdruck", fach:"geschichte", stufe:"7",
+    desc:"Wie der Buchdruck Wissen für viele Menschen möglich machte.",
+    cards:[
+      ["Bücher vor Gutenberg","Vor 1450 wurden Bücher von Hand abgeschrieben, meist von Mönchen in Klöstern. Das dauerte lange, und Bücher waren sehr teuer."],
+      ["Gutenbergs Erfindung","Um 1450 erfand Johannes Gutenberg in Mainz den Buchdruck mit beweglichen Metalllettern. Die einzelnen Buchstaben lassen sich immer wieder neu zusammensetzen."],
+      ["Die Gutenberg-Bibel","Das berühmteste Werk, das Gutenberg druckte, war die Bibel. Sie wurde auf Latein gedruckt."],
+      ["Wissen für viele","Gedruckte Bücher wurden billiger. Dadurch konnten viel mehr Menschen lesen und lernen. Vorher hatten vor allem Kirche und Adel Zugang zu Wissen. Ein Wissensmonopol wurde gebrochen."],
+      ["Ideen verbreiten sich schnell","Flugschriften und Bücher brachten Nachrichten und neue Ideen in kurzer Zeit zu vielen Menschen. Ohne den Buchdruck hätte sich Luthers Lehre nicht so schnell verbreitet."],
+      ["Und heute?","Was der Buchdruck damals war, ist heute das Internet. Auch dort kann jeder Wissen finden, aber man muss prüfen, was stimmt."]
+    ],
+    quiz:[
+      {q:"Was erfand Gutenberg um 1450 in Mainz?",a:["Den Buchdruck mit beweglichen Lettern","Das Schießpulver","Den Kompass","Die Uhr"],c:0,e:"Mit einzelnen Metalllettern konnte man Seiten schnell und oft drucken."},
+      {q:"Wie wurden Bücher vor Gutenberg hergestellt?",a:["Von Hand abgeschrieben","Mit Maschinen gedruckt","Aus Stein gemeißelt","Mit dem Computer"],c:0,e:"Meist schrieben Mönche in Klöstern die Bücher ab."},
+      {q:"Warum brach der Buchdruck das Wissensmonopol von Kirche und Adel?",a:["Bücher wurden billiger und viele Menschen konnten lernen","Bücher wurden verboten","Nur noch Mönche durften lesen","Es gab weniger Bücher"],c:0,e:"Wissen war nun nicht mehr nur wenigen vorbehalten."},
+      {q:"Was ist heute mit der Bedeutung des Buchdrucks von damals vergleichbar?",a:["Das Internet","Das Fahrrad","Der Kühlschrank","Die Eisenbahn"],c:0,e:"Beide verbreiten Wissen und Nachrichten sehr schnell."},
+      {q:"Welches Werk druckte Gutenberg als berühmtestes Buch?",a:["Die Bibel","Ein Kochbuch","Eine Landkarte","Ein Märchenbuch"],c:0,e:"Die Gutenberg-Bibel gilt als sein berühmtestes Werk."}
+    ]
+  },
+  {
+    id:"luther", thema:"reformation", lern:true, title:"Martin Luther", fach:"geschichte", stufe:"7",
     desc:"Vom Mönch zum Reformator: 95 Thesen, Wartburg und Bibelübersetzung.",
     cards:[
-      ["Wann und wo wurde Martin Luther geboren?","Am 10. November 1483 in Eisleben."],
-      ["Was sollte Luther nach dem Wunsch seines Vaters werden?","Jurist. Er begann in Erfurt ein Jurastudium."],
-      ["Warum wurde Luther Mönch?","1505 geriet er bei Stotternheim in ein schweres Gewitter und versprach, Mönch zu werden. Er trat ins Augustinerkloster in Erfurt ein."],
-      ["Was war der Ablass?","Die Kirche versprach: Wer Geld zahlt, dem werden Strafen für seine Sünden erlassen. Luther hielt das für falsch."],
-      ["Was geschah am 31. Oktober 1517?","Luther machte seine 95 Thesen gegen den Ablasshandel bekannt, in Wittenberg. Ob er sie wirklich an die Kirchentür nagelte, ist unter Historikern umstritten."],
-      ["Warum verbreiteten sich Luthers Ideen so schnell?","Durch den Buchdruck (Gutenberg, um 1450). Seine Schriften wurden gedruckt und waren in kurzer Zeit überall bekannt."],
-      ["Was passierte 1521 beim Reichstag zu Worms?","Kaiser Karl V. verlangte, dass Luther seine Lehren widerruft. Luther lehnte ab. Danach wurde die Reichsacht über ihn verhängt."],
-      ["Wo versteckte sich Luther danach?","Auf der Wartburg bei Eisenach. Kurfürst Friedrich der Weise ließ ihn zum Schein entführen. Luther nannte sich dort „Junker Jörg“."],
-      ["Welche große Arbeit machte Luther auf der Wartburg?","Er übersetzte das Neue Testament aus dem Griechischen ins Deutsche, in nur etwa 11 Wochen. Gedruckt wurde es 1522. Die ganze Bibel erschien 1534."],
-      ["Warum war Luthers Bibel auch für die Sprache wichtig?","Normale Leute konnten die Bibel nun selbst auf Deutsch lesen. Luthers Deutsch prägte die deutsche Schriftsprache."],
-      ["Wer war Katharina von Bora?","Eine ehemalige Nonne. Sie heiratete 1525 Martin Luther und führte den großen Haushalt in Wittenberg."],
-      ["Was bedeutet Reformation?","„Erneuerung“. Aus dem Streit um die Kirche entstanden die evangelische (protestantische) und die katholische Kirche."],
-      ["Wann und wo starb Luther?","Am 18. Februar 1546 in Eisleben, seiner Geburtsstadt."],
-      ["Was ist der Reformationstag?","Der 31. Oktober, zur Erinnerung an 1517. In Sachsen und weiteren Bundesländern ist er ein gesetzlicher Feiertag."]
+      ["Luthers Leben","Martin Luther wurde am 10. November 1483 in Eisleben geboren. Er sollte Jurist werden, wurde aber Mönch."],
+      ["Der Ablass","Die Kirche verkaufte Ablassbriefe. Wer zahlte, dem sollten Strafen für seine Sünden erlassen werden. Luther hielt das für falsch."],
+      ["Die 95 Thesen","Am 31. Oktober 1517 machte Luther in Wittenberg seine 95 Thesen gegen den Ablasshandel bekannt. Er war dort Professor. Dieses Datum gilt als Beginn der Reformation."],
+      ["Der Buchdruck hilft","Mit dem Buchdruck wurden Luthers Schriften schnell vervielfältigt und waren bald überall bekannt."],
+      ["Der Reichstag zu Worms","1521 verlangte Kaiser Karl V. in Worms, dass Luther seine Lehren widerruft. Luther lehnte ab. Danach wurde die Reichsacht über ihn verhängt."],
+      ["Luther auf der Wartburg","Kurfürst Friedrich der Weise versteckte Luther auf der Wartburg bei Eisenach. Dort übersetzte er in nur etwa 11 Wochen das Neue Testament ins Deutsche."],
+      ["Die Lutherbibel","Durch die deutsche Bibel konnten normale Leute die Bibel selbst lesen. Luthers Deutsch prägte die deutsche Schriftsprache."],
+      ["Katharina von Bora","Katharina von Bora war früher Nonne. 1525 heiratete sie Luther und führte den großen Haushalt in Wittenberg."],
+      ["Zwei Kirchen","Reformation heißt „Erneuerung“. Aus dem Streit entstand die evangelische (protestantische) Kirche. Daneben blieb die katholische Kirche bestehen."],
+      ["Luthers Tod","Luther starb am 18. Februar 1546 in Eisleben, wo er geboren wurde. Der Reformationstag am 31. Oktober erinnert an das Jahr 1517."]
     ],
     quiz:[
       {q:"In welchem Jahr machte Luther die 95 Thesen bekannt?",a:["1492","1517","1555","1648"],c:1,e:"1517, am 31. Oktober. Dieses Datum gilt als Beginn der Reformation."},
@@ -194,7 +233,70 @@ var MODULES = [
       {q:"Welche Kirche entstand aus der Reformation?",a:["Die orthodoxe Kirche","Die evangelische Kirche","Die jüdische Gemeinde","Die buddhistische Gemeinde"],c:1,e:"Evangelisch oder protestantisch. Daneben blieb die katholische Kirche bestehen."},
       {q:"In welcher Stadt wurde Luther geboren und starb er auch?",a:["Wittenberg","Eisleben","Erfurt","Eisenach"],c:1,e:"Eisleben heißt heute Lutherstadt Eisleben."}
     ]
+  },
+  {
+    id:"sachsen", thema:"reformation", lern:true, title:"Sachsen, Kernland der Reformation", fach:"geschichte", stufe:"7",
+    desc:"Wittenberg, Kurfürst und Maler: Die Reformation und ihre sächsischen Spuren.",
+    cards:[
+      ["Sachsen und die Reformation","Die Reformation begann in Kursachsen. Es war damals größer als das heutige Sachsen. Wittenberg gehörte dazu, liegt heute aber in Sachsen-Anhalt."],
+      ["Wittenberg","In Wittenberg lehrte Luther an der Universität als Professor. Die Stadt heißt heute offiziell Lutherstadt Wittenberg."],
+      ["Friedrich der Weise","Kurfürst Friedrich der Weise von Sachsen schützte Luther. Nach dem Reichstag in Worms ließ er ihn auf der Wartburg verstecken."],
+      ["Lucas Cranach","Der Maler Lucas Cranach der Ältere lebte in Wittenberg und war mit Luther befreundet. Er malte Bilder von Luther und gestaltete Flugschriften und Bibeln."],
+      ["Die Leipziger Disputation","1519 stritt Luther in Leipzig mit dem Theologen Johannes Eck. Es ging darum, wer in Glaubensfragen das letzte Wort hat."],
+      ["Sachsen heute","In Sachsen ist der Reformationstag am 31. Oktober ein gesetzlicher Feiertag. Viele Orte erinnern an die Reformation, zum Beispiel Wittenberg."]
+    ],
+    quiz:[
+      {q:"In welcher Stadt lehrte Luther als Professor?",a:["Wittenberg","Dresden","Chemnitz","Bautzen"],c:0,e:"Luther lehrte an der Universität Wittenberg."},
+      {q:"Welcher Kurfürst von Sachsen schützte Luther?",a:["Friedrich der Weise","Karl V.","August der Starke","Ludwig XIV."],c:0,e:"Friedrich der Weise ließ Luther auf der Wartburg verstecken."},
+      {q:"In welcher Stadt stritt Luther 1519 mit Johannes Eck?",a:["Leipzig","Worms","Eisenach","Rom"],c:0,e:"Das Streitgespräch heißt Leipziger Disputation."},
+      {q:"Welcher Maler lebte in Wittenberg und war mit Luther befreundet?",a:["Lucas Cranach der Ältere","Albrecht Dürer","Leonardo da Vinci","Michelangelo"],c:0,e:"Cranach malte viele Bilder von Luther und seiner Familie."},
+      {q:"Wie heißt Wittenberg heute offiziell?",a:["Lutherstadt Wittenberg","Reformationsstadt Wittenberg","Bibelstadt Wittenberg","Thesenstadt Wittenberg"],c:0,e:"Der Zusatz Lutherstadt erinnert an Martin Luther."}
+    ]
+  },
+  {
+    id:"folgen", thema:"reformation", lern:true, title:"Folgen der Reformation", fach:"geschichte", stufe:"7",
+    desc:"Glaubensspaltung, Gegenreformation, Kriege und Glaubensfreiheit.",
+    cards:[
+      ["Zwei Kirchen","Der Streit um die Kirche führte zur Glaubensspaltung. Es gab nun die katholische und die evangelische (protestantische) Kirche."],
+      ["Die Fürsten entscheiden","Viele Fürsten wurden evangelisch und führten die neue Lehre in ihrem Land ein. Ihre Untertanen mussten oft mitmachen."],
+      ["Gegenreformation","Die katholische Kirche wehrte sich. Sie wollte die Gläubigen zurückgewinnen und die Reformation zurückdrängen. Das nennt man Gegenreformation."],
+      ["Streit wird zum Krieg","Der Glaubensstreit führte zu Kriegen. Dabei ging es oft nicht nur um den Glauben, sondern auch um Macht."],
+      ["Augsburger Religionsfrieden","1555 einigte man sich in Augsburg: Der Landesherr bestimmt die Religion seines Landes. Wer anders glaubte, durfte auswandern."],
+      ["Dreißigjähriger Krieg","Von 1618 bis 1648 tobte der Dreißigjährige Krieg. Auch er hatte religiöse Ursachen und brachte großes Leid nach Europa."],
+      ["Glaubensfreiheit","Glaubensfreiheit heißt: Jeder darf selbst entscheiden, woran er glaubt. Heute steht sie im Grundgesetz."]
+    ],
+    quiz:[
+      {q:"Was war eine Folge des Streits um die Kirche?",a:["Die Spaltung in katholische und evangelische Kirche","Die Abschaffung des Glaubens","Die Gründung der Universitäten","Das Ende der Fürsten"],c:0,e:"Seitdem gibt es in Deutschland evangelische und katholische Christen."},
+      {q:"Was bedeutet „Gegenreformation“?",a:["Die katholische Kirche wollte die Reformation zurückdrängen","Luther nahm seine Thesen zurück","Die Fürsten stimmten Luther zu","Die Bauern gründeten eine eigene Kirche"],c:0,e:"Die katholische Kirche wollte Gläubige zurückgewinnen."},
+      {q:"Was regelte der Augsburger Religionsfrieden von 1555?",a:["Der Landesherr bestimmt die Religion seines Landes","Alle Menschen müssen katholisch sein","Jeder Mensch darf seine Religion frei wählen","Die Kirche darf keine Steuern mehr verlangen"],c:0,e:"Freie Wahl für jeden gab es noch nicht. Das entschied der Landesherr."},
+      {q:"Was bedeutet Glaubensfreiheit?",a:["Jeder darf selbst entscheiden, woran er glaubt","Alle müssen dieselbe Religion haben","Nur der Herrscher darf glauben","Religion ist verboten"],c:0,e:"Die Glaubensfreiheit steht heute im Grundgesetz."},
+      {q:"Welcher Krieg von 1618 bis 1648 hatte auch religiöse Ursachen?",a:["Der Dreißigjährige Krieg","Der Hundertjährige Krieg","Der Siebenjährige Krieg","Der Erste Weltkrieg"],c:0,e:"Im Dreißigjährigen Krieg ging es um Glauben und um Macht."}
+    ]
+  },
+  {
+    id:"bilder", thema:"reformation", lern:true, title:"Bilder und Flugschriften", fach:"geschichte", stufe:"7",
+    desc:"Wie man Bildquellen aus der Reformationszeit liest.",
+    cards:[
+      ["Bildquellen","Bilder aus der Vergangenheit erzählen uns etwas über ihre Zeit. Man nennt sie Bildquellen. Man muss sie aber genau untersuchen."],
+      ["Flugschriften","Flugschriften waren kurze, billige Druckschriften. Mit ihnen verbreiteten sich Meinungen und Nachrichten schnell, auch Luthers Ideen."],
+      ["Bilder für alle","Viele Menschen konnten damals nicht lesen. Deshalb hatten Flugschriften oft Bilder, die auch ohne Lesen verständlich waren."],
+      ["Bibelillustrationen","In der Lutherbibel gab es Holzschnitte. Die Bilder erklärten Geschichten aus der Bibel anschaulich."],
+      ["Altarbilder","Altarbilder hängen in Kirchen. Im Wittenberger Reformationsaltar von Cranach sieht man Taufe, Abendmahl, Beichte und Luthers Predigt."],
+      ["Bildquellen auswerten","Frage bei jedem Bild: Wer hat es gemacht? Wann? Für wen und wozu? Was ist zu sehen?"]
+    ],
+    quiz:[
+      {q:"Was ist eine Flugschrift?",a:["Ein billiges, kurzes Druckblatt zur Verbreitung von Meinungen","Ein Brief des Kaisers","Ein Buch über Vögel","Ein Schiffslogbuch"],c:0,e:"Flugschriften verbreiteten Meinungen und Nachrichten schnell."},
+      {q:"Warum hatten Flugschriften oft Bilder?",a:["Viele Menschen konnten nicht lesen","Texte waren verboten","Bilder waren Pflicht","Es gab keine Buchstaben"],c:0,e:"Bilder konnte auch verstehen, wer nicht lesen konnte."},
+      {q:"Welche Fragen stellt man zuerst an eine Bildquelle?",a:["Wer hat es gemacht, wann und wozu?","Wie teuer war der Rahmen?","Wie viele Farben wurden benutzt?","Wo hängt es heute im Haus?"],c:0,e:"Autor, Zeit und Zweck helfen, ein Bild richtig zu verstehen."},
+      {q:"Wozu dienten Bibelillustrationen?",a:["Sie erklärten Geschichten aus der Bibel anschaulich","Sie waren nur Verzierung ohne Bedeutung","Sie zeigten Landkarten","Sie ersetzten den Text"],c:0,e:"Die Holzschnitte machten die Geschichten leichter verständlich."},
+      {q:"Was zeigt der Wittenberger Reformationsaltar von Cranach?",a:["Taufe, Abendmahl, Beichte und Luthers Predigt","Die Schlacht bei Worms","Die Erfindung des Buchdrucks","Kaiser Karl V. auf dem Thron"],c:0,e:"Der Altar zeigt zentrale Punkte der evangelischen Lehre."}
+    ]
   }
+];
+
+/* Themen fassen Module zusammen (Ebene zwischen Fach und Modul) */
+var THEMEN = [
+  {id:"reformation", title:"Reformation", fach:"geschichte", stufe:"7", desc:"Von Gutenberg über Luther bis zur Glaubensspaltung. Sechs kurze Module zum Lernen."}
 ];
 
 /* ===== Hilfsfunktionen ===== */
@@ -252,12 +354,44 @@ function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.f
 function mod(id){ return MODULES.filter(function(m){ return m.id===id; })[0]; }
 
 /* ===== Hub ===== */
+function themaOf(id){ return THEMEN.filter(function(t){ return t.id===id; })[0]; }
+function kidsOf(id){ return MODULES.filter(function(m){ return m.thema===id; }); }
+function modCard(m){
+  var last = qDone(m), nq = qTot(m);
+  return '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
+    + '<span class="tag">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span>'
+    + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
+    + '<span class="prog"><span>'+(m.map ? 'Auf der Karte gefunden' : 'Letztes Quiz')+'</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
+    + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+(m.map ? ' gefunden' : ' Fragen richtig'))+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
+    + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+nq+'</b> '+(m.map ? 'Begriffe' : 'Fragen')+'</span></span></button>';
+}
+function themaCard(t){
+  var kids = kidsOf(t.id), got = 0, tot = 0, played = 0;
+  kids.forEach(function(m){ var d = qDone(m); tot += qTot(m); if (d!=null){ got += d; played++; } });
+  return '<button class="mod" data-fach="'+t.fach+'" data-a="thema" data-v="'+t.id+'">'
+    + '<span class="tag">'+FACH[t.fach]+' · Klasse '+esc(t.stufe)+'</span>'
+    + '<h2>'+esc(t.title)+'</h2><p>'+esc(t.desc)+'</p>'
+    + '<span class="prog"><span>Quiz gesamt (letzte Durchläufe)</span><span><b>'+got+' von '+tot+'</b></span></span>'
+    + '<span class="bar" role="img" aria-label="'+got+' von '+tot+' Quizfragen richtig"><i style="width:'+(tot ? Math.round(got/tot*100) : 0)+'%"></i></span>'
+    + '<span class="meta"><span><b>'+kids.length+'</b> Module</span><span><b>'+played+'</b> im Quiz gespielt</span></span></button>';
+}
+function renderThema(){
+  var t = themaOf(S.thema), kids = kidsOf(t.id);
+  var h = topbar() + '<div class="head" data-fach="'+t.fach+'"><button class="back" data-a="home">← Alle Module</button>'
+    + '<span class="tag" style="color:var(--c)">'+FACH[t.fach]+' · Klasse '+esc(t.stufe)+'</span><h1>'+esc(t.title)+'</h1><p class="hint">'+esc(t.desc)+'</p></div>';
+  h += '<div class="grid">'+kids.map(modCard).join("")+'</div>';
+  app.innerHTML = h;
+}
 function renderHub(){
   var q = S.q.trim().toLowerCase();
-  var list = MODULES.filter(function(m){
-    var okF = S.fach==="alle" || m.fach===S.fach;
-    var okQ = !q || (m.title+" "+m.desc+" "+FACH[m.fach]).toLowerCase().indexOf(q) > -1;
-    return okF && okQ;
+  function hit(text, fach){ return (S.fach==="alle" || fach===S.fach) && (!q || text.toLowerCase().indexOf(q) > -1); }
+  var list = [];
+  THEMEN.forEach(function(t){
+    var kids = kidsOf(t.id).map(function(m){ return m.title+" "+m.desc; }).join(" ");
+    if (hit(t.title+" "+t.desc+" "+FACH[t.fach]+" "+kids, t.fach)) list.push(themaCard(t));
+  });
+  MODULES.forEach(function(m){
+    if (!m.thema && hit(m.title+" "+m.desc+" "+FACH[m.fach], m.fach)) list.push(modCard(m));
   });
   var faecher = ["alle"].concat(Object.keys(FACH));
   var h = topbar();
@@ -269,17 +403,7 @@ function renderHub(){
   h += '</div></div>';
   if (!list.length) h += '<p class="empty">Kein Modul gefunden. Probier ein anderes Stichwort.</p>';
   else {
-    h += '<div class="grid" id="grid">';
-    list.forEach(function(m){
-      var last = qDone(m), nq = qTot(m);
-      h += '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
-        + '<span class="tag">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span>'
-        + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
-        + '<span class="prog"><span>'+(m.map ? 'Auf der Karte gefunden' : 'Letztes Quiz')+'</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
-        + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+(m.map ? ' gefunden' : ' Fragen richtig'))+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
-        + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+nq+'</b> '+(m.map ? 'Begriffe' : 'Fragen')+'</span></span></button>';
-    });
-    h += '</div>';
+    h += '<div class="grid" id="grid">'+list.join("")+'</div>';
   }
   h += '<p class="foot">Beispielinhalte. Neue Module entstehen, indem ein Eintrag in der Liste ergänzt wird.</p>';
   app.innerHTML = h;
@@ -288,10 +412,11 @@ function renderHub(){
 /* ===== Modul-Rahmen ===== */
 function renderMod(){
   var m = mod(S.mod);
-  var h = topbar() + '<div class="head" data-fach="'+m.fach+'"><button class="back" data-a="home">← Alle Module</button>'
+  var bk = m.thema ? '<button class="back" data-a="thema" data-v="'+m.thema+'">← '+esc(themaOf(m.thema).title)+'</button>' : '<button class="back" data-a="home">← Alle Module</button>';
+  var h = topbar() + '<div class="head" data-fach="'+m.fach+'">'+bk
     + '<span class="tag" style="color:var(--c)">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span><h1>'+esc(m.title)+'</h1></div>';
   h += '<div class="tabs" role="tablist" data-fach="'+m.fach+'">'
-    + '<button class="tab" role="tab" data-a="tab" data-v="cards" aria-selected="'+(S.tab==="cards")+'">Karteikarten</button>'
+    + '<button class="tab" role="tab" data-a="tab" data-v="cards" aria-selected="'+(S.tab==="cards")+'">'+(m.lern ? 'Lernkarten' : 'Karteikarten')+'</button>'
     + (m.map ? '<a class="tab" href="'+esc(m.map.url)+'" style="display:grid;place-items:center;text-decoration:none;color:inherit">Kartenquiz · '+qDone(m)+'/'+qTot(m)+' →</a>'
              : '<button class="tab" role="tab" data-a="tab" data-v="quiz" aria-selected="'+(S.tab==="quiz")+'">Quiz</button>') + '</div>';
   h += '<div data-fach="'+m.fach+'" id="body"></div>';
@@ -300,8 +425,24 @@ function renderMod(){
 }
 
 /* ===== Karteikarten ===== */
-function newDeck(){ var m=mod(S.mod); var idx=[]; for (var i=0;i<m.cards.length;i++) idx.push(i); S.d={queue:shuffle(idx), flip:false, known:0, total:m.cards.length}; }
+function newDeck(){
+  var m=mod(S.mod);
+  if (m.lern){ S.d={i:0, total:m.cards.length, lern:true}; return; }
+  var idx=[]; for (var i=0;i<m.cards.length;i++) idx.push(i); S.d={queue:shuffle(idx), flip:false, known:0, total:m.cards.length};
+}
+/* Lernkarten: kurze Infos zum Durchblättern, danach Quiz */
+function renderLern(){
+  var m = mod(S.mod), d = S.d, el = document.getElementById("body"), c = m.cards[d.i], last = d.i===d.total-1;
+  var pc = P(S.mod); if (d.i+1>pc.cards){ pc.cards = d.i+1; save(); }
+  el.innerHTML = '<div class="deck"><div class="prog"><span>Karte '+(d.i+1)+' von '+d.total+'</span><span>Lernen</span></div>'
+    + '<div class="bar" aria-hidden="true"><i style="width:'+Math.round((d.i+1)/d.total*100)+'%"></i></div>'
+    + '<div class="learn" aria-live="polite"><span class="lbl">'+esc(c[0])+'</span><span class="txt">'+esc(c[1])+'</span></div>'
+    + '<div class="row"><button class="btn" data-a="lprev"'+(d.i ? '' : ' disabled')+'>Zurück</button>'
+    + (last ? '<button class="btn primary" data-a="tab" data-v="quiz" style="background:var(--c);border-color:var(--c);color:var(--on)">Zum Quiz</button>'
+            : '<button class="btn primary" data-a="lnext">Weiter</button>') + '</div></div>';
+}
 function renderCards(){
+  if (S.d.lern) return renderLern();
   var m = mod(S.mod), d = S.d, el = document.getElementById("body");
   if (!d.queue.length){
     el.innerHTML = '<div class="res"><div class="score">'+d.total+'/'+d.total+'</div><h2>Alle Karten gewusst</h2><p class="hint">Gut gemacht. Teste dich jetzt im Quiz oder mische den Stapel neu.</p>'
@@ -380,7 +521,7 @@ function renderMe(){
   MODULES.forEach(function(m){
     var p = P(m.id), nc = m.cards.length, nq = qTot(m), fd = (p.found||[]).length;
     h += '<div class="prow" data-fach="'+m.fach+'"><span class="tag">'+FACH[m.fach]+'</span><h2>'+esc(m.title)+'</h2>'
-      + '<div class="prog"><span>Karten gewusst</span><span>'+p.cards+' von '+nc+'</span></div><div class="bar"><i style="width:'+Math.round(p.cards/nc*100)+'%"></i></div>'
+      + '<div class="prog"><span>'+(m.lern ? 'Karten gelesen' : 'Karten gewusst')+'</span><span>'+p.cards+' von '+nc+'</span></div><div class="bar"><i style="width:'+Math.round(p.cards/nc*100)+'%"></i></div>'
       + (m.map
         ? '<div class="prog"><span>Auf der Karte gefunden</span><span>'+fd+' von '+nq+'</span></div><div class="bar"><i style="width:'+Math.round(fd/nq*100)+'%"></i></div>'
         : '<div class="prog"><span>Quiz Bestwert</span><span>'+(p.best==null?'noch nicht gespielt':p.best+' von '+nq+' · '+p.tries+'×')+'</span></div><div class="bar"><i style="width:'+(p.best==null?0:Math.round(p.best/nq*100))+'%"></i></div>')
@@ -438,7 +579,12 @@ function syncIn(){
 }
 function afterLogin(){
   var id = (location.hash||"").replace("#","");
-  if (id && mod(id)) openMod(id); else home();
+  if (!(id && openHash(id))) home();
+}
+function openHash(id){
+  if (mod(id)){ openMod(id); return true; }
+  if (themaOf(id)){ openThema(id); return true; }
+  return false;
 }
 
 /* ===== Steuerung ===== */
@@ -449,7 +595,13 @@ function go(){
   else if (S.view==="hub"){
     renderHub();
     if (hadFocus){ var n = document.getElementById("suche"); n.focus(); try { n.setSelectionRange(pos,pos); } catch(e){} }
-  } else renderMod();
+  } else if (S.view==="thema") renderThema();
+  else renderMod();
+}
+function openThema(id){
+  if (!themaOf(id) || !me()) return;
+  S.view="thema"; S.thema=id; S.mod=null;
+  go(); window.scrollTo(0,0);
 }
 function openMod(id, tab){
   if (!mod(id) || !me()) return;
@@ -463,6 +615,9 @@ app.addEventListener("click", function(ev){
   var a = t.getAttribute("data-a"), v = t.getAttribute("data-v");
   if (a==="home"){ try { history.replaceState(null,"",location.pathname+location.search); } catch(e){} home(); }
   else if (a==="open"){ try { location.hash = v; } catch(e){} openMod(v); }
+  else if (a==="thema"){ try { location.hash = v; } catch(e){} openThema(v); }
+  else if (a==="lnext"){ if (S.d.i < S.d.total-1){ S.d.i++; renderLern(); } }
+  else if (a==="lprev"){ if (S.d.i > 0){ S.d.i--; renderLern(); } }
   else if (a==="fach"){ S.fach = v; go(); }
   else if (a==="me"){ S.view="me"; S.delask=false; go(); window.scrollTo(0,0); }
   else if (a==="submit"){ submit(); }
@@ -508,13 +663,13 @@ app.addEventListener("input", function(ev){
 window.addEventListener("hashchange", function(){
   if (!me()) return;
   var id = (location.hash||"").replace("#","");
-  if (id && mod(id)) openMod(id); else if (!id) home();
+  if (id) openHash(id); else home();
 });
 
 if (!me()){ S.view = "who"; renderWho(); }
 else {
   var start = (location.hash||"").replace("#","");
-  if (start && mod(start)) openMod(start); else renderHub();
+  if (!(start && openHash(start))) renderHub();
   syncIn();
 }
 </script>
