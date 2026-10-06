@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F2F4F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11161C" media="(prefers-color-scheme: dark)">
+<meta name="robots" content="noindex,nofollow">
+<style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Lernportal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: eine Spalte (max 960px). Hub = Suche + Filter + Kachelraster. Modul = Kopfzeile + Reiter (Karteikarten / Quiz). Fachfarbe steuert Karten und Tags. */
+:root{
+  --bg:#F2F4F1; --surface:#FFFFFF; --fg:#16202B; --muted:#56616D; --line:#D6DCD4;
+  --geschichte:#8C2F39; --on-geschichte:#FFFFFF;
+  --erdkunde:#0E6A62; --on-erdkunde:#FFFFFF;
+  --good:#1E7B3A; --bad:#B3261E; --focus:#2B5BD7;
+  --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11161C; --surface:#1A222B; --fg:#E9EDF1; --muted:#9AA6B2; --line:#2C3742;
+    --geschichte:#E2848E; --on-geschichte:#2A0C10;
+    --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
+    --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11161C; --surface:#1A222B; --fg:#E9EDF1; --muted:#9AA6B2; --line:#2C3742;
+  --geschichte:#E2848E; --on-geschichte:#2A0C10;
+  --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
+  --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
+*{box-sizing:border-box}
+[data-fach="geschichte"]{--c:var(--geschichte);--on:var(--on-geschichte)}
+[data-fach="erdkunde"]{--c:var(--erdkunde);--on:var(--on-erdkunde)}
+.wrap{max-width:960px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--font-display);line-height:1.1;margin:0;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--font-display);font-weight:800;font-size:1.9rem;letter-spacing:-.02em;background:none;border:0;padding:0}
+.hint{color:var(--muted);font-size:.95rem;margin:0}
+
+/* Hub */
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.search{flex:1 1 220px;min-width:0;font:inherit;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;min-height:44px}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.mod{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:10px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.mod:hover{border-color:var(--c)}
+.mod:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.tag{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.mod h2{font-size:1.5rem}
+.mod p{margin:0;color:var(--muted);font-size:.98rem}
+.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);margin-top:auto;font-variant-numeric:tabular-nums}
+.meta b{color:var(--fg)}
+.empty{padding:28px 0;color:var(--muted)}
+
+/* Modul */
+.head{display:flex;flex-direction:column;gap:8px}
+.back{align-self:flex-start;background:none;border:0;padding:6px 0;color:var(--muted);font-weight:700;min-height:44px}
+.head h1{font-size:clamp(2rem,6vw,3rem);color:var(--c)}
+.tabs{display:flex;gap:8px}
+.tab{flex:1 1 0;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;font-weight:700;min-height:48px}
+.tab[aria-selected="true"]{background:var(--c);border-color:var(--c);color:var(--on)}
+
+/* Karteikarten */
+.deck{display:flex;flex-direction:column;gap:14px}
+.prog{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.95rem;font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c);width:0;transition:width .25s}
+.card{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:12px;min-height:260px;padding:28px 22px;border-radius:18px;background:var(--surface);border:2px solid var(--line);width:100%}
+.card:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.card .lbl{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+.card .txt{font-family:var(--font-display);font-weight:600;font-size:clamp(1.3rem,4.5vw,1.8rem);line-height:1.25;text-wrap:balance;overflow-wrap:anywhere}
+.card.back-side{background:var(--c);border-color:var(--c);color:var(--on)}
+.card .tap{font-size:.85rem;opacity:.7}
+.row{display:flex;gap:10px}
+.btn{flex:1 1 0;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:14px;font-weight:700;min-height:52px}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.good{border-color:var(--good);color:var(--good)}
+.btn.again{border-color:var(--bad);color:var(--bad)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+
+/* Quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{font-family:var(--font-display);font-weight:600;font-size:clamp(1.3rem,4.5vw,1.7rem);line-height:1.25;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:14px 16px;min-height:52px;overflow-wrap:anywhere}
+.opt:not([disabled]):hover{border-color:var(--c)}
+.opt.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 16%,var(--surface))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 16%,var(--surface))}
+.opt[disabled]{cursor:default}
+.expl{padding:12px 14px;border-radius:12px;background:var(--surface);border:2px solid var(--line)}
+.res{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:28px 16px;background:var(--surface);border:2px solid var(--line);border-radius:18px}
+.score{font-family:var(--font-display);font-weight:800;font-size:4rem;color:var(--c);font-variant-numeric:tabular-nums;line-height:1}
+.foot{color:var(--muted);font-size:.85rem}
+/* Nutzer */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.usr{display:flex;align-items:center;gap:10px;border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 16px 5px 5px;min-height:44px;max-width:62%;min-width:0}
+.usr .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.av{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:hsl(var(--h) 55% 36%);color:#fff;font-family:var(--font-display);font-weight:800}
+.av.big{width:72px;height:72px;font-size:2rem}
+.who{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+.pick{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 10px;background:var(--surface);border:2px solid var(--line);border-radius:14px;text-align:center;font-weight:700;overflow-wrap:anywhere;min-width:0}
+.pick:hover{border-color:var(--fg)}
+.pick:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.newu{display:flex;gap:10px;flex-wrap:wrap}
+.head h1.plain{color:var(--fg)}
+.who-h{display:flex;align-items:center;gap:14px;min-width:0}
+.prow{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.prow h2{font-size:1.3rem}
+.prow .btn{flex:none;align-self:flex-start;margin-top:4px;padding-inline:20px}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.err{color:var(--bad);min-height:1.4em;margin:0}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ===== Inhalte: neue Module hier als Objekt ergänzen ===== */
+var MODULES = [
+  {
+    id:"asien", title:"Asien", fach:"erdkunde", stufe:"5–7",
+    desc:"Hauptstädte, Berge, Flüsse und Klima des größten Kontinents.",
+    cards:[
+      ["Wie groß ist Asien im Vergleich zu den anderen Kontinenten?","Asien ist der größte Kontinent: fast ein Drittel der Landfläche der Erde, und hier leben mehr als die Hälfte aller Menschen."],
+      ["Wie heißt der höchste Berg der Erde und wo liegt er?","Mount Everest im Himalaya, rund 8.849 m hoch, an der Grenze zwischen Nepal und China (Tibet)."],
+      ["Hauptstadt von Japan?","Tokio"],
+      ["Hauptstadt von China?","Peking"],
+      ["Hauptstadt von Indien?","Neu-Delhi"],
+      ["Hauptstadt von Südkorea?","Seoul"],
+      ["Hauptstadt von Thailand?","Bangkok"],
+      ["Hauptstadt von Vietnam?","Hanoi"],
+      ["Hauptstadt der Mongolei?","Ulaanbaatar. Sie gilt als die kälteste Hauptstadt der Welt."],
+      ["Wie heißt der längste Fluss Asiens?","Der Jangtse in China, über 6.000 km lang."],
+      ["Welcher See ist der tiefste der Erde?","Der Baikalsee in Russland (Sibirien), rund 1.600 m tief."],
+      ["Wo liegt die Wüste Gobi?","In der Mongolei und im Norden Chinas."],
+      ["Was ist der Monsun?","Ein Wind, der im Sommer viel Regen vom Meer nach Süd- und Südostasien bringt. Er ist wichtig für den Reisanbau."],
+      ["Welches Land hat die meisten Einwohner?","Indien. Seit 2023 hat es mehr Einwohner als China."],
+      ["Wie heißt der höchste Berg Japans?","Der Fuji, 3.776 m hoch."],
+      ["Liegt Russland in Europa oder Asien?","Beides: Der größte Teil der Fläche (Sibirien) liegt in Asien. Die Hauptstadt Moskau liegt in Europa."]
+    ],
+    quiz:[
+      {q:"Wie heißt die Hauptstadt von Japan?",a:["Tokio","Osaka","Peking","Seoul"],c:0,e:"Tokio ist Hauptstadt und eine der größten Städte der Welt."},
+      {q:"In welchem Gebirge liegt der Mount Everest?",a:["Alpen","Anden","Himalaya","Rocky Mountains"],c:2,e:"Der Himalaya erstreckt sich durch Nepal, Indien, Bhutan, China und Pakistan."},
+      {q:"Welches Land hat die Hauptstadt Hanoi?",a:["Thailand","Vietnam","Japan","Indien"],c:1,e:"Hanoi liegt im Norden Vietnams."},
+      {q:"Wie heißt die Hauptstadt von Indien?",a:["Mumbai","Dhaka","Neu-Delhi","Bangkok"],c:2,e:"Mumbai ist größer, aber die Hauptstadt ist Neu-Delhi."},
+      {q:"Welcher See ist der tiefste der Erde?",a:["Bodensee","Baikalsee","Victoriasee","Toten Meer"],c:1,e:"Der Baikalsee ist rund 1.600 m tief."},
+      {q:"Welcher Fluss ist der längste in Asien?",a:["Rhein","Nil","Jangtse","Donau"],c:2,e:"Der Jangtse fließt durch China bis ins Ostchinesische Meer."},
+      {q:"Welche Wüste liegt in der Mongolei und in China?",a:["Sahara","Gobi","Namib","Kalahari"],c:1,e:"Sahara, Namib und Kalahari liegen in Afrika."},
+      {q:"Was bringt der Sommermonsun nach Südasien?",a:["Schnee","Starken Regen","Sandstürme","Nebel"],c:1,e:"Der Monsun bringt starke Regenfälle. Reis wächst dadurch gut."}
+    ]
+  },
+  {
+    id:"luther", title:"Martin Luther", fach:"geschichte", stufe:"5–8",
+    desc:"Vom Mönch zum Reformator: 95 Thesen, Wartburg und Bibelübersetzung.",
+    cards:[
+      ["Wann und wo wurde Martin Luther geboren?","Am 10. November 1483 in Eisleben."],
+      ["Was sollte Luther nach dem Wunsch seines Vaters werden?","Jurist. Er begann in Erfurt ein Jurastudium."],
+      ["Warum wurde Luther Mönch?","1505 geriet er bei Stotternheim in ein schweres Gewitter und versprach, Mönch zu werden. Er trat ins Augustinerkloster in Erfurt ein."],
+      ["Was war der Ablass?","Die Kirche versprach: Wer Geld zahlt, dem werden Strafen für seine Sünden erlassen. Luther hielt das für falsch."],
+      ["Was geschah am 31. Oktober 1517?","Luther machte seine 95 Thesen gegen den Ablasshandel bekannt, in Wittenberg. Ob er sie wirklich an die Kirchentür nagelte, ist unter Historikern umstritten."],
+      ["Warum verbreiteten sich Luthers Ideen so schnell?","Durch den Buchdruck (Gutenberg, um 1450). Seine Schriften wurden gedruckt und waren in kurzer Zeit überall bekannt."],
+      ["Was passierte 1521 beim Reichstag zu Worms?","Kaiser Karl V. verlangte, dass Luther seine Lehren widerruft. Luther lehnte ab. Danach wurde die Reichsacht über ihn verhängt."],
+      ["Wo versteckte sich Luther danach?","Auf der Wartburg bei Eisenach. Kurfürst Friedrich der Weise ließ ihn zum Schein entführen. Luther nannte sich dort „Junker Jörg“."],
+      ["Welche große Arbeit machte Luther auf der Wartburg?","Er übersetzte das Neue Testament aus dem Griechischen ins Deutsche, in nur etwa 11 Wochen. Gedruckt wurde es 1522. Die ganze Bibel erschien 1534."],
+      ["Warum war Luthers Bibel auch für die Sprache wichtig?","Normale Leute konnten die Bibel nun selbst auf Deutsch lesen. Luthers Deutsch prägte die deutsche Schriftsprache."],
+      ["Wer war Katharina von Bora?","Eine ehemalige Nonne. Sie heiratete 1525 Martin Luther und führte den großen Haushalt in Wittenberg."],
+      ["Was bedeutet Reformation?","„Erneuerung“. Aus dem Streit um die Kirche entstanden die evangelische (protestantische) und die katholische Kirche."],
+      ["Wann und wo starb Luther?","Am 18. Februar 1546 in Eisleben, seiner Geburtsstadt."],
+      ["Was ist der Reformationstag?","Der 31. Oktober, zur Erinnerung an 1517. In Sachsen und weiteren Bundesländern ist er ein gesetzlicher Feiertag."]
+    ],
+    quiz:[
+      {q:"In welchem Jahr machte Luther die 95 Thesen bekannt?",a:["1492","1517","1555","1648"],c:1,e:"1517, am 31. Oktober. Dieses Datum gilt als Beginn der Reformation."},
+      {q:"In welcher Stadt wirkte Luther als Professor und veröffentlichte die Thesen?",a:["Rom","Wittenberg","Berlin","Köln"],c:1,e:"Wittenberg heißt heute Lutherstadt Wittenberg."},
+      {q:"Auf welcher Burg übersetzte Luther das Neue Testament?",a:["Burg Eltz","Wartburg","Burg Hohenzollern","Burg Meißen"],c:1,e:"Die Wartburg liegt bei Eisenach in Thüringen."},
+      {q:"Welche Erfindung half Luther, seine Ideen zu verbreiten?",a:["Dampfmaschine","Telefon","Buchdruck","Kompass"],c:2,e:"Mit dem Buchdruck konnten Schriften schnell vervielfältigt werden."},
+      {q:"Wer verlangte 1521 in Worms, dass Luther widerruft?",a:["Friedrich der Weise","Johann Tetzel","Kaiser Karl V.","Gutenberg"],c:2,e:"Der Kaiser verhängte danach die Reichsacht. Friedrich der Weise beschützte Luther."},
+      {q:"Wen heiratete Luther 1525?",a:["Katharina von Bora","Maria Theresia","Elisabeth von Thüringen","Katharina die Große"],c:0,e:"Katharina von Bora war früher Nonne."},
+      {q:"Welche Kirche entstand aus der Reformation?",a:["Die orthodoxe Kirche","Die evangelische Kirche","Die jüdische Gemeinde","Die buddhistische Gemeinde"],c:1,e:"Evangelisch oder protestantisch. Daneben blieb die katholische Kirche bestehen."},
+      {q:"In welcher Stadt wurde Luther geboren und starb er auch?",a:["Wittenberg","Eisleben","Erfurt","Eisenach"],c:1,e:"Eisleben heißt heute Lutherstadt Eisleben."}
+    ]
+  }
+];
+
+/* ===== Hilfsfunktionen ===== */
+var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde"};
+var app = document.getElementById("app");
+var S = {view:"hub", mod:null, tab:"cards", q:"", fach:"alle", d:null, z:null, delask:false};
+var store = {users:[], cur:null, prog:{}};
+try { var raw = localStorage.getItem("lernportal-v2"); if (raw) { var o = JSON.parse(raw); if (o && o.users) store = o; } } catch(e) {}
+if (!store.prog) store.prog = {};
+function save(){ try { localStorage.setItem("lernportal-v2", JSON.stringify(store)); } catch(e) {} }
+var HUES = [8,28,150,190,215,265,320];
+function me(){ for (var i=0;i<store.users.length;i++) if (store.users[i].id===store.cur) return store.users[i]; return null; }
+function ini(u){ return u.name.charAt(0).toUpperCase(); }
+function P(modId){
+  var u = me(); if (!u) return {best:null,tries:0,cards:0};
+  var up = store.prog[u.id] || (store.prog[u.id] = {});
+  return up[modId] || (up[modId] = {best:null,tries:0,cards:0});
+}
+function topbar(){
+  var u = me();
+  return '<div class="topbar"><button class="brand" data-a="home">Lernportal</button>'
+    + (u ? '<button class="usr" data-a="me" aria-label="Mein Bereich"><span class="av" style="--h:'+u.hue+'">'+esc(ini(u))+'</span><span class="n">'+esc(u.name)+'</span></button>' : '') + '</div>';
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function mod(id){ return MODULES.filter(function(m){ return m.id===id; })[0]; }
+
+/* ===== Hub ===== */
+function renderHub(){
+  var q = S.q.trim().toLowerCase();
+  var list = MODULES.filter(function(m){
+    var okF = S.fach==="alle" || m.fach===S.fach;
+    var okQ = !q || (m.title+" "+m.desc+" "+FACH[m.fach]).toLowerCase().indexOf(q) > -1;
+    return okF && okQ;
+  });
+  var faecher = ["alle"].concat(Object.keys(FACH));
+  var h = topbar();
+  h += '<div class="tools"><input id="suche" class="search" type="search" placeholder="Thema suchen, z. B. Luther" value="'+esc(S.q)+'" aria-label="Thema suchen">';
+  h += '<div class="chips" role="group" aria-label="Fach">';
+  faecher.forEach(function(f){
+    h += '<button class="chip" data-a="fach" data-v="'+f+'" aria-pressed="'+(S.fach===f)+'">'+(f==="alle"?"Alle Fächer":FACH[f])+'</button>';
+  });
+  h += '</div></div>';
+  if (!list.length) h += '<p class="empty">Kein Modul gefunden. Probier ein anderes Stichwort.</p>';
+  else {
+    h += '<div class="grid" id="grid">';
+    list.forEach(function(m){
+      var best = P(m.id).best;
+      h += '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
+        + '<span class="tag">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span>'
+        + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
+        + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+m.quiz.length+'</b> Fragen</span>'
+        + (best!=null ? '<span>Bestwert <b>'+best+'/'+m.quiz.length+'</b></span>' : '') + '</span></button>';
+    });
+    h += '</div>';
+  }
+  h += '<p class="foot">Beispielinhalte. Neue Module entstehen, indem ein Eintrag in der Liste ergänzt wird.</p>';
+  app.innerHTML = h;
+}
+
+/* ===== Modul-Rahmen ===== */
+function renderMod(){
+  var m = mod(S.mod);
+  var h = topbar() + '<div class="head" data-fach="'+m.fach+'"><button class="back" data-a="home">← Alle Module</button>'
+    + '<span class="tag" style="color:var(--c)">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span><h1>'+esc(m.title)+'</h1></div>';
+  h += '<div class="tabs" role="tablist" data-fach="'+m.fach+'">'
+    + '<button class="tab" role="tab" data-a="tab" data-v="cards" aria-selected="'+(S.tab==="cards")+'">Karteikarten</button>'
+    + '<button class="tab" role="tab" data-a="tab" data-v="quiz" aria-selected="'+(S.tab==="quiz")+'">Quiz</button></div>';
+  h += '<div data-fach="'+m.fach+'" id="body"></div>';
+  app.innerHTML = h;
+  if (S.tab==="cards") renderCards(); else renderQuiz();
+}
+
+/* ===== Karteikarten ===== */
+function newDeck(){ var m=mod(S.mod); var idx=[]; for (var i=0;i<m.cards.length;i++) idx.push(i); S.d={queue:shuffle(idx), flip:false, known:0, total:m.cards.length}; }
+function renderCards(){
+  var m = mod(S.mod), d = S.d, el = document.getElementById("body");
+  if (!d.queue.length){
+    el.innerHTML = '<div class="res"><div class="score">'+d.total+'/'+d.total+'</div><h2>Alle Karten gewusst</h2><p class="hint">Gut gemacht. Teste dich jetzt im Quiz oder mische den Stapel neu.</p>'
+      + '<div class="row" style="width:100%"><button class="btn" data-a="redeck">Neu mischen</button><button class="btn primary" data-a="tab" data-v="quiz" style="background:var(--c);border-color:var(--c);color:var(--on)">Zum Quiz</button></div></div>';
+    return;
+  }
+  var c = m.cards[d.queue[0]];
+  var pct = Math.round(d.known/d.total*100);
+  var h = '<div class="deck"><div class="prog"><span>Gewusst: '+d.known+' von '+d.total+'</span><span>Noch '+d.queue.length+' im Stapel</span></div>'
+    + '<div class="bar" aria-hidden="true"><i style="width:'+pct+'%"></i></div>';
+  h += '<button class="card'+(d.flip?' back-side':'')+'" data-a="flip" aria-live="polite">'
+    + '<span class="lbl">'+(d.flip?'Antwort':'Frage')+'</span><span class="txt">'+esc(d.flip?c[1]:c[0])+'</span>'
+    + '<span class="tap">'+(d.flip?'Tippen für die Frage':'Tippen für die Antwort')+'</span></button>';
+  h += '<div class="row"><button class="btn again" data-a="again"'+(d.flip?'':' disabled')+'>Nochmal</button><button class="btn good" data-a="know"'+(d.flip?'':' disabled')+'>Gewusst</button></div></div>';
+  el.innerHTML = h;
+}
+
+/* ===== Quiz ===== */
+function newQuiz(){
+  var m = mod(S.mod);
+  var qs = shuffle(m.quiz).map(function(q){
+    var opts = shuffle(q.a.map(function(t,i){ return {t:t, ok:i===q.c}; }));
+    return {q:q.q, e:q.e, opts:opts};
+  });
+  S.z = {qs:qs, i:0, score:0, pick:null, done:false};
+}
+function renderQuiz(){
+  var m = mod(S.mod), z = S.z, el = document.getElementById("body");
+  if (z.done){
+    var n = z.qs.length, best = P(m.id).best;
+    var msg = z.score===n ? "Fehlerfrei." : z.score>=n*0.75 ? "Sehr gut." : z.score>=n*0.5 ? "Auf dem richtigen Weg. Die Karten helfen beim Üben." : "Schau dir erst die Karteikarten an und versuche es dann noch einmal.";
+    el.innerHTML = '<div class="res"><div class="score">'+z.score+'/'+n+'</div><h2>'+msg+'</h2><p class="hint">Bestwert: '+best+' von '+n+'</p>'
+      + '<div class="row" style="width:100%"><button class="btn" data-a="tab" data-v="cards">Zu den Karten</button><button class="btn primary" data-a="requiz" style="background:var(--c);border-color:var(--c);color:var(--on)">Nochmal</button></div></div>';
+    return;
+  }
+  var q = z.qs[z.i], answered = z.pick!==null;
+  var h = '<div class="quiz"><div class="prog"><span>Frage '+(z.i+1)+' von '+z.qs.length+'</span><span>Punkte: '+z.score+'</span></div>'
+    + '<div class="bar" aria-hidden="true"><i style="width:'+Math.round(z.i/z.qs.length*100)+'%"></i></div>'
+    + '<div class="q">'+esc(q.q)+'</div><div class="opts">';
+  q.opts.forEach(function(o,i){
+    var cls = "opt";
+    if (answered){ if (o.ok) cls += " ok"; else if (i===z.pick) cls += " no"; }
+    h += '<button class="'+cls+'" data-a="pick" data-v="'+i+'"'+(answered?' disabled':'')+'>'+esc(o.t)+'</button>';
+  });
+  h += '</div>';
+  if (answered){
+    var right = q.opts[z.pick].ok;
+    h += '<div class="expl" role="status"><b>'+(right?'Richtig.':'Leider falsch.')+'</b> '+esc(q.e)+'</div>'
+      + '<button class="btn primary" data-a="next" id="weiter">'+(z.i+1===z.qs.length?'Ergebnis ansehen':'Weiter')+'</button>';
+  }
+  h += '</div>';
+  el.innerHTML = h;
+  if (answered){ var w = document.getElementById("weiter"); if (w) w.focus(); }
+}
+
+/* ===== Nutzer ===== */
+function renderWho(){
+  var h = '<div class="topbar"><span class="brand">Lernportal</span></div><div class="head"><h1 class="plain">Wer lernt heute?</h1></div>';
+  if (store.users.length){
+    h += '<div class="who">';
+    store.users.forEach(function(u){
+      h += '<button class="pick" data-a="setuser" data-v="'+u.id+'"><span class="av big" style="--h:'+u.hue+'">'+esc(ini(u))+'</span><span>'+esc(u.name)+'</span></button>';
+    });
+    h += '</div>';
+  }
+  h += '<div class="head"><h2>'+(store.users.length?'Neuer Nutzer':'Lege den ersten Nutzer an')+'</h2></div>'
+    + '<div class="newu"><input id="neuname" class="search" type="text" maxlength="20" placeholder="Name" aria-label="Name" autocomplete="off"><button class="btn primary" data-a="newuser" style="flex:0 0 auto;padding-inline:22px">Anlegen</button></div>'
+    + '<p class="err" id="err" role="alert"></p>'
+    + '<p class="foot">Der Fortschritt wird in diesem Browser gespeichert, also auf diesem Gerät.</p>';
+  app.innerHTML = h;
+}
+function renderMe(){
+  var u = me(), h = topbar();
+  h += '<div class="head"><button class="back" data-a="home">← Alle Module</button><div class="who-h"><span class="av big" style="--h:'+u.hue+'">'+esc(ini(u))+'</span><h1 class="plain" style="overflow-wrap:anywhere">Hallo, '+esc(u.name)+'</h1></div></div>';
+  h += '<div class="grid">';
+  MODULES.forEach(function(m){
+    var p = P(m.id), nc = m.cards.length, nq = m.quiz.length;
+    h += '<div class="prow" data-fach="'+m.fach+'"><span class="tag">'+FACH[m.fach]+'</span><h2>'+esc(m.title)+'</h2>'
+      + '<div class="prog"><span>Karten gewusst</span><span>'+p.cards+' von '+nc+'</span></div><div class="bar"><i style="width:'+Math.round(p.cards/nc*100)+'%"></i></div>'
+      + '<div class="prog"><span>Quiz Bestwert</span><span>'+(p.best==null?'noch nicht gespielt':p.best+' von '+nq+' · '+p.tries+'×')+'</span></div><div class="bar"><i style="width:'+(p.best==null?0:Math.round(p.best/nq*100))+'%"></i></div>'
+      + '<button class="btn" data-a="open" data-v="'+m.id+'">Üben</button></div>';
+  });
+  h += '</div>';
+  if (S.delask){
+    h += '<div class="expl" role="alert"><b>'+esc(u.name)+' löschen?</b> Der Fortschritt dieses Nutzers geht verloren.</div>'
+      + '<div class="row"><button class="btn" data-a="delcancel">Abbrechen</button><button class="btn danger" data-a="deluser">Ja, löschen</button></div>';
+  } else {
+    h += '<div class="row"><button class="btn" data-a="who">Nutzer wechseln</button><button class="btn danger" data-a="delask">Nutzer löschen</button></div>';
+  }
+  h += '<p class="foot">Der Fortschritt wird in diesem Browser gespeichert, also auf diesem Gerät.</p>';
+  app.innerHTML = h;
+}
+function createUser(){
+  var inp = document.getElementById("neuname"), err = document.getElementById("err");
+  var name = (inp.value||"").replace(/\s+/g," ").trim();
+  if (!name){ err.textContent = "Bitte einen Namen eingeben."; inp.focus(); return; }
+  var dup = store.users.some(function(u){ return u.name.toLowerCase()===name.toLowerCase(); });
+  if (dup){ err.textContent = "Diesen Namen gibt es schon. Wähle einen anderen."; inp.focus(); return; }
+  var u = {id:"u"+Date.now().toString(36), name:name, hue:HUES[store.users.length % HUES.length]};
+  store.users.push(u); store.cur = u.id; save(); afterLogin();
+}
+function afterLogin(){
+  var id = (location.hash||"").replace("#","");
+  if (id && mod(id)) openMod(id); else home();
+}
+
+/* ===== Steuerung ===== */
+function go(){
+  var el = document.getElementById("suche"), hadFocus = el && document.activeElement===el, pos = el ? el.selectionStart : 0;
+  if (S.view==="who") renderWho();
+  else if (S.view==="me") renderMe();
+  else if (S.view==="hub"){
+    renderHub();
+    if (hadFocus){ var n = document.getElementById("suche"); n.focus(); try { n.setSelectionRange(pos,pos); } catch(e){} }
+  } else renderMod();
+}
+function openMod(id, tab){
+  if (!mod(id) || !me()) return;
+  S.view="mod"; S.mod=id; S.tab=tab||"cards"; newDeck(); newQuiz();
+  go(); window.scrollTo(0,0);
+}
+function home(){ S.view = me() ? "hub" : "who"; S.mod=null; S.delask=false; go(); window.scrollTo(0,0); }
+
+app.addEventListener("click", function(ev){
+  var t = ev.target.closest("[data-a]"); if (!t || t.disabled) return;
+  var a = t.getAttribute("data-a"), v = t.getAttribute("data-v");
+  if (a==="home"){ try { history.replaceState(null,"",location.pathname+location.search); } catch(e){} home(); }
+  else if (a==="open"){ try { location.hash = v; } catch(e){} openMod(v); }
+  else if (a==="fach"){ S.fach = v; go(); }
+  else if (a==="me"){ S.view="me"; S.delask=false; go(); window.scrollTo(0,0); }
+  else if (a==="who"){ S.view="who"; go(); window.scrollTo(0,0); }
+  else if (a==="setuser"){ store.cur = v; save(); afterLogin(); }
+  else if (a==="newuser"){ createUser(); }
+  else if (a==="delask"){ S.delask = true; renderMe(); }
+  else if (a==="delcancel"){ S.delask = false; renderMe(); }
+  else if (a==="deluser"){
+    var u = me();
+    if (u){ store.users = store.users.filter(function(x){ return x.id!==u.id; }); delete store.prog[u.id]; store.cur = null; save(); }
+    S.delask = false; S.view = "who"; go(); window.scrollTo(0,0);
+  }
+  else if (a==="tab"){ S.tab = v; if (v==="quiz" && (S.z.done)) newQuiz(); renderMod(); }
+  else if (a==="flip"){ S.d.flip = !S.d.flip; renderCards(); }
+  else if (a==="know"){ S.d.queue.shift(); S.d.known++; S.d.flip=false; var pc = P(S.mod); if (S.d.known>pc.cards){ pc.cards = S.d.known; save(); } renderCards(); }
+  else if (a==="again"){ S.d.queue.push(S.d.queue.shift()); S.d.flip=false; renderCards(); }
+  else if (a==="redeck"){ newDeck(); renderCards(); }
+  else if (a==="pick"){
+    var z = S.z; if (z.pick!==null) return;
+    z.pick = +v; if (z.qs[z.i].opts[z.pick].ok) z.score++;
+    renderQuiz();
+  }
+  else if (a==="next"){
+    var z2 = S.z; z2.i++; z2.pick = null;
+    if (z2.i>=z2.qs.length){
+      z2.done = true; var pr = P(S.mod);
+      pr.tries++; if (pr.best==null || z2.score>pr.best) pr.best = z2.score;
+      save();
+    }
+    renderQuiz();
+  }
+  else if (a==="requiz"){ newQuiz(); renderQuiz(); }
+});
+app.addEventListener("keydown", function(ev){
+  if (ev.key==="Enter" && ev.target.id==="neuname"){ ev.preventDefault(); createUser(); }
+});
+app.addEventListener("input", function(ev){
+  if (ev.target.id==="suche"){ S.q = ev.target.value; go(); }
+});
+window.addEventListener("hashchange", function(){
+  if (!me()) return;
+  var id = (location.hash||"").replace("#","");
+  if (id && mod(id)) openMod(id); else if (!id) home();
+});
+
+if (!me()){ S.view = "who"; renderWho(); }
+else {
+  var start = (location.hash||"").replace("#","");
+  if (start && mod(start)) openMod(start); else renderHub();
+}
+</script>
+
+</body>
+</html>
