@@ -59,6 +59,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mod:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .tag{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
 .mod h2{font-size:1.5rem}
+.mod .bar{display:block}
+.mod .prog b{color:var(--fg)}
 .mod p{margin:0;color:var(--muted);font-size:.98rem}
 .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);margin-top:auto;font-variant-numeric:tabular-nums}
 .meta b{color:var(--fg)}
@@ -226,7 +228,8 @@ function mergeProg(a,b){
   var out = {}; a = a||{}; b = b||{};
   Object.keys(a).concat(Object.keys(b)).forEach(function(k){
     var x = a[k]||{}, y = b[k]||{};
-    out[k] = {best: x.best==null ? (y.best==null ? null : y.best) : (y.best==null ? x.best : Math.max(x.best,y.best)), tries:Math.max(x.tries||0,y.tries||0), cards:Math.max(x.cards||0,y.cards||0)};
+    var n = (y.at||0) > (x.at||0) ? y : x;
+    out[k] = {best: x.best==null ? (y.best==null ? null : y.best) : (y.best==null ? x.best : Math.max(x.best,y.best)), tries:Math.max(x.tries||0,y.tries||0), cards:Math.max(x.cards||0,y.cards||0), last:n.last==null ? null : n.last, at:n.at||0};
   });
   return out;
 }
@@ -266,12 +269,13 @@ function renderHub(){
   else {
     h += '<div class="grid" id="grid">';
     list.forEach(function(m){
-      var best = P(m.id).best;
+      var last = P(m.id).last, nq = m.quiz.length;
       h += '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
         + '<span class="tag">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span>'
         + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
-        + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+m.quiz.length+'</b> Fragen</span>'
-        + (best!=null ? '<span>Bestwert <b>'+best+'/'+m.quiz.length+'</b></span>' : '') + '</span></button>';
+        + '<span class="prog"><span>Letzter Quiz-Durchlauf</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
+        + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+' Fragen richtig')+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
+        + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+nq+'</b> Fragen</span></span></button>';
     });
     h += '</div>';
   }
@@ -480,6 +484,7 @@ app.addEventListener("click", function(ev){
     if (z2.i>=z2.qs.length){
       z2.done = true; var pr = P(S.mod);
       pr.tries++; if (pr.best==null || z2.score>pr.best) pr.best = z2.score;
+      pr.last = z2.score; pr.at = Date.now();
       save();
     }
     renderQuiz();
