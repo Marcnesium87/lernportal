@@ -121,6 +121,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .prow .btn{flex:none;align-self:flex-start;margin-top:4px;padding-inline:20px}
 .btn.danger{border-color:var(--bad);color:var(--bad)}
 .err{color:var(--bad);min-height:1.4em;margin:0}
+.form{display:flex;flex-direction:column;gap:10px;max-width:420px}
+.fld{width:100%;font:inherit;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg)}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 
@@ -198,23 +200,47 @@ var MODULES = [
 /* ===== Hilfsfunktionen ===== */
 var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde"};
 var app = document.getElementById("app");
-var S = {view:"hub", mod:null, tab:"cards", q:"", fach:"alle", d:null, z:null, delask:false};
-var store = {users:[], cur:null, prog:{}};
-try { var raw = localStorage.getItem("lernportal-v2"); if (raw) { var o = JSON.parse(raw); if (o && o.users) store = o; } } catch(e) {}
+/* Online-Speicher (Supabase): hier nach der Einrichtung eintragen, siehe setup.sql */
+var CONFIG = {url:"https://rorcvgomcufpdmigoyvf.supabase.co", key:"sb_publishable_52LO4V2NIfARRyFagtxvhg_45XOPnsp"};
+
+var S = {view:"hub", mod:null, tab:"cards", q:"", fach:"alle", d:null, z:null, delask:false, mode:"login", busy:false, sync:""};
+var store = {cur:null, prog:{}};
+try { var raw = localStorage.getItem("lernportal-v3"); if (raw) { var o = JSON.parse(raw); if (o && o.cur && o.cur.name) store = o; } } catch(e) {}
 if (!store.prog) store.prog = {};
-function save(){ try { localStorage.setItem("lernportal-v2", JSON.stringify(store)); } catch(e) {} }
-var HUES = [8,28,150,190,215,265,320];
-function me(){ for (var i=0;i<store.users.length;i++) if (store.users[i].id===store.cur) return store.users[i]; return null; }
+var saveTimer = null;
+function api(fn, body){
+  if (!CONFIG.url) return Promise.reject(new Error("config"));
+  return fetch(CONFIG.url.replace(/\/$/,"")+"/rest/v1/rpc/"+fn, {method:"POST", keepalive:true, headers:{"apikey":CONFIG.key,"Content-Type":"application/json"}, body:JSON.stringify(body)}).then(function(r){ return r.json(); });
+}
+function setSync(t){ S.sync = t; var el = document.getElementById("sync"); if (el){ el.textContent = t; el.hidden = !t; } }
+function saveLocal(){ try { localStorage.setItem("lernportal-v3", JSON.stringify(store)); } catch(e) {} }
+function push(){
+  clearTimeout(saveTimer); saveTimer = null;
+  var c = store.cur; if (!c) return;
+  api("lp_save",{p_name:c.name,p_pin:c.pin,p_prog:store.prog}).then(function(r){
+    setSync(r && r.ok ? "" : "Fortschritt konnte nicht online gespeichert werden.");
+  }).catch(function(){ setSync("Offline: Fortschritt ist nur auf diesem Gerät gespeichert."); });
+}
+function save(){ saveLocal(); if (store.cur){ clearTimeout(saveTimer); saveTimer = setTimeout(push, 700); } }
+function mergeProg(a,b){
+  var out = {}; a = a||{}; b = b||{};
+  Object.keys(a).concat(Object.keys(b)).forEach(function(k){
+    var x = a[k]||{}, y = b[k]||{};
+    out[k] = {best: x.best==null ? (y.best==null ? null : y.best) : (y.best==null ? x.best : Math.max(x.best,y.best)), tries:Math.max(x.tries||0,y.tries||0), cards:Math.max(x.cards||0,y.cards||0)};
+  });
+  return out;
+}
+function me(){ return store.cur; }
 function ini(u){ return u.name.charAt(0).toUpperCase(); }
 function P(modId){
-  var u = me(); if (!u) return {best:null,tries:0,cards:0};
-  var up = store.prog[u.id] || (store.prog[u.id] = {});
-  return up[modId] || (up[modId] = {best:null,tries:0,cards:0});
+  if (!store.cur) return {best:null,tries:0,cards:0};
+  return store.prog[modId] || (store.prog[modId] = {best:null,tries:0,cards:0});
 }
 function topbar(){
   var u = me();
   return '<div class="topbar"><button class="brand" data-a="home">Lernportal</button>'
-    + (u ? '<button class="usr" data-a="me" aria-label="Mein Bereich"><span class="av" style="--h:'+u.hue+'">'+esc(ini(u))+'</span><span class="n">'+esc(u.name)+'</span></button>' : '') + '</div>';
+    + (u ? '<button class="usr" data-a="me" aria-label="Mein Bereich"><span class="av" style="--h:'+u.hue+'">'+esc(ini(u))+'</span><span class="n">'+esc(u.name)+'</span></button>' : '') + '</div>'
+    + '<p class="foot" id="sync" role="status" style="color:var(--bad);margin:0"'+(S.sync?'':' hidden')+'>'+esc(S.sync)+'</p>';
 }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
 function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
@@ -326,18 +352,16 @@ function renderQuiz(){
 
 /* ===== Nutzer ===== */
 function renderWho(){
-  var h = '<div class="topbar"><span class="brand">Lernportal</span></div><div class="head"><h1 class="plain">Wer lernt heute?</h1></div>';
-  if (store.users.length){
-    h += '<div class="who">';
-    store.users.forEach(function(u){
-      h += '<button class="pick" data-a="setuser" data-v="'+u.id+'"><span class="av big" style="--h:'+u.hue+'">'+esc(ini(u))+'</span><span>'+esc(u.name)+'</span></button>';
-    });
-    h += '</div>';
-  }
-  h += '<div class="head"><h2>'+(store.users.length?'Neuer Nutzer':'Lege den ersten Nutzer an')+'</h2></div>'
-    + '<div class="newu"><input id="neuname" class="search" type="text" maxlength="20" placeholder="Name" aria-label="Name" autocomplete="off"><button class="btn primary" data-a="newuser" style="flex:0 0 auto;padding-inline:22px">Anlegen</button></div>'
+  var neu = S.mode==="new";
+  var h = '<div class="topbar"><span class="brand">Lernportal</span></div><div class="head"><h1 class="plain">'+(neu?'Neuen Nutzer anlegen':'Wer lernt heute?')+'</h1></div>';
+  if (!CONFIG.url) h += '<p class="err" role="alert">Die Online-Speicherung ist noch nicht eingerichtet (CONFIG in der Datei ausfüllen).</p>';
+  h += '<div class="form"><input id="neuname" class="fld" type="text" maxlength="20" placeholder="Name" aria-label="Name" autocomplete="off">'
+    + '<input id="pin" class="fld" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="PIN (4 bis 6 Ziffern)" aria-label="PIN" autocomplete="off">'
+    + (neu ? '<input id="pin2" class="fld" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="PIN wiederholen" aria-label="PIN wiederholen" autocomplete="off">' : '')
+    + '<button class="btn primary" id="go" data-a="submit" style="flex:none">'+(neu?'Anlegen':'Anmelden')+'</button>'
+    + '<button class="btn" data-a="mode" style="flex:none">'+(neu?'Ich habe schon einen Nutzer':'Neuen Nutzer anlegen')+'</button></div>'
     + '<p class="err" id="err" role="alert"></p>'
-    + '<p class="foot">Der Fortschritt wird in diesem Browser gespeichert, also auf diesem Gerät.</p>';
+    + '<p class="foot">Der Fortschritt wird online gespeichert. Mit Name und PIN kannst du auf jedem Gerät weiterlernen. Merk dir deine PIN gut, sie lässt sich nicht zurücksetzen.</p>';
   app.innerHTML = h;
 }
 function renderMe(){
@@ -356,19 +380,50 @@ function renderMe(){
     h += '<div class="expl" role="alert"><b>'+esc(u.name)+' löschen?</b> Der Fortschritt dieses Nutzers geht verloren.</div>'
       + '<div class="row"><button class="btn" data-a="delcancel">Abbrechen</button><button class="btn danger" data-a="deluser">Ja, löschen</button></div>';
   } else {
-    h += '<div class="row"><button class="btn" data-a="who">Nutzer wechseln</button><button class="btn danger" data-a="delask">Nutzer löschen</button></div>';
+    h += '<div class="row"><button class="btn" data-a="logout">Abmelden</button><button class="btn danger" data-a="delask">Nutzer löschen</button></div>';
   }
-  h += '<p class="foot">Der Fortschritt wird in diesem Browser gespeichert, also auf diesem Gerät.</p>';
+  h += '<p class="foot">Der Fortschritt wird online gespeichert und ist nach der Anmeldung auf jedem Gerät da.</p>';
   app.innerHTML = h;
 }
-function createUser(){
-  var inp = document.getElementById("neuname"), err = document.getElementById("err");
-  var name = (inp.value||"").replace(/\s+/g," ").trim();
-  if (!name){ err.textContent = "Bitte einen Namen eingeben."; inp.focus(); return; }
-  var dup = store.users.some(function(u){ return u.name.toLowerCase()===name.toLowerCase(); });
-  if (dup){ err.textContent = "Diesen Namen gibt es schon. Wähle einen anderen."; inp.focus(); return; }
-  var u = {id:"u"+Date.now().toString(36), name:name, hue:HUES[store.users.length % HUES.length]};
-  store.users.push(u); store.cur = u.id; save(); afterLogin();
+function val(id){ var e = document.getElementById(id); return e ? e.value : ""; }
+function fail(msg, id){ var e = document.getElementById("err"); if (e) e.textContent = msg; var f = id && document.getElementById(id); if (f) f.focus(); }
+var ERR = {exists:"Diesen Namen gibt es schon. Melde dich damit an oder wähle einen anderen.", wrong:"Name oder PIN stimmt nicht.", locked:"Zu viele Fehlversuche. Bitte in 5 Minuten noch einmal versuchen.", name:"Der Name muss 1 bis 20 Zeichen haben.", pin:"Die PIN besteht aus 4 bis 6 Ziffern."};
+function submit(){
+  if (S.busy) return;
+  var name = val("neuname").replace(/\s+/g," ").trim(), pin = val("pin"), neu = S.mode==="new";
+  if (!name) return fail("Bitte einen Namen eingeben.","neuname");
+  if (!/^\d{4,6}$/.test(pin)) return fail(ERR.pin,"pin");
+  if (neu && pin!==val("pin2")) return fail("Die beiden PINs sind verschieden.","pin2");
+  if (!CONFIG.url) return fail("Die Online-Speicherung ist noch nicht eingerichtet.");
+  S.busy = true; fail("");
+  var b = document.getElementById("go"); b.disabled = true; b.textContent = "Einen Moment …";
+  api(neu ? "lp_register" : "lp_login", {p_name:name, p_pin:pin}).then(function(r){
+    S.busy = false;
+    if (r && r.ok){
+      store.cur = {name:r.name, hue:r.hue, pin:pin}; store.prog = r.prog || {}; S.mode = "login"; S.sync = "";
+      saveLocal(); afterLogin();
+    } else {
+      b.disabled = false; b.textContent = neu ? "Anlegen" : "Anmelden";
+      fail(ERR[r && r.error] || "Das hat nicht geklappt. Bitte noch einmal versuchen.");
+    }
+  }).catch(function(){
+    S.busy = false; b.disabled = false; b.textContent = neu ? "Anlegen" : "Anmelden";
+    fail("Keine Verbindung. Bitte das Internet prüfen.");
+  });
+}
+function clearUser(){
+  clearTimeout(saveTimer); saveTimer = null;
+  store.cur = null; store.prog = {}; S.sync = ""; S.delask = false; S.view = "who"; S.mode = "login";
+  saveLocal(); go(); window.scrollTo(0,0);
+}
+function syncIn(){
+  var c = store.cur; if (!c) return;
+  api("lp_login", {p_name:c.name, p_pin:c.pin}).then(function(r){
+    if (r && r.ok){
+      store.prog = mergeProg(r.prog, store.prog); saveLocal(); push();
+      if (S.view==="hub" || S.view==="me") go();
+    } else if (r && (r.error==="wrong")) clearUser();
+  }).catch(function(){ setSync("Offline: Fortschritt ist nur auf diesem Gerät gespeichert."); });
 }
 function afterLogin(){
   var id = (location.hash||"").replace("#","");
@@ -399,15 +454,16 @@ app.addEventListener("click", function(ev){
   else if (a==="open"){ try { location.hash = v; } catch(e){} openMod(v); }
   else if (a==="fach"){ S.fach = v; go(); }
   else if (a==="me"){ S.view="me"; S.delask=false; go(); window.scrollTo(0,0); }
-  else if (a==="who"){ S.view="who"; go(); window.scrollTo(0,0); }
-  else if (a==="setuser"){ store.cur = v; save(); afterLogin(); }
-  else if (a==="newuser"){ createUser(); }
+  else if (a==="submit"){ submit(); }
+  else if (a==="mode"){ S.mode = S.mode==="new" ? "login" : "new"; renderWho(); }
+  else if (a==="logout"){ push(); clearUser(); }
   else if (a==="delask"){ S.delask = true; renderMe(); }
   else if (a==="delcancel"){ S.delask = false; renderMe(); }
   else if (a==="deluser"){
-    var u = me();
-    if (u){ store.users = store.users.filter(function(x){ return x.id!==u.id; }); delete store.prog[u.id]; store.cur = null; save(); }
-    S.delask = false; S.view = "who"; go(); window.scrollTo(0,0);
+    var u = me(); if (!u) return;
+    api("lp_delete", {p_name:u.name, p_pin:u.pin}).then(function(r){
+      if (r && r.ok) clearUser(); else setSync("Löschen hat nicht geklappt.");
+    }).catch(function(){ setSync("Keine Verbindung. Löschen hat nicht geklappt."); });
   }
   else if (a==="tab"){ S.tab = v; if (v==="quiz" && (S.z.done)) newQuiz(); renderMod(); }
   else if (a==="flip"){ S.d.flip = !S.d.flip; renderCards(); }
@@ -431,8 +487,9 @@ app.addEventListener("click", function(ev){
   else if (a==="requiz"){ newQuiz(); renderQuiz(); }
 });
 app.addEventListener("keydown", function(ev){
-  if (ev.key==="Enter" && ev.target.id==="neuname"){ ev.preventDefault(); createUser(); }
+  if (ev.key==="Enter" && (ev.target.id==="neuname" || ev.target.id==="pin" || ev.target.id==="pin2")){ ev.preventDefault(); submit(); }
 });
+document.addEventListener("visibilitychange", function(){ if (document.visibilityState==="hidden" && saveTimer) push(); });
 app.addEventListener("input", function(ev){
   if (ev.target.id==="suche"){ S.q = ev.target.value; go(); }
 });
@@ -446,6 +503,7 @@ if (!me()){ S.view = "who"; renderWho(); }
 else {
   var start = (location.hash||"").replace("#","");
   if (start && mod(start)) openMod(start); else renderHub();
+  syncIn();
 }
 </script>
 
