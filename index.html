@@ -61,6 +61,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mod h2{font-size:1.5rem}
 .mod .bar{display:block}
 .mod .prog b{color:var(--fg)}
+.mod .prog span{white-space:nowrap}
 .mod p{margin:0;color:var(--muted);font-size:.98rem}
 .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);margin-top:auto;font-variant-numeric:tabular-nums}
 .meta b{color:var(--fg)}
@@ -273,7 +274,7 @@ function renderHub(){
       h += '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
         + '<span class="tag">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span>'
         + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
-        + '<span class="prog"><span>Letzter Quiz-Durchlauf</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
+        + '<span class="prog"><span>Letztes Quiz</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
         + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+' Fragen richtig')+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
         + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+nq+'</b> Fragen</span></span></button>';
     });
