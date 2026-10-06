@@ -83,6 +83,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Lernkarten */
 .learn{display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:240px;padding:28px 24px;border-radius:18px;background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--c)}
 .learn .lbl{font-family:var(--font-display);font-weight:800;font-size:clamp(1.4rem,5vw,1.9rem);line-height:1.15;color:var(--c);overflow-wrap:anywhere}
+.learn .bonus{align-self:flex-start;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--c);color:var(--on);border-radius:999px;padding:3px 12px}
 .learn .txt{font-size:clamp(1.1rem,3.6vw,1.3rem);line-height:1.5;overflow-wrap:anywhere}
 
 /* Karteikarten */
@@ -150,146 +151,129 @@ var MODULES = [
     id:"asien", title:"Asien", fach:"erdkunde", stufe:"5–7",
     desc:"Hauptstädte, Berge, Flüsse und Klima des größten Kontinents.",
     map:{url:"asien-quiz.html", total:59},
-    cards:[
-      ["Wie groß ist Asien im Vergleich zu den anderen Kontinenten?","Asien ist der größte Kontinent: fast ein Drittel der Landfläche der Erde, und hier leben mehr als die Hälfte aller Menschen."],
-      ["Wie heißt der höchste Berg der Erde und wo liegt er?","Mount Everest im Himalaya, rund 8.849 m hoch, an der Grenze zwischen Nepal und China (Tibet)."],
-      ["Hauptstadt von Japan?","Tokio"],
-      ["Hauptstadt von China?","Peking"],
-      ["Hauptstadt von Indien?","Neu-Delhi"],
-      ["Hauptstadt von Südkorea?","Seoul"],
-      ["Hauptstadt von Thailand?","Bangkok"],
-      ["Hauptstadt von Vietnam?","Hanoi"],
-      ["Hauptstadt der Mongolei?","Ulaanbaatar. Sie gilt als die kälteste Hauptstadt der Welt."],
-      ["Wie heißt der längste Fluss Asiens?","Der Jangtse in China, über 6.000 km lang."],
-      ["Welcher See ist der tiefste der Erde?","Der Baikalsee in Russland (Sibirien), rund 1.600 m tief."],
-      ["Wo liegt die Wüste Gobi?","In der Mongolei und im Norden Chinas."],
-      ["Was ist der Monsun?","Ein Wind, der im Sommer viel Regen vom Meer nach Süd- und Südostasien bringt. Er ist wichtig für den Reisanbau."],
-      ["Welches Land hat die meisten Einwohner?","Indien. Seit 2023 hat es mehr Einwohner als China."],
-      ["Wie heißt der höchste Berg Japans?","Der Fuji, 3.776 m hoch."],
-      ["Liegt Russland in Europa oder Asien?","Beides: Der größte Teil der Fläche (Sibirien) liegt in Asien. Die Hauptstadt Moskau liegt in Europa."]
-    ],
+    cards:[],
     quiz:[]
   },
   {
     id:"neuzeit", thema:"reformation", lern:true, title:"Aufbruch in die Neuzeit", fach:"geschichte", stufe:"7",
     desc:"Renaissance, Humanismus und ein neues Bild von der Welt.",
     cards:[
-      ["Mittelalter und Neuzeit","Um 1500 beginnt in Europa die Neuzeit. Die Menschen erklären die Welt jetzt immer öfter durch Beobachten und Forschen und nicht mehr nur durch den Glauben."],
-      ["Renaissance","Renaissance heißt „Wiedergeburt“. Künstler und Gelehrte entdecken die Kunst und das Wissen der Antike neu und nehmen sie zum Vorbild."],
-      ["Humanismus","Die Humanisten stellen den Menschen in den Mittelpunkt. Ihnen sind Bildung und eigenes Denken wichtig. Sie lesen die alten Schriften im Original."],
-      ["Nikolaus Kopernikus","Kopernikus erkannte, dass die Sonne im Mittelpunkt steht und sich die Erde um sie bewegt. Das widersprach dem Weltbild, das bis dahin galt."],
-      ["Leonardo da Vinci","Leonardo da Vinci war Maler, Erfinder und Naturforscher. Er malte die Mona Lisa und zeichnete Entwürfe für Maschinen und Flugapparate."],
-      ["Fragen statt glauben","Auch Entdecker wie Kolumbus erweitern das Wissen über die Erde. Die Menschen fragen nun öfter: Stimmt das wirklich, was bisher galt?"]
+      ["Mittelalter und Neuzeit","Etwa um das Jahr 1500 endet das Mittelalter und die Neuzeit beginnt. Im Mittelalter haben die meisten Menschen geglaubt, was die Kirche ihnen erklärt hat. Jetzt fangen immer mehr Menschen an, selbst zu beobachten, zu forschen und nachzufragen."],
+      ["Renaissance","Renaissance ist ein französisches Wort und bedeutet „Wiedergeburt“. Künstler und Gelehrte entdeckten die Kunst und das Wissen der alten Griechen und Römer neu. Sie nahmen sich die Antike zum Vorbild, zum Beispiel für Gebäude, Bilder und Statuen."],
+      ["Humanismus","Die Humanisten waren Gelehrte, die den Menschen in den Mittelpunkt stellten. Ihnen waren Bildung und eigenes Denken wichtig. Sie lasen die alten Schriften im Original, also in ihrer ursprünglichen Sprache, und prüften selbst, was darin steht."],
+      ["Nikolaus Kopernikus","Lange glaubten die Menschen, dass die Erde im Mittelpunkt des Weltalls steht. Nikolaus Kopernikus rechnete und beobachtete und kam zu einem anderen Ergebnis: Die Sonne steht in der Mitte, und die Erde bewegt sich um sie herum. Das war eine riesige Neuigkeit, weil es dem alten Weltbild widersprach."],
+      ["Leonardo da Vinci","Leonardo da Vinci lebte in Italien und konnte fast alles: Er war Maler, Erfinder und Naturforscher. Er malte die berühmte Mona Lisa und das Bild „Das Abendmahl“. Außerdem zeichnete er Pläne für Maschinen und sogar für Flugapparate, die damals noch niemand bauen konnte."],
+      ["Fragen statt nur glauben","In dieser Zeit entdeckten Seefahrer wie Christoph Kolumbus neue Länder. Dadurch merkten die Menschen: Die Welt ist größer und anders, als wir dachten. Viele fragten deshalb mehr nach, auch bei der Kirche. Das bereitete den Boden für die Reformation."]
     ],
     quiz:[
-      {q:"Was bedeutet das Wort „Renaissance“?",a:["Wiedergeburt","Erfindung","Entdeckung","Reformation"],c:0,e:"Gemeint ist die Wiedergeburt der Kunst und des Wissens der Antike."},
-      {q:"Wer erkannte, dass die Sonne im Mittelpunkt steht?",a:["Nikolaus Kopernikus","Johannes Gutenberg","Martin Luther","Christoph Kolumbus"],c:0,e:"Kopernikus beschrieb, dass sich die Erde um die Sonne bewegt."},
-      {q:"Was war Leonardo da Vinci?",a:["Maler, Erfinder und Naturforscher","Kaiser und Feldherr","Mönch und Prediger","Kaufmann und Seefahrer"],c:0,e:"Leonardo malte die Mona Lisa und entwarf viele Maschinen."},
-      {q:"Was war den Humanisten besonders wichtig?",a:["Der Mensch, Bildung und eigenes Denken","Möglichst viel Land zu erobern","Der Handel mit Gewürzen","Strenger Gehorsam gegenüber allen Herrschern"],c:0,e:"Humanisten wollten, dass Menschen gebildet sind und selbst denken."},
-      {q:"Was ist ein typischer Unterschied der Neuzeit zum Mittelalter?",a:["Man erklärt die Welt zunehmend durch Beobachten und Forschen","Es gibt keine Kirche mehr","Alle Menschen können lesen und schreiben","Es gibt keine Könige mehr"],c:0,e:"Die Menschen fragen mehr nach Beweisen und prüfen, was bisher galt."}
+      {q:"Was bedeutet das Wort „Renaissance“?",a:["Wiedergeburt","Erfindung","Entdeckung","Reformation"],c:0,e:"„Renaissance“ heißt Wiedergeburt: Man entdeckte die Kunst und das Wissen der alten Griechen und Römer neu."},
+      {q:"Wer erkannte, dass die Sonne im Mittelpunkt steht?",a:["Nikolaus Kopernikus","Johannes Gutenberg","Martin Luther","Christoph Kolumbus"],c:0,e:"Kopernikus fand heraus: Die Sonne steht in der Mitte, die Erde bewegt sich um sie. Vorher glaubte man, die Erde sei der Mittelpunkt."},
+      {q:"Was war Leonardo da Vinci?",a:["Maler, Erfinder und Naturforscher","Kaiser und Feldherr","Mönch und Prediger","Kaufmann und Seefahrer"],c:0,e:"Leonardo konnte vieles: Er malte die Mona Lisa, erforschte die Natur und zeichnete Pläne für Maschinen."},
+      {q:"Was war den Humanisten besonders wichtig?",a:["Der Mensch, Bildung und eigenes Denken","Möglichst viel Land zu erobern","Der Handel mit Gewürzen","Strenger Gehorsam gegenüber allen Herrschern"],c:0,e:"Humanisten wollten, dass Menschen gebildet sind und selbst nachdenken, statt nur zu glauben, was man ihnen sagt."},
+      {q:"Was ist ein typischer Unterschied der Neuzeit zum Mittelalter?",a:["Man erklärt die Welt zunehmend durch Beobachten und Forschen","Es gibt keine Kirche mehr","Alle Menschen können lesen und schreiben","Es gibt keine Könige mehr"],c:0,e:"In der Neuzeit wollen die Menschen Dinge selbst beobachten und prüfen, statt sich nur auf alte Lehren zu verlassen."}
     ]
   },
   {
     id:"gutenberg", thema:"reformation", lern:true, title:"Gutenberg und der Buchdruck", fach:"geschichte", stufe:"7",
     desc:"Wie der Buchdruck Wissen für viele Menschen möglich machte.",
     cards:[
-      ["Bücher vor Gutenberg","Vor 1450 wurden Bücher von Hand abgeschrieben, meist von Mönchen in Klöstern. Das dauerte lange, und Bücher waren sehr teuer."],
-      ["Gutenbergs Erfindung","Um 1450 erfand Johannes Gutenberg in Mainz den Buchdruck mit beweglichen Metalllettern. Die einzelnen Buchstaben lassen sich immer wieder neu zusammensetzen."],
-      ["Die Gutenberg-Bibel","Das berühmteste Werk, das Gutenberg druckte, war die Bibel. Sie wurde auf Latein gedruckt."],
-      ["Wissen für viele","Gedruckte Bücher wurden billiger. Dadurch konnten viel mehr Menschen lesen und lernen. Vorher hatten vor allem Kirche und Adel Zugang zu Wissen. Ein Wissensmonopol wurde gebrochen."],
-      ["Ideen verbreiten sich schnell","Flugschriften und Bücher brachten Nachrichten und neue Ideen in kurzer Zeit zu vielen Menschen. Ohne den Buchdruck hätte sich Luthers Lehre nicht so schnell verbreitet."],
-      ["Und heute?","Was der Buchdruck damals war, ist heute das Internet. Auch dort kann jeder Wissen finden, aber man muss prüfen, was stimmt."]
+      ["Bücher vor Gutenberg","Früher gab es keine Druckmaschinen. Jedes Buch musste von Hand abgeschrieben werden, meistens von Mönchen in den Klöstern. Für ein einziges Buch brauchte man Monate. Deshalb waren Bücher sehr teuer, und nur reiche Leute und Klöster besaßen welche."],
+      ["Gutenbergs Erfindung","Um das Jahr 1450 erfand Johannes Gutenberg in Mainz den Buchdruck mit beweglichen Lettern. Er goss einzelne Buchstaben aus Metall und setzte daraus Wörter und ganze Seiten zusammen. Die Seite wurde mit Druckerschwärze eingefärbt und auf Papier gepresst. Danach konnte man die Buchstaben für die nächste Seite wiederverwenden."],
+      ["Die Gutenberg-Bibel","Das berühmteste Buch, das Gutenberg druckte, war die Bibel, auf Latein. Man nennt sie die Gutenberg-Bibel. Einige Exemplare gibt es noch heute, und sie sind sehr wertvoll."],
+      ["Wissen für viele","Mit dem Buchdruck konnte man viele gleiche Bücher in kurzer Zeit herstellen. Dadurch wurden Bücher billiger, und mehr Menschen lernten lesen. Vorher hatten vor allem Kirche und Adel Zugang zu Wissen. Dieses Wissensmonopol, also dass nur wenige Bescheid wussten, wurde nun gebrochen."],
+      ["Ideen verbreiten sich schnell","Mit der neuen Technik konnte man auch Flugschriften drucken, das sind kurze, billige Blätter und Heftchen. Nachrichten und neue Ideen kamen so in wenigen Wochen in viele Städte. Ohne den Buchdruck hätte sich Luthers Lehre nicht so schnell in ganz Deutschland verbreitet."],
+      ["Und heute?","Was damals der Buchdruck war, ist heute das Internet. Wissen und Nachrichten verbreiten sich blitzschnell. Doch nicht alles, was man liest, stimmt. Deshalb muss man immer prüfen, woher eine Information kommt."]
     ],
     quiz:[
-      {q:"Was erfand Gutenberg um 1450 in Mainz?",a:["Den Buchdruck mit beweglichen Lettern","Das Schießpulver","Den Kompass","Die Uhr"],c:0,e:"Mit einzelnen Metalllettern konnte man Seiten schnell und oft drucken."},
-      {q:"Wie wurden Bücher vor Gutenberg hergestellt?",a:["Von Hand abgeschrieben","Mit Maschinen gedruckt","Aus Stein gemeißelt","Mit dem Computer"],c:0,e:"Meist schrieben Mönche in Klöstern die Bücher ab."},
-      {q:"Warum brach der Buchdruck das Wissensmonopol von Kirche und Adel?",a:["Bücher wurden billiger und viele Menschen konnten lernen","Bücher wurden verboten","Nur noch Mönche durften lesen","Es gab weniger Bücher"],c:0,e:"Wissen war nun nicht mehr nur wenigen vorbehalten."},
-      {q:"Was ist heute mit der Bedeutung des Buchdrucks von damals vergleichbar?",a:["Das Internet","Das Fahrrad","Der Kühlschrank","Die Eisenbahn"],c:0,e:"Beide verbreiten Wissen und Nachrichten sehr schnell."},
-      {q:"Welches Werk druckte Gutenberg als berühmtestes Buch?",a:["Die Bibel","Ein Kochbuch","Eine Landkarte","Ein Märchenbuch"],c:0,e:"Die Gutenberg-Bibel gilt als sein berühmtestes Werk."}
+      {q:"Was erfand Gutenberg um 1450 in Mainz?",a:["Den Buchdruck mit beweglichen Lettern","Das Schießpulver","Den Kompass","Die Uhr"],c:0,e:"Gutenberg goss einzelne Buchstaben aus Metall, setzte daraus Seiten zusammen und druckte sie. Die Buchstaben ließen sich immer wieder verwenden."},
+      {q:"Wie wurden Bücher vor Gutenberg hergestellt?",a:["Von Hand abgeschrieben","Mit Maschinen gedruckt","Aus Stein gemeißelt","Mit dem Computer"],c:0,e:"Vor dem Buchdruck schrieben vor allem Mönche in Klöstern die Bücher mit der Hand ab. Das dauerte sehr lange."},
+      {q:"Warum brach der Buchdruck das Wissensmonopol von Kirche und Adel?",a:["Bücher wurden billiger und viele Menschen konnten lernen","Bücher wurden verboten","Nur noch Mönche durften lesen","Es gab weniger Bücher"],c:0,e:"Bücher wurden billiger, und mehr Menschen konnten lesen und lernen. Wissen gehörte nicht mehr nur der Kirche und dem Adel."},
+      {q:"Was ist heute mit der Bedeutung des Buchdrucks von damals vergleichbar?",a:["Das Internet","Das Fahrrad","Der Kühlschrank","Die Eisenbahn"],c:0,e:"Beide bringen Wissen und Nachrichten schnell zu vielen Menschen."},
+      {q:"Welches Werk druckte Gutenberg als berühmtestes Buch?",a:["Die Bibel","Ein Kochbuch","Eine Landkarte","Ein Märchenbuch"],c:0,e:"Die Gutenberg-Bibel ist sein berühmtestes Werk."}
     ]
   },
   {
     id:"luther", thema:"reformation", lern:true, title:"Martin Luther", fach:"geschichte", stufe:"7",
     desc:"Vom Mönch zum Reformator: 95 Thesen, Wartburg und Bibelübersetzung.",
     cards:[
-      ["Luthers Leben","Martin Luther wurde am 10. November 1483 in Eisleben geboren. Er sollte Jurist werden, wurde aber Mönch."],
-      ["Der Ablass","Die Kirche verkaufte Ablassbriefe. Wer zahlte, dem sollten Strafen für seine Sünden erlassen werden. Luther hielt das für falsch."],
-      ["Die 95 Thesen","Am 31. Oktober 1517 machte Luther in Wittenberg seine 95 Thesen gegen den Ablasshandel bekannt. Er war dort Professor. Dieses Datum gilt als Beginn der Reformation."],
-      ["Der Buchdruck hilft","Mit dem Buchdruck wurden Luthers Schriften schnell vervielfältigt und waren bald überall bekannt."],
-      ["Der Reichstag zu Worms","1521 verlangte Kaiser Karl V. in Worms, dass Luther seine Lehren widerruft. Luther lehnte ab. Danach wurde die Reichsacht über ihn verhängt."],
-      ["Luther auf der Wartburg","Kurfürst Friedrich der Weise versteckte Luther auf der Wartburg bei Eisenach. Dort übersetzte er in nur etwa 11 Wochen das Neue Testament ins Deutsche."],
-      ["Die Lutherbibel","Durch die deutsche Bibel konnten normale Leute die Bibel selbst lesen. Luthers Deutsch prägte die deutsche Schriftsprache."],
-      ["Katharina von Bora","Katharina von Bora war früher Nonne. 1525 heiratete sie Luther und führte den großen Haushalt in Wittenberg."],
-      ["Zwei Kirchen","Reformation heißt „Erneuerung“. Aus dem Streit entstand die evangelische (protestantische) Kirche. Daneben blieb die katholische Kirche bestehen."],
-      ["Luthers Tod","Luther starb am 18. Februar 1546 in Eisleben, wo er geboren wurde. Der Reformationstag am 31. Oktober erinnert an das Jahr 1517."]
+      ["Luthers Leben","Martin Luther wurde am 10. November 1483 in Eisleben geboren. Sein Vater wollte, dass er Jurist wird, also Rechtsanwalt oder Richter. Doch 1505 geriet Luther in ein schlimmes Gewitter, bekam große Angst und versprach, Mönch zu werden. Dieses Versprechen hielt er."],
+      ["Der Ablass","Die Kirche verkaufte damals Ablassbriefe. Wer Geld bezahlte, dem sollten angeblich seine Sünden und die Strafen dafür erlassen werden. Die Kirche brauchte das Geld unter anderem für den Bau des Petersdoms in Rom. Luther fand das falsch: Gottes Vergebung kann man nicht kaufen."],
+      ["Die 95 Thesen","Am 31. Oktober 1517 machte Luther in Wittenberg seine 95 Thesen bekannt. Thesen sind Behauptungen, über die man diskutieren möchte. Luther war in Wittenberg Professor und kritisierte darin den Ablasshandel. Ob er die Thesen wirklich an die Kirchentür nagelte, ist unter Historikern umstritten. Dieses Datum gilt als Beginn der Reformation."],
+      ["Der Buchdruck hilft","Luthers Thesen wurden abgeschrieben, gedruckt und in ganz Deutschland verteilt, schon nach wenigen Wochen. Auch seine späteren Schriften wurden gedruckt und gern gelesen. So wussten bald viele Menschen, was Luther dachte."],
+      ["Der Reichstag zu Worms","Der Papst und der Kaiser wollten, dass Luther aufhört. 1521 musste er in Worms vor Kaiser Karl V. erscheinen. Der Kaiser verlangte, dass Luther seine Lehren widerruft, also zurücknimmt. Luther weigerte sich. Deshalb verhängte der Kaiser die Reichsacht: Luther war nun geächtet und sollte festgenommen werden."],
+      ["Luther auf der Wartburg","Auf dem Heimweg von Worms ließ Kurfürst Friedrich der Weise Luther zum Schein überfallen und versteckte ihn auf der Wartburg bei Eisenach. Dort lebte Luther unter dem Namen „Junker Jörg“. In nur etwa 11 Wochen übersetzte er das Neue Testament aus dem Griechischen ins Deutsche."],
+      ["Die Lutherbibel","Bis dahin gab es die Bibel für die meisten Menschen nur auf Latein, und das konnten sie nicht lesen. Luther schrieb in einem Deutsch, das jeder verstand. Das Neue Testament erschien 1522, die ganze Bibel 1534. Luthers Sprache prägte das Deutsch, das wir heute schreiben."],
+      ["Katharina von Bora","Katharina von Bora war früher Nonne und floh aus ihrem Kloster. 1525 heiratete sie Martin Luther. In Wittenberg führte sie den großen Haushalt mit Kindern, Studenten und Gästen.",1],
+      ["Zwei Kirchen","Reformation heißt „Erneuerung“. Luther wollte die Kirche verbessern, nicht spalten. Aber der Streit wurde so groß, dass eine neue Kirche entstand: die evangelische (protestantische) Kirche. Daneben blieb die katholische Kirche bestehen."],
+      ["Luthers Tod","Luther starb am 18. Februar 1546 in Eisleben, also in der Stadt, in der er geboren wurde. Er war 62 Jahre alt. Der Reformationstag am 31. Oktober erinnert bis heute an den Tag der 95 Thesen. In Sachsen ist er ein Feiertag."]
     ],
     quiz:[
-      {q:"In welchem Jahr machte Luther die 95 Thesen bekannt?",a:["1492","1517","1555","1648"],c:1,e:"1517, am 31. Oktober. Dieses Datum gilt als Beginn der Reformation."},
-      {q:"In welcher Stadt wirkte Luther als Professor und veröffentlichte die Thesen?",a:["Rom","Wittenberg","Berlin","Köln"],c:1,e:"Wittenberg heißt heute Lutherstadt Wittenberg."},
-      {q:"Auf welcher Burg übersetzte Luther das Neue Testament?",a:["Burg Eltz","Wartburg","Burg Hohenzollern","Burg Meißen"],c:1,e:"Die Wartburg liegt bei Eisenach in Thüringen."},
-      {q:"Welche Erfindung half Luther, seine Ideen zu verbreiten?",a:["Dampfmaschine","Telefon","Buchdruck","Kompass"],c:2,e:"Mit dem Buchdruck konnten Schriften schnell vervielfältigt werden."},
-      {q:"Wer verlangte 1521 in Worms, dass Luther widerruft?",a:["Friedrich der Weise","Johann Tetzel","Kaiser Karl V.","Gutenberg"],c:2,e:"Der Kaiser verhängte danach die Reichsacht. Friedrich der Weise beschützte Luther."},
-      {q:"Wen heiratete Luther 1525?",a:["Katharina von Bora","Maria Theresia","Elisabeth von Thüringen","Katharina die Große"],c:0,e:"Katharina von Bora war früher Nonne."},
-      {q:"Welche Kirche entstand aus der Reformation?",a:["Die orthodoxe Kirche","Die evangelische Kirche","Die jüdische Gemeinde","Die buddhistische Gemeinde"],c:1,e:"Evangelisch oder protestantisch. Daneben blieb die katholische Kirche bestehen."},
-      {q:"In welcher Stadt wurde Luther geboren und starb er auch?",a:["Wittenberg","Eisleben","Erfurt","Eisenach"],c:1,e:"Eisleben heißt heute Lutherstadt Eisleben."}
+      {q:"In welchem Jahr machte Luther die 95 Thesen bekannt?",a:["1492","1517","1555","1648"],c:1,e:"Das war 1517, am 31. Oktober. Dieses Datum gilt als Beginn der Reformation."},
+      {q:"In welcher Stadt wirkte Luther als Professor und veröffentlichte die Thesen?",a:["Rom","Wittenberg","Berlin","Köln"],c:1,e:"Luther lehrte in Wittenberg. Die Stadt heißt heute Lutherstadt Wittenberg."},
+      {q:"Auf welcher Burg übersetzte Luther das Neue Testament?",a:["Burg Eltz","Wartburg","Burg Hohenzollern","Burg Meißen"],c:1,e:"Die Wartburg liegt bei Eisenach in Thüringen. Dort war Luther versteckt."},
+      {q:"Welche Erfindung half Luther, seine Ideen zu verbreiten?",a:["Dampfmaschine","Telefon","Buchdruck","Kompass"],c:2,e:"Mit dem Buchdruck konnte man Luthers Schriften schnell vervielfältigen und überall verteilen."},
+      {q:"Wer verlangte 1521 in Worms, dass Luther widerruft?",a:["Friedrich der Weise","Johann Tetzel","Kaiser Karl V.","Gutenberg"],c:2,e:"Der Kaiser verhängte danach die Reichsacht über Luther. Friedrich der Weise beschützte ihn."},
+      {q:"Wen heiratete Luther 1525?",a:["Katharina von Bora","Maria Theresia","Elisabeth von Thüringen","Katharina die Große"],c:0,e:"Katharina von Bora war früher Nonne und floh aus dem Kloster."},
+      {q:"Welche Kirche entstand aus der Reformation?",a:["Die orthodoxe Kirche","Die evangelische Kirche","Die jüdische Gemeinde","Die buddhistische Gemeinde"],c:1,e:"Die evangelische (protestantische) Kirche. Daneben blieb die katholische Kirche bestehen."},
+      {q:"In welcher Stadt wurde Luther geboren und starb er auch?",a:["Wittenberg","Eisleben","Erfurt","Eisenach"],c:1,e:"Eisleben heißt heute Lutherstadt Eisleben. Dort wurde Luther geboren und starb auch dort."}
     ]
   },
   {
     id:"sachsen", thema:"reformation", lern:true, title:"Sachsen, Kernland der Reformation", fach:"geschichte", stufe:"7",
     desc:"Wittenberg, Kurfürst und Maler: Die Reformation und ihre sächsischen Spuren.",
     cards:[
-      ["Sachsen und die Reformation","Die Reformation begann in Kursachsen. Es war damals größer als das heutige Sachsen. Wittenberg gehörte dazu, liegt heute aber in Sachsen-Anhalt."],
-      ["Wittenberg","In Wittenberg lehrte Luther an der Universität als Professor. Die Stadt heißt heute offiziell Lutherstadt Wittenberg."],
-      ["Friedrich der Weise","Kurfürst Friedrich der Weise von Sachsen schützte Luther. Nach dem Reichstag in Worms ließ er ihn auf der Wartburg verstecken."],
-      ["Lucas Cranach","Der Maler Lucas Cranach der Ältere lebte in Wittenberg und war mit Luther befreundet. Er malte Bilder von Luther und gestaltete Flugschriften und Bibeln."],
-      ["Die Leipziger Disputation","1519 stritt Luther in Leipzig mit dem Theologen Johannes Eck. Es ging darum, wer in Glaubensfragen das letzte Wort hat."],
-      ["Sachsen heute","In Sachsen ist der Reformationstag am 31. Oktober ein gesetzlicher Feiertag. Viele Orte erinnern an die Reformation, zum Beispiel Wittenberg."]
+      ["Sachsen und die Reformation","Das Land Sachsen sah damals anders aus als heute. Um Wittenberg lag Kursachsen, dessen Kurfürst Luther beschützte. Um Dresden und Leipzig herrschte Herzog Georg, der Luthers Gegner war. Wittenberg liegt heute in Sachsen-Anhalt."],
+      ["Wittenberg","Wittenberg war damals eine kleine Universitätsstadt an der Elbe. Hier lehrte Luther als Professor, hier schrieb er viele seiner Schriften, und hier lebte er mit seiner Familie. Darum heißt die Stadt heute offiziell Lutherstadt Wittenberg."],
+      ["Friedrich der Weise","Friedrich der Weise war Kurfürst von Sachsen und einer der mächtigsten Fürsten im Reich. Er hatte die Universität in Wittenberg gegründet. Er schützte Luther, auch als der Kaiser ihn verfolgte, und versteckte ihn auf der Wartburg."],
+      ["Lucas Cranach","Lucas Cranach der Ältere war ein berühmter Maler und lebte in Wittenberg. Er war mit Luther befreundet und malte viele Bilder von ihm und seiner Familie, die wir noch heute kennen. Außerdem gestaltete er Flugschriften und Bibeln mit Bildern."],
+      ["Die Leipziger Disputation","1519 trafen sich Luther und der Theologe Johannes Eck in Leipzig zu einem öffentlichen Streitgespräch. Das nennt man Disputation. Es ging darum, wer in Glaubensfragen das letzte Wort hat: der Papst oder die Bibel. Luther sagte, die Bibel steht über dem Papst. Danach war der Streit mit der Kirche nicht mehr zu retten.",1],
+      ["Sachsen heute","In Sachsen ist der Reformationstag am 31. Oktober ein gesetzlicher Feiertag. Viele Orte erinnern an die Reformation, zum Beispiel Wittenberg mit dem Lutherhaus und der Schlosskirche. Bei einem Ausflug kannst du diese Orte selbst entdecken."]
     ],
     quiz:[
-      {q:"In welcher Stadt lehrte Luther als Professor?",a:["Wittenberg","Dresden","Chemnitz","Bautzen"],c:0,e:"Luther lehrte an der Universität Wittenberg."},
-      {q:"Welcher Kurfürst von Sachsen schützte Luther?",a:["Friedrich der Weise","Karl V.","August der Starke","Ludwig XIV."],c:0,e:"Friedrich der Weise ließ Luther auf der Wartburg verstecken."},
-      {q:"In welcher Stadt stritt Luther 1519 mit Johannes Eck?",a:["Leipzig","Worms","Eisenach","Rom"],c:0,e:"Das Streitgespräch heißt Leipziger Disputation."},
-      {q:"Welcher Maler lebte in Wittenberg und war mit Luther befreundet?",a:["Lucas Cranach der Ältere","Albrecht Dürer","Leonardo da Vinci","Michelangelo"],c:0,e:"Cranach malte viele Bilder von Luther und seiner Familie."},
-      {q:"Wie heißt Wittenberg heute offiziell?",a:["Lutherstadt Wittenberg","Reformationsstadt Wittenberg","Bibelstadt Wittenberg","Thesenstadt Wittenberg"],c:0,e:"Der Zusatz Lutherstadt erinnert an Martin Luther."}
+      {q:"In welcher Stadt lehrte Luther als Professor?",a:["Wittenberg","Dresden","Chemnitz","Bautzen"],c:0,e:"Luther lehrte an der Universität Wittenberg. Die Stadt heißt heute Lutherstadt Wittenberg."},
+      {q:"Welcher Kurfürst von Sachsen schützte Luther?",a:["Friedrich der Weise","Karl V.","August der Starke","Ludwig XIV."],c:0,e:"Friedrich der Weise war Kurfürst von Sachsen. Er ließ Luther auf der Wartburg verstecken."},
+      {q:"In welcher Stadt stritt Luther 1519 mit Johannes Eck?",a:["Leipzig","Worms","Eisenach","Rom"],c:0,e:"In Leipzig fand 1519 das Streitgespräch statt, die Leipziger Disputation."},
+      {q:"Welcher Maler lebte in Wittenberg und war mit Luther befreundet?",a:["Lucas Cranach der Ältere","Albrecht Dürer","Leonardo da Vinci","Michelangelo"],c:0,e:"Cranach lebte in Wittenberg und malte viele Bilder von Luther und seiner Familie."},
+      {q:"Wie heißt Wittenberg heute offiziell?",a:["Lutherstadt Wittenberg","Reformationsstadt Wittenberg","Bibelstadt Wittenberg","Thesenstadt Wittenberg"],c:0,e:"Der Zusatz „Lutherstadt“ erinnert an Martin Luther."}
     ]
   },
   {
     id:"folgen", thema:"reformation", lern:true, title:"Folgen der Reformation", fach:"geschichte", stufe:"7",
     desc:"Glaubensspaltung, Gegenreformation, Kriege und Glaubensfreiheit.",
     cards:[
-      ["Zwei Kirchen","Der Streit um die Kirche führte zur Glaubensspaltung. Es gab nun die katholische und die evangelische (protestantische) Kirche."],
-      ["Die Fürsten entscheiden","Viele Fürsten wurden evangelisch und führten die neue Lehre in ihrem Land ein. Ihre Untertanen mussten oft mitmachen."],
-      ["Gegenreformation","Die katholische Kirche wehrte sich. Sie wollte die Gläubigen zurückgewinnen und die Reformation zurückdrängen. Das nennt man Gegenreformation."],
-      ["Streit wird zum Krieg","Der Glaubensstreit führte zu Kriegen. Dabei ging es oft nicht nur um den Glauben, sondern auch um Macht."],
-      ["Augsburger Religionsfrieden","1555 einigte man sich in Augsburg: Der Landesherr bestimmt die Religion seines Landes. Wer anders glaubte, durfte auswandern."],
-      ["Dreißigjähriger Krieg","Von 1618 bis 1648 tobte der Dreißigjährige Krieg. Auch er hatte religiöse Ursachen und brachte großes Leid nach Europa."],
-      ["Glaubensfreiheit","Glaubensfreiheit heißt: Jeder darf selbst entscheiden, woran er glaubt. Heute steht sie im Grundgesetz."]
+      ["Zwei Kirchen","Luther wollte die Kirche erneuern, nicht spalten. Doch der Papst und die Anhänger Luthers einigten sich nicht. Deshalb gab es bald zwei Kirchen: die katholische und die evangelische (protestantische) Kirche. Man nennt das Glaubensspaltung."],
+      ["Die Fürsten entscheiden","Viele Fürsten fanden Luthers Lehre gut. Manche glaubten wirklich daran, andere wollten auch mehr Macht und Besitz. Sie führten in ihrem Land die evangelische Kirche ein. Ihre Untertanen mussten dann meist auch evangelisch werden."],
+      ["Gegenreformation","Die katholische Kirche wollte ihre Gläubigen nicht verlieren. Auf einem großen Kirchentreffen, dem Konzil von Trient, beschloss sie Verbesserungen. Neue Orden wie die Jesuiten gründeten Schulen und predigten, um die Menschen zurückzugewinnen. Das nennt man Gegenreformation."],
+      ["Streit wird zum Krieg","Evangelische und katholische Fürsten misstrauten einander. Sie schlossen Bündnisse, und es kam zu Kriegen. Dabei ging es nicht nur um den Glauben, sondern auch um Macht, Land und Einfluss."],
+      ["Augsburger Religionsfrieden","1555 schlossen die Fürsten im Reich in Augsburg einen Frieden. Er sagte: Der Landesherr bestimmt, ob sein Land katholisch oder lutherisch ist. Wer eine andere Religion hatte, durfte auswandern. Echte Glaubensfreiheit für alle war das noch nicht.",1],
+      ["Dreißigjähriger Krieg","Von 1618 bis 1648 wurde in Europa 30 Jahre lang Krieg geführt, vor allem in Deutschland. Der Streit zwischen den Religionen war ein Grund, aber auch Macht spielte eine große Rolle. Viele Städte und Dörfer wurden zerstört, und sehr viele Menschen starben durch Gewalt, Hunger und Krankheiten. Der Krieg endete mit dem Westfälischen Frieden.",1],
+      ["Glaubensfreiheit","Glaubensfreiheit bedeutet: Jeder darf selbst entscheiden, woran er glaubt, und niemand darf ihn dafür bestrafen. Das war damals keine Selbstverständlichkeit. Heute steht die Glaubensfreiheit im Grundgesetz."]
     ],
     quiz:[
-      {q:"Was war eine Folge des Streits um die Kirche?",a:["Die Spaltung in katholische und evangelische Kirche","Die Abschaffung des Glaubens","Die Gründung der Universitäten","Das Ende der Fürsten"],c:0,e:"Seitdem gibt es in Deutschland evangelische und katholische Christen."},
-      {q:"Was bedeutet „Gegenreformation“?",a:["Die katholische Kirche wollte die Reformation zurückdrängen","Luther nahm seine Thesen zurück","Die Fürsten stimmten Luther zu","Die Bauern gründeten eine eigene Kirche"],c:0,e:"Die katholische Kirche wollte Gläubige zurückgewinnen."},
-      {q:"Was regelte der Augsburger Religionsfrieden von 1555?",a:["Der Landesherr bestimmt die Religion seines Landes","Alle Menschen müssen katholisch sein","Jeder Mensch darf seine Religion frei wählen","Die Kirche darf keine Steuern mehr verlangen"],c:0,e:"Freie Wahl für jeden gab es noch nicht. Das entschied der Landesherr."},
+      {q:"Was war eine Folge des Streits um die Kirche?",a:["Die Spaltung in katholische und evangelische Kirche","Die Abschaffung des Glaubens","Die Gründung der Universitäten","Das Ende der Fürsten"],c:0,e:"Seit der Reformation gibt es in Deutschland evangelische und katholische Christen."},
+      {q:"Was bedeutet „Gegenreformation“?",a:["Die katholische Kirche wollte die Reformation zurückdrängen","Luther nahm seine Thesen zurück","Die Fürsten stimmten Luther zu","Die Bauern gründeten eine eigene Kirche"],c:0,e:"Die katholische Kirche wehrte sich und wollte Gläubige zurückgewinnen."},
+      {q:"Was regelte der Augsburger Religionsfrieden von 1555?",a:["Der Landesherr bestimmt die Religion seines Landes","Alle Menschen müssen katholisch sein","Jeder Mensch darf seine Religion frei wählen","Die Kirche darf keine Steuern mehr verlangen"],c:0,e:"Die Menschen konnten ihre Religion noch nicht frei wählen. Das entschied der Landesherr."},
       {q:"Was bedeutet Glaubensfreiheit?",a:["Jeder darf selbst entscheiden, woran er glaubt","Alle müssen dieselbe Religion haben","Nur der Herrscher darf glauben","Religion ist verboten"],c:0,e:"Die Glaubensfreiheit steht heute im Grundgesetz."},
-      {q:"Welcher Krieg von 1618 bis 1648 hatte auch religiöse Ursachen?",a:["Der Dreißigjährige Krieg","Der Hundertjährige Krieg","Der Siebenjährige Krieg","Der Erste Weltkrieg"],c:0,e:"Im Dreißigjährigen Krieg ging es um Glauben und um Macht."}
+      {q:"Welcher Krieg von 1618 bis 1648 hatte auch religiöse Ursachen?",a:["Der Dreißigjährige Krieg","Der Hundertjährige Krieg","Der Siebenjährige Krieg","Der Erste Weltkrieg"],c:0,e:"Im Dreißigjährigen Krieg ging es um den Glauben, aber auch um Macht."}
     ]
   },
   {
     id:"bilder", thema:"reformation", lern:true, title:"Bilder und Flugschriften", fach:"geschichte", stufe:"7",
     desc:"Wie man Bildquellen aus der Reformationszeit liest.",
     cards:[
-      ["Bildquellen","Bilder aus der Vergangenheit erzählen uns etwas über ihre Zeit. Man nennt sie Bildquellen. Man muss sie aber genau untersuchen."],
-      ["Flugschriften","Flugschriften waren kurze, billige Druckschriften. Mit ihnen verbreiteten sich Meinungen und Nachrichten schnell, auch Luthers Ideen."],
-      ["Bilder für alle","Viele Menschen konnten damals nicht lesen. Deshalb hatten Flugschriften oft Bilder, die auch ohne Lesen verständlich waren."],
-      ["Bibelillustrationen","In der Lutherbibel gab es Holzschnitte. Die Bilder erklärten Geschichten aus der Bibel anschaulich."],
-      ["Altarbilder","Altarbilder hängen in Kirchen. Im Wittenberger Reformationsaltar von Cranach sieht man Taufe, Abendmahl, Beichte und Luthers Predigt."],
-      ["Bildquellen auswerten","Frage bei jedem Bild: Wer hat es gemacht? Wann? Für wen und wozu? Was ist zu sehen?"]
+      ["Bildquellen","Alte Bilder, Zeichnungen und Gemälde sind Quellen. Sie zeigen uns, wie Menschen damals gelebt und gedacht haben. Aber ein Bild zeigt nicht immer die Wahrheit. Der Künstler wollte oft etwas Bestimmtes ausdrücken. Deshalb muss man Bildquellen genau untersuchen."],
+      ["Flugschriften","Flugschriften waren kurze, billige Blätter und Heftchen. Sie wurden auf Märkten verkauft und von Hand zu Hand weitergegeben. Damit verbreiteten sich Meinungen und Nachrichten sehr schnell, auch Luthers Ideen. Man kann sie mit heutigen Flyern oder Posts vergleichen."],
+      ["Bilder für alle","Viele Menschen konnten damals nicht oder nur schlecht lesen. Darum hatten Flugschriften oft Bilder, zum Beispiel Zeichnungen und Holzschnitte. So verstanden auch Menschen, die nicht lesen konnten, worum es ging. Manchmal machten sich die Bilder auch über Gegner lustig."],
+      ["Bibelillustrationen","Die Lutherbibel hatte Holzschnitte, das sind Bilder, die in Holz geschnitten und dann gedruckt wurden. Sie zeigten Geschichten aus der Bibel, zum Beispiel die Erschaffung der Welt. So konnte man die Geschichten besser verstehen und sich merken."],
+      ["Altarbilder","Der Altar steht vorne in der Kirche. Auf Altarbildern waren früher meist Heilige zu sehen. Im Wittenberger Reformationsaltar von Cranach sieht man dagegen die evangelische Lehre: Taufe, Abendmahl, Beichte und Luther, der von der Kanzel predigt. Das Bild zeigt den Menschen, was in der neuen Kirche wichtig ist."],
+      ["Bildquellen auswerten","Wenn du ein altes Bild untersuchst, hilft dir diese Reihenfolge: Was ist zu sehen? Wer hat das Bild gemacht, und wann? Für wen und wozu wurde es gemacht? Was wollte der Künstler damit sagen?"]
     ],
     quiz:[
-      {q:"Was ist eine Flugschrift?",a:["Ein billiges, kurzes Druckblatt zur Verbreitung von Meinungen","Ein Brief des Kaisers","Ein Buch über Vögel","Ein Schiffslogbuch"],c:0,e:"Flugschriften verbreiteten Meinungen und Nachrichten schnell."},
-      {q:"Warum hatten Flugschriften oft Bilder?",a:["Viele Menschen konnten nicht lesen","Texte waren verboten","Bilder waren Pflicht","Es gab keine Buchstaben"],c:0,e:"Bilder konnte auch verstehen, wer nicht lesen konnte."},
-      {q:"Welche Fragen stellt man zuerst an eine Bildquelle?",a:["Wer hat es gemacht, wann und wozu?","Wie teuer war der Rahmen?","Wie viele Farben wurden benutzt?","Wo hängt es heute im Haus?"],c:0,e:"Autor, Zeit und Zweck helfen, ein Bild richtig zu verstehen."},
-      {q:"Wozu dienten Bibelillustrationen?",a:["Sie erklärten Geschichten aus der Bibel anschaulich","Sie waren nur Verzierung ohne Bedeutung","Sie zeigten Landkarten","Sie ersetzten den Text"],c:0,e:"Die Holzschnitte machten die Geschichten leichter verständlich."},
-      {q:"Was zeigt der Wittenberger Reformationsaltar von Cranach?",a:["Taufe, Abendmahl, Beichte und Luthers Predigt","Die Schlacht bei Worms","Die Erfindung des Buchdrucks","Kaiser Karl V. auf dem Thron"],c:0,e:"Der Altar zeigt zentrale Punkte der evangelischen Lehre."}
+      {q:"Was ist eine Flugschrift?",a:["Ein billiges, kurzes Druckblatt zur Verbreitung von Meinungen","Ein Brief des Kaisers","Ein Buch über Vögel","Ein Schiffslogbuch"],c:0,e:"Flugschriften waren billig und schnell gedruckt. So verbreiteten sich Meinungen und Nachrichten schnell."},
+      {q:"Warum hatten Flugschriften oft Bilder?",a:["Viele Menschen konnten nicht lesen","Texte waren verboten","Bilder waren Pflicht","Es gab keine Buchstaben"],c:0,e:"Viele Menschen konnten nicht lesen. Bilder konnten auch sie verstehen."},
+      {q:"Welche Fragen stellt man zuerst an eine Bildquelle?",a:["Wer hat es gemacht, wann und wozu?","Wie teuer war der Rahmen?","Wie viele Farben wurden benutzt?","Wo hängt es heute im Haus?"],c:0,e:"Wer, wann und wozu: Damit findet man heraus, was ein Bild aussagen will."},
+      {q:"Wozu dienten Bibelillustrationen?",a:["Sie erklärten Geschichten aus der Bibel anschaulich","Sie waren nur Verzierung ohne Bedeutung","Sie zeigten Landkarten","Sie ersetzten den Text"],c:0,e:"Die Holzschnitte machten Geschichten aus der Bibel leicht verständlich."},
+      {q:"Was zeigt der Wittenberger Reformationsaltar von Cranach?",a:["Taufe, Abendmahl, Beichte und Luthers Predigt","Die Schlacht bei Worms","Die Erfindung des Buchdrucks","Kaiser Karl V. auf dem Thron"],c:0,e:"Der Altar zeigt Dinge, die in der evangelischen Kirche wichtig sind."}
     ]
   }
 ];
@@ -363,7 +347,7 @@ function modCard(m){
     + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
     + '<span class="prog"><span>'+(m.map ? 'Auf der Karte gefunden' : 'Letztes Quiz')+'</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
     + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+(m.map ? ' gefunden' : ' Fragen richtig'))+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
-    + '<span class="meta"><span><b>'+m.cards.length+'</b> Karten</span><span><b>'+nq+'</b> '+(m.map ? 'Begriffe' : 'Fragen')+'</span></span></button>';
+    + '<span class="meta">'+(m.cards.length ? '<span><b>'+m.cards.length+'</b> Karten</span>' : '')+'<span><b>'+nq+'</b> '+(m.map ? 'Begriffe' : 'Fragen')+'</span></span></button>';
 }
 function themaCard(t){
   var kids = kidsOf(t.id), got = 0, tot = 0, played = 0;
@@ -415,6 +399,12 @@ function renderMod(){
   var bk = m.thema ? '<button class="back" data-a="thema" data-v="'+m.thema+'">← '+esc(themaOf(m.thema).title)+'</button>' : '<button class="back" data-a="home">← Alle Module</button>';
   var h = topbar() + '<div class="head" data-fach="'+m.fach+'">'+bk
     + '<span class="tag" style="color:var(--c)">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span><h1>'+esc(m.title)+'</h1></div>';
+  if (m.map && !m.cards.length){
+    /* Modul nur mit Kartenquiz: keine Lernkarten, direkter Einstieg */
+    h += '<a class="extra" data-fach="'+m.fach+'" href="'+esc(m.map.url)+'"><b>Kartenquiz starten →</b><span>Bisher gefunden: '+qDone(m)+' von '+qTot(m)+' Begriffen</span></a>';
+    app.innerHTML = h;
+    return;
+  }
   h += '<div class="tabs" role="tablist" data-fach="'+m.fach+'">'
     + '<button class="tab" role="tab" data-a="tab" data-v="cards" aria-selected="'+(S.tab==="cards")+'">'+(m.lern ? 'Lernkarten' : 'Karteikarten')+'</button>'
     + (m.map ? '<a class="tab" href="'+esc(m.map.url)+'" style="display:grid;place-items:center;text-decoration:none;color:inherit">Kartenquiz · '+qDone(m)+'/'+qTot(m)+' →</a>'
@@ -436,7 +426,7 @@ function renderLern(){
   var pc = P(S.mod); if (d.i+1>pc.cards){ pc.cards = d.i+1; save(); }
   el.innerHTML = '<div class="deck"><div class="prog"><span>Karte '+(d.i+1)+' von '+d.total+'</span><span>Lernen</span></div>'
     + '<div class="bar" aria-hidden="true"><i style="width:'+Math.round((d.i+1)/d.total*100)+'%"></i></div>'
-    + '<div class="learn" aria-live="polite"><span class="lbl">'+esc(c[0])+'</span><span class="txt">'+esc(c[1])+'</span></div>'
+    + '<div class="learn" aria-live="polite">'+(c[2] ? '<span class="bonus">Bonuswissen</span>' : '')+'<span class="lbl">'+esc(c[0])+'</span><span class="txt">'+esc(c[1])+'</span></div>'
     + '<div class="row"><button class="btn" data-a="lprev"'+(d.i ? '' : ' disabled')+'>Zurück</button>'
     + (last ? '<button class="btn primary" data-a="tab" data-v="quiz" style="background:var(--c);border-color:var(--c);color:var(--on)">Zum Quiz</button>'
             : '<button class="btn primary" data-a="lnext">Weiter</button>') + '</div></div>';
@@ -521,7 +511,7 @@ function renderMe(){
   MODULES.forEach(function(m){
     var p = P(m.id), nc = m.cards.length, nq = qTot(m), fd = (p.found||[]).length;
     h += '<div class="prow" data-fach="'+m.fach+'"><span class="tag">'+FACH[m.fach]+'</span><h2>'+esc(m.title)+'</h2>'
-      + '<div class="prog"><span>'+(m.lern ? 'Karten gelesen' : 'Karten gewusst')+'</span><span>'+p.cards+' von '+nc+'</span></div><div class="bar"><i style="width:'+Math.round(p.cards/nc*100)+'%"></i></div>'
+      + (nc ? '<div class="prog"><span>'+(m.lern ? 'Karten gelesen' : 'Karten gewusst')+'</span><span>'+p.cards+' von '+nc+'</span></div><div class="bar"><i style="width:'+Math.round(p.cards/nc*100)+'%"></i></div>' : '')
       + (m.map
         ? '<div class="prog"><span>Auf der Karte gefunden</span><span>'+fd+' von '+nq+'</span></div><div class="bar"><i style="width:'+Math.round(fd/nq*100)+'%"></i></div>'
         : '<div class="prog"><span>Quiz Bestwert</span><span>'+(p.best==null?'noch nicht gespielt':p.best+' von '+nq+' · '+p.tries+'×')+'</span></div><div class="bar"><i style="width:'+(p.best==null?0:Math.round(p.best/nq*100))+'%"></i></div>')
