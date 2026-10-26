@@ -17,6 +17,7 @@
   --bg:#F2F4F1; --surface:#FFFFFF; --fg:#16202B; --muted:#56616D; --line:#D6DCD4;
   --geschichte:#8C2F39; --on-geschichte:#FFFFFF;
   --erdkunde:#0E6A62; --on-erdkunde:#FFFFFF;
+  --ethik:#5B3FA0; --on-ethik:#FFFFFF;
   --good:#1E7B3A; --bad:#B3261E; --focus:#2B5BD7;
   --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
   --font-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -26,6 +27,7 @@
     --bg:#11161C; --surface:#1A222B; --fg:#E9EDF1; --muted:#9AA6B2; --line:#2C3742;
     --geschichte:#E2848E; --on-geschichte:#2A0C10;
     --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
+    --ethik:#B7A4F0; --on-ethik:#1D1236;
     --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
   }
 }
@@ -33,12 +35,14 @@
   --bg:#11161C; --surface:#1A222B; --fg:#E9EDF1; --muted:#9AA6B2; --line:#2C3742;
   --geschichte:#E2848E; --on-geschichte:#2A0C10;
   --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
+    --ethik:#B7A4F0; --on-ethik:#1D1236;
   --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
 }
 body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
 *{box-sizing:border-box}
 [data-fach="geschichte"]{--c:var(--geschichte);--on:var(--on-geschichte)}
 [data-fach="erdkunde"]{--c:var(--erdkunde);--on:var(--on-erdkunde)}
+[data-fach="ethik"]{--c:var(--ethik);--on:var(--on-ethik)}
 .wrap{max-width:960px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
 h1,h2,h3{font-family:var(--font-display);line-height:1.1;margin:0;text-wrap:balance}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -275,16 +279,119 @@ var MODULES = [
       {q:"Wozu dienten Bibelillustrationen?",a:["Sie erklärten Geschichten aus der Bibel anschaulich","Sie waren nur Verzierung ohne Bedeutung","Sie zeigten Landkarten","Sie ersetzten den Text"],c:0,e:"Die Holzschnitte machten Geschichten aus der Bibel leicht verständlich."},
       {q:"Was zeigt der Wittenberger Reformationsaltar von Cranach?",a:["Taufe, Abendmahl, Beichte und Luthers Predigt","Die Schlacht bei Worms","Die Erfindung des Buchdrucks","Kaiser Karl V. auf dem Thron"],c:0,e:"Der Altar zeigt Dinge, die in der evangelischen Kirche wichtig sind."}
     ]
+  },
+  {
+    id:"eth-logik", thema:"ethisch-argumentieren", lern:true, title:"Logik: richtig schlussfolgern", fach:"ethik", stufe:"8 · Gymnasium",
+    desc:"Syllogismus, Deduktion, Induktion und Wahrheitstabellen als Werkzeug fürs Argumentieren.",
+    cards:[
+      ["Wozu Logik?","Logik ist die Lehre vom richtigen Schlussfolgern. Wer argumentiert, will andere mit Gründen überzeugen. Das gelingt nur, wenn die Gründe so zusammenhängen, dass die Behauptung wirklich aus ihnen folgt. Genau das prüft die Logik."],
+      ["Der klassische Syllogismus","Ein Syllogismus ist ein Schluss aus zwei Voraussetzungen, den Prämissen, auf eine Folgerung, die Konklusion. Das bekannteste Beispiel: Alle Menschen sind sterblich. Sokrates ist ein Mensch. Also ist Sokrates sterblich. Sind beide Prämissen wahr und ist der Schluss richtig gebaut, muss auch die Konklusion wahr sein."],
+      ["Deduktion","Bei der Deduktion schließt man vom Allgemeinen auf den Einzelfall. Aus der Regel „Stehlen ist verboten“ und der Feststellung „Das war Stehlen“ folgt: Diese Handlung ist verboten. Stimmen die Voraussetzungen und ist der Schluss richtig, ist das Ergebnis sicher."],
+      ["Induktion","Bei der Induktion schließt man von vielen Einzelfällen auf eine allgemeine Regel. Beispiel: Du siehst viele Schwäne, und alle sind weiß. Du schließt: Alle Schwäne sind weiß. Das Ergebnis ist aber nur wahrscheinlich, denn ein einziger schwarzer Schwan widerlegt die Regel."],
+      ["Wahrheitstabellen","Mit einer Wahrheitstabelle prüft man, wann eine zusammengesetzte Aussage wahr ist. Jede einzelne Aussage ist entweder wahr (w) oder falsch (f). „A und B“ ist nur wahr, wenn beide Aussagen wahr sind. „A oder B“ ist schon wahr, wenn mindestens eine der beiden wahr ist."],
+      ["Gültig ist nicht gleich wahr","Ein Schluss kann logisch gültig sein und trotzdem zu einer falschen Konklusion führen, wenn eine Prämisse falsch ist. Beispiel: Alle Vögel können fliegen. Ein Pinguin ist ein Vogel. Also kann ein Pinguin fliegen. Der Aufbau ist richtig, aber die erste Prämisse ist falsch. Deshalb muss man immer beides prüfen: den Aufbau und die Wahrheit der Voraussetzungen."]
+    ],
+    quiz:[
+      {q:"Was ist ein Syllogismus?",a:["Ein Schluss aus zwei Prämissen auf eine Konklusion","Eine Sammlung von Gefühlen","Ein Streitgespräch mit Publikum","Eine Tabelle mit Zahlen"],c:0,e:"Ein Syllogismus verbindet zwei Voraussetzungen (Prämissen) zu einer Folgerung (Konklusion), zum Beispiel: Alle Menschen sind sterblich, Sokrates ist ein Mensch, also ist Sokrates sterblich."},
+      {q:"Was beschreibt die Deduktion?",a:["Den Schluss vom Allgemeinen auf den Einzelfall","Den Schluss von vielen Einzelfällen auf eine Regel","Den Schluss vom Gefühl auf die Wahrheit","Den Schluss von einer Person auf eine andere"],c:0,e:"Deduktion geht von einer allgemeinen Regel aus und wendet sie auf einen Einzelfall an."},
+      {q:"Warum ist das Ergebnis einer Induktion nur wahrscheinlich?",a:["Ein einziger Gegenfall kann die Regel widerlegen","Induktion ist immer falsch","Man braucht dafür keine Beobachtungen","Sie gilt nur in der Mathematik"],c:0,e:"Auch wenn alle bisher beobachteten Schwäne weiß waren: Ein schwarzer Schwan genügt, um die Regel zu widerlegen."},
+      {q:"Wann ist die Aussage „A und B“ in einer Wahrheitstabelle wahr?",a:["Nur wenn A und B beide wahr sind","Wenn mindestens eine der beiden wahr ist","Wenn beide falsch sind","Immer"],c:0,e:"„Und“ verlangt, dass beide Aussagen wahr sind. Bei „oder“ genügt eine."},
+      {q:"Alle Vögel können fliegen. Ein Pinguin ist ein Vogel. Also kann ein Pinguin fliegen. Was stimmt?",a:["Der Schluss ist gültig, aber eine Prämisse ist falsch","Der Schluss ist ungültig, obwohl alle Prämissen wahr sind","Alles daran ist wahr","Die Konklusion ist damit bewiesen"],c:0,e:"Der Aufbau ist richtig, doch „Alle Vögel können fliegen“ ist falsch. Darum ist auch die Konklusion falsch."}
+    ]
+  },
+  {
+    id:"eth-begriffe", thema:"ethisch-argumentieren", lern:true, title:"Grundbegriffe des Argumentierens", fach:"ethik", stufe:"8 · Gymnasium",
+    desc:"Argument, Stützung, Norm und die typischen Arten von Gründen: Tatsache, Gefühl, Folgen, Autorität, Gewissen.",
+    cards:[
+      ["Was ist ein Argument?","Ein Argument ist eine Begründung für eine Behauptung, die man These nennt. Es besteht aus der These, also dem, was man zeigen will, und mindestens einem Grund, der sie stützt. Beispiel: „Man sollte nicht schwarzfahren, weil dadurch die anderen Fahrgäste die Kosten mittragen.“"],
+      ["Stützung eines Arguments","Oft braucht ein Argument selbst noch einen weiteren Grund, damit es überzeugt. Das nennt man Stützung. Beispiel: Das Argument „Schwarzfahren schadet anderen“ wird gestützt durch „Die Verkehrsbetriebe finanzieren sich auch aus Fahrkarten.“ So entsteht eine Kette von Gründen."],
+      ["Tatsache","Ein Tatsachenargument beruft sich auf etwas, das man überprüfen kann, zum Beispiel eine Zahl oder ein Ereignis. In der Ethik reicht das nicht allein: Aus „So ist es“ folgt nicht automatisch „So soll es sein“. Dafür braucht man zusätzlich eine moralische Norm."],
+      ["Gefühl","Gefühle wie Mitleid, Wut oder Scham können Hinweise geben, dass etwas moralisch wichtig ist. Als alleiniger Grund sind sie schwach, weil Gefühle bei Menschen verschieden sind und sich ändern. Ein starkes Argument erklärt, warum das Gefühl berechtigt ist."],
+      ["Folgen","Ein Folgenargument fragt: Was passiert, wenn man so handelt? Man betrachtet Nutzen und Schaden für alle Betroffenen. Schwierig ist, dass man die Folgen oft nicht sicher vorhersagen kann."],
+      ["Moralische Autoritäten","Man kann sich auf Personen, Texte oder Gemeinschaften berufen, die als moralisch maßgeblich gelten, zum Beispiel Eltern, Gesetze, religiöse Schriften oder Vorbilder. Dieses Argument überzeugt aber nur Menschen, die diese Autorität anerkennen. Deshalb sollte man fragen, warum die Autorität recht hat."],
+      ["Gewissen","Das Gewissen ist die innere Stimme, die uns sagt, ob eine Handlung richtig oder falsch ist. Es wird durch Erziehung und Erfahrung geprägt. Wer sich auf das Gewissen beruft, sollte erklären können, worauf es sich stützt, damit andere es nachvollziehen können."],
+      ["Moralische Normen","Moralische Normen sind Regeln, die sagen, was man tun oder lassen soll, etwa „Du sollst nicht stehlen“ oder „Hilf Menschen in Not“. Sie sind die Grundlage jeder ethischen Argumentation. Anders als Gesetze muss der Staat sie nicht durchsetzen."],
+      ["Die Goldene Regel","„Was du nicht willst, dass man dir tu, das füg auch keinem andern zu.“ Diese Regel findet man in vielen Kulturen und Religionen. Sie hilft zu prüfen, ob eine Handlung fair ist: Würde ich selbst so behandelt werden wollen?",1],
+      ["Kants Prüfstein","Der Philosoph Immanuel Kant fragte: Könnte meine Handlungsregel für alle Menschen gelten? Wenn nicht, ist sie moralisch nicht in Ordnung. Das nennt man den kategorischen Imperativ. Er passt zum Argumentieren, weil er verlangt, Gründe zu nennen, die für alle gelten.",1]
+    ],
+    quiz:[
+      {q:"Woraus besteht ein Argument?",a:["Aus einer These und mindestens einem stützenden Grund","Nur aus einer Behauptung","Nur aus einem Gefühl","Aus einer Tabelle und einer Zeichnung"],c:0,e:"Ein Argument begründet eine Behauptung (These) mit mindestens einem Grund."},
+      {q:"Warum reicht eine Tatsache allein in der Ethik nicht aus?",a:["Aus „So ist es“ folgt nicht „So soll es sein“","Tatsachen sind immer falsch","Tatsachen darf man nicht nennen","Man kann Tatsachen nicht prüfen"],c:0,e:"Zusätzlich braucht man eine moralische Norm, die sagt, was man tun oder lassen soll."},
+      {q:"Was fragt ein Folgenargument?",a:["Was passiert, wenn man so handelt?","Wer hat es früher erlaubt?","Wie fühlt sich der Redner?","Wie alt ist die Regel?"],c:0,e:"Ein Folgenargument betrachtet Nutzen und Schaden für alle Betroffenen."},
+      {q:"Warum ist ein Gefühl allein ein schwaches Argument?",a:["Gefühle sind verschieden und ändern sich","Gefühle gibt es nicht","Gefühle sind immer falsch","Man darf nicht fühlen"],c:0,e:"Gefühle können Hinweise geben, aber andere müssen sie nicht teilen. Ein gutes Argument erklärt, warum das Gefühl berechtigt ist."},
+      {q:"Was ist eine moralische Norm?",a:["Eine Regel, die sagt, was man tun oder lassen soll","Ein Naturgesetz","Eine Messung","Ein mathematischer Beweis"],c:0,e:"Beispiele sind „Du sollst nicht stehlen“ oder „Hilf Menschen in Not“."},
+      {q:"Bonus: Was besagt die Goldene Regel?",a:["Behandle andere so, wie du selbst behandelt werden willst","Wer zahlt, bestimmt","Gold ist wertvoller als Silber","Gehorche immer dem Stärkeren"],c:0,e:"Die Goldene Regel gibt es in vielen Kulturen und Religionen. Sie hilft, die Fairness einer Handlung zu prüfen."}
+    ]
+  },
+  {
+    id:"eth-pruefen", thema:"ethisch-argumentieren", lern:true, title:"Argumentationen prüfen", fach:"ethik", stufe:"8 · Gymnasium",
+    desc:"Argumente sammeln, gewichten, vergleichen und auf Schlüssigkeit prüfen.",
+    cards:[
+      ["Argumente sammeln","Am Anfang sammelt man alle Argumente, auch die der Gegenseite. Dabei hilft eine Tabelle mit zwei Spalten: Pro (dafür) und Kontra (dagegen). Wer nur die Argumente für die eigene Meinung kennt, kann sie nicht fair prüfen."],
+      ["Argumente gewichten","Nicht jedes Argument ist gleich stark. Man gewichtet sie und fragt: Wie schwer wiegt der mögliche Schaden? Wie viele Menschen sind betroffen? Wie sicher ist das Argument? Ein einzelnes gewichtiges Argument kann mehrere schwache aufwiegen."],
+      ["Argumente verknüpfen und vergleichen","Gute Argumente hängen zusammen und stützen sich gegenseitig. Man verknüpft sie mit Wörtern wie „weil“, „deshalb“, „außerdem“ und „dagegen spricht“. Beim Vergleichen stellt man Pro und Kontra gegenüber und fragt, welche Seite insgesamt besser begründet ist."],
+      ["Argumentationsstrukturen erkennen","Eine Argumentation besteht aus einer Behauptung, einer Begründung und oft einer Stützung. Um sie zu erkennen, fragt man: Was wird behauptet? Womit wird es begründet? Welche Regel steckt dahinter, die nicht ausgesprochen wird?"],
+      ["Schlüssigkeit prüfen","Eine Argumentation ist schlüssig, wenn aus den Gründen die Behauptung wirklich folgt. Man prüft: Sind die Gründe wahr? Folgt daraus die Behauptung? Wurde etwas Wichtiges weggelassen? Häufige Fehler sind das Verallgemeinern nach nur einem Fall, das Angreifen der Person statt ihrer Argumente und das Arbeiten nur mit Gefühlen."],
+      ["Argumentationsspiele","In Argumentationsspielen übt man das Begründen. Zum Beispiel muss man eine Position verteidigen, die man selbst nicht vertritt, oder zu einem Argument das beste Gegenargument finden. So lernt man, andere Sichtweisen zu verstehen."],
+      ["Thesenreflexion","Bei der Thesenreflexion prüft man die eigene Meinung kritisch. Man fragt: Warum glaube ich das? Welche Gründe sprechen dafür, welche dagegen? Würde ich meine Meinung ändern, wenn ich neue Argumente höre? Wer das kann, nimmt Abstand zur eigenen Position."]
+    ],
+    quiz:[
+      {q:"Wozu dient eine Pro-Kontra-Tabelle?",a:["Um Argumente beider Seiten zu sammeln","Um den Gegner zu beleidigen","Um Noten zu berechnen","Um Gefühle zu verstecken"],c:0,e:"Wer beide Seiten kennt, kann die eigene Meinung fair prüfen."},
+      {q:"Was bedeutet „Argumente gewichten“?",a:["Ihre Stärke einschätzen und vergleichen","Sie möglichst lang aufschreiben","Sie nur zählen und die Mehrheit nehmen","Sie vergessen"],c:0,e:"Man fragt, wie schwer ein Schaden wiegt, wie viele Menschen betroffen sind und wie sicher das Argument ist."},
+      {q:"Wann ist eine Argumentation schlüssig?",a:["Wenn aus wahren Gründen die Behauptung folgt","Wenn sie laut vorgetragen wird","Wenn alle klatschen","Wenn sie kurz ist"],c:0,e:"Schlüssig heißt: Die Gründe stimmen, und die Behauptung folgt wirklich aus ihnen."},
+      {q:"Welcher Fehler ist ein typisches Scheinargument?",a:["Die Person angreifen statt ihr Argument zu prüfen","Eine Quelle nennen","Ein Beispiel bringen","Eine Gegenposition anhören"],c:0,e:"Wer die Person angreift, widerlegt ihr Argument nicht."},
+      {q:"Was ist das Ziel der Thesenreflexion?",a:["Die eigene Meinung kritisch zu prüfen","Die eigene Meinung nie zu ändern","Andere zu überstimmen","Den Lehrer zu überzeugen"],c:0,e:"Man nimmt Abstand zur eigenen Position und fragt nach ihren Gründen."}
+    ]
+  },
+  {
+    id:"eth-handeln", thema:"ethisch-argumentieren", lern:true, title:"Handlungen begründen", fach:"ethik", stufe:"8 · Gymnasium",
+    desc:"Ethisch argumentieren an Fällen: Diebstahl, Schwarzfahren, Organspende, Umwelt und Migration.",
+    cards:[
+      ["Handlungen ethisch begründen","Wer eine Handlung ethisch begründet, beantwortet die Frage: Warum ist es richtig oder falsch, so zu handeln? Dazu nennt man Gründe wie Folgen, moralische Normen, die Rechte anderer oder das Gewissen. Das übt man an Fällen aus Alltag und Gesellschaft."],
+      ["Fall Diebstahl","Jemand nimmt im Laden etwas mit, ohne zu bezahlen. Dagegen spricht: Das Eigentum anderer wird verletzt, und das Vertrauen im Zusammenleben leidet. Man kann auch fragen, ob es Ausnahmen gibt, zum Beispiel bei großer Not. Dann muss man die Gründe sorgfältig gegeneinander abwägen."],
+      ["Fall Schwarzfahren","Wer ohne Fahrschein fährt, spart Geld, aber die anderen Fahrgäste tragen die Kosten mit. Man kann den Verallgemeinerungstest anwenden: Was wäre, wenn alle schwarzfahren würden? Dann gäbe es bald keinen Nahverkehr mehr."],
+      ["Fall Organspende","Eine Organspende kann kranken Menschen das Leben retten. Dafür spricht der große Nutzen. Zur Vorsicht mahnen kann das Recht, über den eigenen Körper selbst zu bestimmen. Umstritten ist, ob man ausdrücklich zustimmen muss oder ob man widersprechen muss, wenn man nicht spenden will. Es gibt dazu verschiedene Positionen mit jeweils eigenen Gründen."],
+      ["Fall Ökologie und Konsum","Viele Menschen möchten viel einkaufen und reisen. Gleichzeitig belasten Herstellung und Transport das Klima. Mit Folgen argumentiert man: Wer nachhaltig lebt, schützt die Umwelt auch für spätere Generationen. Dagegen steht der Wunsch nach Wohlstand. Man fragt außerdem, wer welche Verantwortung trägt: einzelne Menschen, Firmen oder der Staat."],
+      ["Fall Flucht und Migration","Menschen verlassen ihre Heimat wegen Krieg, Verfolgung oder Armut. Ethisch geht es darum, welche Pflicht Staaten haben, Schutz zu bieten, und wie man die Belastungen gerecht verteilt. Dazu gibt es verschiedene Positionen. Ethisch argumentieren heißt, die Gründe aller Seiten fair zu prüfen."],
+      ["Das Metagespräch","Ein Metagespräch ist ein Gespräch über das Gespräch. Danach fragt man: Wie haben wir argumentiert? Welche Gründe waren stark? Wo haben wir aneinander vorbeigeredet? So lernt man, die eigene Argumentation zu verbessern."]
+    ],
+    quiz:[
+      {q:"Was prüft man mit der Frage „Was wäre, wenn alle so handeln würden?“",a:["Ob die Handlungsregel für alle gelten könnte","Wie viel Geld man spart","Wer zuerst gehandelt hat","Wie schnell etwas geht"],c:0,e:"Das ist der Verallgemeinerungstest. Er hängt mit Kants Prüfstein zusammen."},
+      {q:"Welches Argument spricht gegen Schwarzfahren?",a:["Die anderen Fahrgäste tragen die Kosten mit","Fahrkarten sind bunt","Busse sind groß","Es gibt Haltestellen"],c:0,e:"Außerdem könnte der Nahverkehr nicht bestehen, wenn alle schwarzfahren würden."},
+      {q:"Was ist bei der Organspende ein zentraler Streitpunkt?",a:["Ob man ausdrücklich zustimmen oder widersprechen muss","Welche Farbe die Spenderkarte hat","Wie schnell operiert wird","Wer das Krankenhaus baut"],c:0,e:"Man wägt den Nutzen für Kranke gegen das Recht ab, über den eigenen Körper zu bestimmen."},
+      {q:"Was ist ein Metagespräch?",a:["Ein Gespräch über das vorherige Gespräch und die Argumentation","Ein Gespräch im Internet","Ein Gespräch ohne Regeln","Ein Streit"],c:0,e:"Man prüft, wie argumentiert wurde und was besser gehen kann."},
+      {q:"Welche Abwägung steckt im Fall „Ökologie gegen Konsumgesellschaft“?",a:["Umweltschutz für die Zukunft gegen den Wunsch nach Wohlstand","Zeit gegen Geld","Lesen gegen Schreiben","Tag gegen Nacht"],c:0,e:"Man fragt auch, wer Verantwortung trägt: Einzelne, Firmen oder der Staat."}
+    ]
+  },
+  {
+    id:"eth-gestalten", thema:"ethisch-argumentieren", lern:true, title:"Ethisch diskutieren und entscheiden", fach:"ethik", stufe:"8 · Gymnasium",
+    desc:"Konsens und Dissens, Sokratisches Gespräch, Pro-Kontra-Debatte und Podiumsdiskussion.",
+    cards:[
+      ["Konsens und Dissens","Konsens heißt, dass sich alle auf eine gemeinsame Lösung einigen. Dissens heißt, dass die Meinungen verschieden bleiben. In der Ethik muss nicht immer ein Konsens entstehen. Wichtig ist, dass man Unterschiede aushält und die Gründe der anderen versteht."],
+      ["Ethik und Politik","Eine ethische Argumentation fragt, was moralisch richtig ist, und nennt dafür Gründe. Eine politische Entscheidung wird von Parlamenten oder Regierungen getroffen und gilt danach für alle als Gesetz, auch wenn nicht jeder sie gut findet. Ethik kann die Politik beraten, ersetzt sie aber nicht."],
+      ["Das Sokratische Gespräch","Der Philosoph Sokrates stellte Fragen, statt Antworten zu geben. Im Sokratischen Gespräch klärt eine Gruppe gemeinsam durch Nachfragen, was man unter einem Begriff wie „Gerechtigkeit“ versteht. Dabei prüft man Beispiele und widerlegt voreilige Antworten."],
+      ["Die Pro-Kontra-Debatte","In einer Pro-Kontra-Debatte vertreten zwei Seiten gegensätzliche Positionen zu einer Streitfrage. Jede Seite trägt ihre Argumente vor und antwortet auf die der anderen. Eine Jury oder das Publikum entscheidet, wer überzeugender war. Dabei spielt keine Rolle, welche Meinung man privat hat."],
+      ["Die Podiumsdiskussion","Bei einer Podiumsdiskussion sitzen mehrere Personen mit verschiedenen Standpunkten vor Publikum. Eine Moderatorin oder ein Moderator leitet das Gespräch, stellt Fragen und achtet darauf, dass alle zu Wort kommen. Danach kann das Publikum Fragen stellen."],
+      ["Fair diskutieren","Gute Regeln für ethische Diskussionen: ausreden lassen, die Sache angreifen und nicht die Person, Behauptungen begründen und Gegenargumente ernst nehmen. Am Ende kann man festhalten, worüber man sich einig ist und wo man verschiedener Meinung bleibt."]
+    ],
+    quiz:[
+      {q:"Was bedeutet Dissens?",a:["Die Meinungen bleiben verschieden","Alle einigen sich","Das Gespräch endet sofort","Eine Wahl wird gewonnen"],c:0,e:"Das Gegenteil ist Konsens. Auch Dissens kann man aushalten und trotzdem respektvoll diskutieren."},
+      {q:"Wodurch unterscheidet sich eine politische Entscheidung von einer ethischen Argumentation?",a:["Sie wird von dafür zuständigen Stellen getroffen und gilt dann für alle","Sie braucht keine Gründe","Sie ist immer moralisch richtig","Sie kommt nur im Unterricht vor"],c:0,e:"Ethik liefert Gründe und kann beraten. Die verbindliche Entscheidung trifft die Politik."},
+      {q:"Was zeichnet ein Sokratisches Gespräch aus?",a:["Gemeinsames Nachfragen, um einen Begriff zu klären","Ein Vortrag des Lehrers","Eine Abstimmung","Eine Prüfung mit Noten"],c:0,e:"Sokrates fragte nach, statt Antworten zu geben."},
+      {q:"Wer leitet eine Podiumsdiskussion?",a:["Eine Moderation","Das Publikum allein","Der lauteste Redner","Niemand"],c:0,e:"Die Moderation stellt Fragen und achtet darauf, dass alle zu Wort kommen."},
+      {q:"Welche Regel gehört zu einer fairen Diskussion?",a:["Die Sache angreifen, nicht die Person","Den Gegner unterbrechen","Immer recht behalten","Nur Gefühle nennen"],c:0,e:"Wer die Sache prüft und begründet, argumentiert fair."}
+    ]
   }
 ];
 
 /* Themen fassen Module zusammen (Ebene zwischen Fach und Modul) */
 var THEMEN = [
-  {id:"reformation", title:"Reformation", fach:"geschichte", stufe:"7", desc:"Von Gutenberg über Luther bis zur Glaubensspaltung. Sechs kurze Module zum Lernen."}
+  {id:"reformation", title:"Reformation", fach:"geschichte", stufe:"7", desc:"Von Gutenberg über Luther bis zur Glaubensspaltung. Sechs kurze Module zum Lernen."},
+  {id:"ethisch-argumentieren", title:"Ethisch argumentieren", fach:"ethik", stufe:"8 · Gymnasium", desc:"Logik, Begründen, Prüfen und Diskutieren: Fünf Module zum Lehrplan Ethik Klasse 8 am Gymnasium."}
 ];
 
 /* ===== Hilfsfunktionen ===== */
-var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde"};
+var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde", ethik:"Ethik"};
 var app = document.getElementById("app");
 /* Online-Speicher (Supabase): hier nach der Einrichtung eintragen, siehe setup.sql */
 var CONFIG = {url:"https://rorcvgomcufpdmigoyvf.supabase.co", key:"sb_publishable_52LO4V2NIfARRyFagtxvhg_45XOPnsp"};
