@@ -18,6 +18,7 @@
   --geschichte:#8C2F39; --on-geschichte:#FFFFFF;
   --erdkunde:#0E6A62; --on-erdkunde:#FFFFFF;
   --ethik:#5B3FA0; --on-ethik:#FFFFFF;
+  --englisch:#9A4A00; --on-englisch:#FFFFFF;
   --good:#1E7B3A; --bad:#B3261E; --focus:#2B5BD7;
   --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
   --font-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -28,6 +29,7 @@
     --geschichte:#E2848E; --on-geschichte:#2A0C10;
     --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
     --ethik:#B7A4F0; --on-ethik:#1D1236;
+    --englisch:#F0A560; --on-englisch:#2A1300;
     --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
   }
 }
@@ -36,6 +38,7 @@
   --geschichte:#E2848E; --on-geschichte:#2A0C10;
   --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
     --ethik:#B7A4F0; --on-ethik:#1D1236;
+    --englisch:#F0A560; --on-englisch:#2A1300;
   --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
 }
 body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
@@ -43,6 +46,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size
 [data-fach="geschichte"]{--c:var(--geschichte);--on:var(--on-geschichte)}
 [data-fach="erdkunde"]{--c:var(--erdkunde);--on:var(--on-erdkunde)}
 [data-fach="ethik"]{--c:var(--ethik);--on:var(--on-ethik)}
+[data-fach="englisch"]{--c:var(--englisch);--on:var(--on-englisch)}
 .wrap{max-width:960px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
 h1,h2,h3{font-family:var(--font-display);line-height:1.1;margin:0;text-wrap:balance}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -381,17 +385,141 @@ var MODULES = [
       {q:"Wer leitet eine Podiumsdiskussion?",a:["Eine Moderation","Das Publikum allein","Der lauteste Redner","Niemand"],c:0,e:"Die Moderation stellt Fragen und achtet darauf, dass alle zu Wort kommen."},
       {q:"Welche Regel gehört zu einer fairen Diskussion?",a:["Die Sache angreifen, nicht die Person","Den Gegner unterbrechen","Immer recht behalten","Nur Gefühle nennen"],c:0,e:"Wer die Sache prüft und begründet, argumentiert fair."}
     ]
+  },
+  {
+    id:"eng-lh-211", thema:"lighthouse-vocab", lern:true, title:"Seite 211: -ful und -less", fach:"englisch", stufe:"Lighthouse",
+    desc:"Wörter mit -ful und -less, dazu goal, bike lane und less.",
+    cards:[
+      ["Die Endungen -ful und -less","Aus einem Nomen kannst du mit einer Endung ein Adjektiv bauen. -ful bedeutet „voll von“ und -less bedeutet „ohne“. So wird aus care (die Sorgfalt) das Wort careful (voll Sorgfalt, also vorsichtig) und careless (ohne Sorgfalt, also leichtsinnig). Wenn du ein Wort kennst, kannst du oft das andere erraten."],
+      ["careful","vorsichtig. Beispiel: Be careful on the stairs. (Sei vorsichtig auf der Treppe.)"],
+      ["colourful","farbenprächtig, bunt. Beispiel: She wore a colourful scarf. (Sie trug einen bunten Schal.)"],
+      ["helpful","hilfsbereit, hilfreich. Beispiel: The guide was very helpful. (Der Führer war sehr hilfsbereit.)"],
+      ["peaceful","friedlich, friedfertig. Beispiel: The lake is quiet and peaceful. (Der See ist ruhig und friedlich.)"],
+      ["stressful","anstrengend, stressig. Beispiel: Exams can be stressful. (Klassenarbeiten können stressig sein.)"],
+      ["successful","erfolgreich. Beispiel: Our school party was successful. (Unser Schulfest war erfolgreich.)"],
+      ["tasteful","geschmackvoll. Beispiel: They have a tasteful flat. (Sie haben eine geschmackvolle Wohnung.)"],
+      ["useful","nützlich. Beispiel: A map is useful on a trip. (Eine Karte ist auf einer Reise nützlich.)"],
+      ["careless","unvorsichtig, leichtsinnig. Beispiel: A careless mistake cost him a point. (Ein Leichtsinnsfehler kostete ihn einen Punkt.)"],
+      ["cloudless","wolkenlos. Beispiel: It was a cloudless night. (Es war eine wolkenlose Nacht.)"],
+      ["colourless","farblos. Beispiel: Water is colourless. (Wasser ist farblos.)"],
+      ["endless","endlos, unendlich. Beispiel: The road seemed endless. (Die Straße schien endlos.)"],
+      ["helpless","hilflos. Beispiel: The baby bird was helpless. (Der junge Vogel war hilflos.)"],
+      ["homeless","obdachlos. Beispiel: We gave food to a homeless man. (Wir gaben einem obdachlosen Mann Essen.)"],
+      ["tasteless","geschmacklos. Beispiel: The soup was tasteless. (Die Suppe war geschmacklos.)"],
+      ["useless","nutzlos, unnütz. Beispiel: This old phone is useless. (Dieses alte Handy ist nutzlos.)"],
+      ["goal","das Ziel (Absicht; Lebensziel); das Tor (im Sport). Im Sport ist goal das Tor, das man schießt. Beispiel: My goal is to speak English well. (Mein Ziel ist es, gut Englisch zu sprechen.)"],
+      ["bike lane","der Radweg. lane allein heißt „die Gasse“ oder „die Spur“. Beispiel: Cycle on the bike lane, please. (Fahr bitte auf dem Radweg.)"],
+      ["less","weniger. Das Gegenteil ist more (mehr). Beispiel: I eat less sugar now. (Ich esse jetzt weniger Zucker.)"]
+    ],
+    quiz:[
+      {"q":"Was bedeutet die Endung -less?","a":["ohne","voll von","sehr","wieder"],"c":0,"e":"-less heißt „ohne“, zum Beispiel homeless = ohne Zuhause."},
+      {"q":"Was bedeutet die Endung -ful?","a":["voll von","ohne","weniger","nicht"],"c":0,"e":"-ful heißt „voll von“, zum Beispiel helpful = voller Hilfe."},
+      {"q":"Was bedeutet „careful“ auf Deutsch?","a":["vorsichtig","erfolgreich","wolkenlos","obdachlos"],"c":0,"e":"careful heißt: vorsichtig."},
+      {"q":"Was bedeutet „colourful“ auf Deutsch?","a":["bunt","geschmackvoll","farblos","geschmacklos"],"c":0,"e":"colourful heißt: farbenprächtig, bunt."},
+      {"q":"Was bedeutet „helpful“ auf Deutsch?","a":["hilfsbereit","nützlich","endlos","nutzlos"],"c":0,"e":"helpful heißt: hilfsbereit, hilfreich."},
+      {"q":"Was bedeutet „peaceful“ auf Deutsch?","a":["friedlich","leichtsinnig","hilflos","das Ziel"],"c":0,"e":"peaceful heißt: friedlich, friedfertig."},
+      {"q":"Was bedeutet „stressful“ auf Deutsch?","a":["anstrengend","wolkenlos","obdachlos","der Radweg"],"c":0,"e":"stressful heißt: anstrengend, stressig."},
+      {"q":"Was bedeutet „successful“ auf Deutsch?","a":["erfolgreich","farblos","geschmacklos","weniger"],"c":0,"e":"successful heißt: erfolgreich."},
+      {"q":"Was bedeutet „tasteful“ auf Deutsch?","a":["geschmackvoll","endlos","nutzlos","vorsichtig"],"c":0,"e":"tasteful heißt: geschmackvoll."},
+      {"q":"Was bedeutet „useful“ auf Deutsch?","a":["nützlich","hilflos","das Ziel","bunt"],"c":0,"e":"useful heißt: nützlich."},
+      {"q":"Was bedeutet „careless“ auf Deutsch?","a":["leichtsinnig","obdachlos","der Radweg","hilfsbereit"],"c":0,"e":"careless heißt: unvorsichtig, leichtsinnig."},
+      {"q":"Was bedeutet „cloudless“ auf Deutsch?","a":["wolkenlos","geschmacklos","weniger","friedlich"],"c":0,"e":"cloudless heißt: wolkenlos."},
+      {"q":"Was bedeutet „colourless“ auf Deutsch?","a":["farblos","nutzlos","vorsichtig","anstrengend"],"c":0,"e":"colourless heißt: farblos."},
+      {"q":"Was bedeutet „endless“ auf Deutsch?","a":["endlos","das Ziel","bunt","erfolgreich"],"c":0,"e":"endless heißt: endlos, unendlich."},
+      {"q":"Was bedeutet „helpless“ auf Deutsch?","a":["hilflos","der Radweg","hilfsbereit","geschmackvoll"],"c":0,"e":"helpless heißt: hilflos."},
+      {"q":"Was bedeutet „homeless“ auf Deutsch?","a":["obdachlos","weniger","friedlich","nützlich"],"c":0,"e":"homeless heißt: obdachlos."},
+      {"q":"Was bedeutet „tasteless“ auf Deutsch?","a":["geschmacklos","vorsichtig","anstrengend","leichtsinnig"],"c":0,"e":"tasteless heißt: geschmacklos."},
+      {"q":"Was bedeutet „useless“ auf Deutsch?","a":["nutzlos","bunt","erfolgreich","wolkenlos"],"c":0,"e":"useless heißt: nutzlos, unnütz."},
+      {"q":"Was bedeutet „goal“ auf Deutsch?","a":["das Ziel","hilfsbereit","geschmackvoll","farblos"],"c":0,"e":"goal heißt: das Ziel (Absicht; Lebensziel); das Tor (im Sport)."},
+      {"q":"Was bedeutet „bike lane“ auf Deutsch?","a":["der Radweg","friedlich","nützlich","endlos"],"c":0,"e":"bike lane heißt: der Radweg."},
+      {"q":"Was bedeutet „less“ auf Deutsch?","a":["weniger","anstrengend","leichtsinnig","hilflos"],"c":0,"e":"less heißt: weniger."}
+    ]
+  },
+  {
+    id:"eng-lh-212", thema:"lighthouse-vocab", lern:true, title:"Seite 212: Vocabulary", fach:"englisch", stufe:"Lighthouse",
+    desc:"Wörter von few bis sesame: Essen, Umwelt und Mengen.",
+    cards:[
+      ["few","wenige. a few heißt „einige, ein paar“ und klingt positiver. few allein heißt „(nur) wenige“. Beispiel: Few people came to the show. (Nur wenige Leute kamen zur Show.)"],
+      ["air","die Luft. Beispiel: We all need air to breathe. (Wir alle brauchen Luft zum Atmen.)"],
+      ["pollution","die (Umwelt-)Verschmutzung. Beispiel: Cars cause air pollution. (Autos verursachen Luftverschmutzung.)"],
+      ["(to) lead, led, led","führen, leiten. Die Formen sind lead – led – led. Der leader ist die Person, die führt. Beispiel: She leads the school choir. (Sie leitet den Schulchor.)"],
+      ["(to) make sb. sth.","jn. zu etwas machen. Beispiel: They made Mia the captain. (Sie machten Mia zur Kapitänin.)"],
+      ["tap","der Wasserhahn. tap water ist das Leitungswasser. Beispiel: Turn off the tap, please. (Dreh bitte den Wasserhahn zu.)"],
+      ["sparkling","kohlensäurehaltig. sparkling water ist der Sprudel. Beispiel: I'd like sparkling water. (Ich hätte gern Sprudelwasser.)"],
+      ["soft","weich; (Stimme) leise. Bei Stimmen heißt soft „leise“. soft drink ist ein alkoholfreies Getränk. Beispiel: The pillow is soft. (Das Kissen ist weich.)"],
+      ["mint","die (Pfeffer-)Minze. Beispiel: I like mint tea. (Ich mag Minztee.)"],
+      ["plate","der Teller. Beispiel: Put the plates on the table. (Stell die Teller auf den Tisch.)"],
+      ["chickpea","die Kichererbse. Beispiel: Hummus is made of chickpeas. (Hummus wird aus Kichererbsen gemacht.)"],
+      ["cucumber","die Gurke (Salatgurke). Beispiel: Add a cucumber to the salad. (Gib eine Gurke in den Salat.)"],
+      ["olive","die Olive. Beispiel: I don't like black olives. (Ich mag keine schwarzen Oliven.)"],
+      ["sesame","der Sesam. Beispiel: The roll has sesame on top. (Auf dem Brötchen ist Sesam.)"],
+      ["few oder little?","Beide heißen „wenig“, aber man benutzt sie verschieden. few steht bei Dingen, die man zählen kann (few cars, wenige Autos). little steht bei Dingen, die man nicht zählen kann (little traffic, wenig Verkehr). Die Steigerung heißt bei few: fewer, the fewest. Bei little heißt sie: less, the least. Beispiel: There are fewer cars and less traffic today. (Heute gibt es weniger Autos und weniger Verkehr.)"]
+    ],
+    quiz:[
+      {"q":"Was bedeutet „few“ auf Deutsch?","a":["wenige","der Wasserhahn","der Teller","der Sesam"],"c":0,"e":"few heißt: wenige."},
+      {"q":"Was bedeutet „air“ auf Deutsch?","a":["die Luft","kohlensäurehaltig","die Kichererbse","wenige"],"c":0,"e":"air heißt: die Luft."},
+      {"q":"Was bedeutet „pollution“ auf Deutsch?","a":["die Verschmutzung","weich","die Gurke","die Luft"],"c":0,"e":"pollution heißt: die (Umwelt-)Verschmutzung."},
+      {"q":"Was bedeutet „(to) lead, led, led“ auf Deutsch?","a":["führen, leiten","die Minze","die Olive","die Verschmutzung"],"c":0,"e":"(to) lead, led, led heißt: führen, leiten."},
+      {"q":"Was bedeutet „(to) make sb. sth.“ auf Deutsch?","a":["jn. zu etwas machen","der Teller","der Sesam","führen, leiten"],"c":0,"e":"(to) make sb. sth. heißt: jn. zu etwas machen."},
+      {"q":"Was bedeutet „tap“ auf Deutsch?","a":["der Wasserhahn","die Kichererbse","wenige","jn. zu etwas machen"],"c":0,"e":"tap heißt: der Wasserhahn."},
+      {"q":"Was bedeutet „sparkling“ auf Deutsch?","a":["kohlensäurehaltig","die Gurke","die Luft","der Wasserhahn"],"c":0,"e":"sparkling heißt: kohlensäurehaltig."},
+      {"q":"Was bedeutet „soft“ auf Deutsch?","a":["weich","die Olive","die Verschmutzung","kohlensäurehaltig"],"c":0,"e":"soft heißt: weich; (Stimme) leise."},
+      {"q":"Was bedeutet „mint“ auf Deutsch?","a":["die Minze","der Sesam","führen, leiten","weich"],"c":0,"e":"mint heißt: die (Pfeffer-)Minze."},
+      {"q":"Was bedeutet „plate“ auf Deutsch?","a":["der Teller","wenige","jn. zu etwas machen","die Minze"],"c":0,"e":"plate heißt: der Teller."},
+      {"q":"Was bedeutet „chickpea“ auf Deutsch?","a":["die Kichererbse","die Luft","der Wasserhahn","der Teller"],"c":0,"e":"chickpea heißt: die Kichererbse."},
+      {"q":"Was bedeutet „cucumber“ auf Deutsch?","a":["die Gurke","die Verschmutzung","kohlensäurehaltig","die Kichererbse"],"c":0,"e":"cucumber heißt: die Gurke (Salatgurke)."},
+      {"q":"Was bedeutet „olive“ auf Deutsch?","a":["die Olive","führen, leiten","weich","die Gurke"],"c":0,"e":"olive heißt: die Olive."},
+      {"q":"Was bedeutet „sesame“ auf Deutsch?","a":["der Sesam","jn. zu etwas machen","die Minze","die Olive"],"c":0,"e":"sesame heißt: der Sesam."},
+      {"q":"Welches Wort passt? „There are ___ cars in our street.“ (wenige Autos)","a":["few","little","less","least"],"c":0,"e":"Autos kann man zählen, deshalb few."},
+      {"q":"Welches Wort passt? „We have ___ money.“ (wenig Geld)","a":["little","few","fewer","fewest"],"c":0,"e":"Geld ist nicht zählbar, deshalb little."}
+    ]
+  },
+  {
+    id:"eng-lh-213", thema:"lighthouse-vocab", lern:true, title:"Seite 213: Vocabulary", fach:"englisch", stufe:"Lighthouse",
+    desc:"Wörter von „I'll have ...“ bis opposite: im Restaurant, Richtungen und Verben.",
+    cards:[
+      ["I'll have ...","Ich nehme ... (beim Essen, z. B. im Restaurant). Beispiel: I'll have the pasta, please. (Ich nehme die Nudeln, bitte.)"],
+      ["(to) order","bestellen. Auch als Nomen: the order ist die Bestellung. Beispiel: Are you ready to order? (Sind Sie bereit zu bestellen?)"],
+      ["waiter / waitress","der Kellner / die Kellnerin. Beispiel: The waitress brought our drinks. (Die Kellnerin brachte unsere Getränke.)"],
+      ["(to) introduce sb. to sb./sth.","jm. jn. / etwas vorstellen; jn. mit jm. / etwas bekannt machen. Das Nomen dazu ist introduction. Beispiel: Let me introduce my friend to you. (Lass mich dir meinen Freund vorstellen.)"],
+      ["paragraph","der (Text-)Abschnitt. Beispiel: Start a new paragraph here. (Beginne hier einen neuen Absatz.)"],
+      ["statue","die Statue. Beispiel: The statue stands in the park. (Die Statue steht im Park.)"],
+      ["gate","das Tor. Beispiel: Please close the gate. (Bitte schließ das Tor.)"],
+      ["right after school","gleich / direkt nach der Schule. right kann auch „richtig“, „rechts“ oder „das Recht“ heißen. Hier bedeutet es „direkt“. Beispiel: I do my homework right after school. (Ich mache meine Hausaufgaben direkt nach der Schule.)"],
+      ["doorkeeper","der Pförtner / die Pförtnerin. Beispiel: The doorkeeper opened the big door. (Der Pförtner öffnete die große Tür.)"],
+      ["(to) shake, shook, shaken","schütteln; zittern. Die Formen sind shake – shook – shaken. shake hands heißt „sich die Hand geben“. Beispiel: Shake the bottle first. (Schüttle zuerst die Flasche.)"],
+      ["towards","nach, auf ... zu, in Richtung (von). Beispiel: The dog ran towards me. (Der Hund rannte auf mich zu.)"],
+      ["natural","natürlich, Natur-. Das Nomen dazu ist nature (die Natur). Beispiel: A natural park protects animals. (Ein Naturpark schützt Tiere.)"],
+      ["opposite","gegenüber (von); gegenüberliegend; entgegengesetzt; das Gegenteil. The opposite of „hot“ is „cold“. Beispiel: The library is opposite the bank. (Die Bibliothek ist gegenüber der Bank.)"]
+    ],
+    quiz:[
+      {"q":"Was bedeutet „I'll have ...“ auf Deutsch?","a":["Ich nehme ...","die Statue","schütteln","jm. jn. vorstellen"],"c":0,"e":"I'll have ... heißt: Ich nehme ... (beim Essen, z. B. im Restaurant)."},
+      {"q":"Was bedeutet „(to) order“ auf Deutsch?","a":["bestellen","das Tor","in Richtung","der Textabschnitt"],"c":0,"e":"(to) order heißt: bestellen."},
+      {"q":"Was bedeutet „waiter / waitress“ auf Deutsch?","a":["der Kellner","direkt nach der Schule","natürlich","die Statue"],"c":0,"e":"waiter / waitress heißt: der Kellner / die Kellnerin."},
+      {"q":"Was bedeutet „(to) introduce sb. to sb./sth.“ auf Deutsch?","a":["jm. jn. vorstellen","der Pförtner","gegenüber","das Tor"],"c":0,"e":"(to) introduce sb. to sb./sth. heißt: jm. jn. / etwas vorstellen; jn. mit jm. / etwas bekannt machen."},
+      {"q":"Was bedeutet „paragraph“ auf Deutsch?","a":["der Textabschnitt","schütteln","Ich nehme ...","direkt nach der Schule"],"c":0,"e":"paragraph heißt: der (Text-)Abschnitt."},
+      {"q":"Was bedeutet „statue“ auf Deutsch?","a":["die Statue","in Richtung","bestellen","der Pförtner"],"c":0,"e":"statue heißt: die Statue."},
+      {"q":"Was bedeutet „gate“ auf Deutsch?","a":["das Tor","natürlich","der Kellner","schütteln"],"c":0,"e":"gate heißt: das Tor."},
+      {"q":"Was bedeutet „right after school“ auf Deutsch?","a":["direkt nach der Schule","gegenüber","jm. jn. vorstellen","in Richtung"],"c":0,"e":"right after school heißt: gleich / direkt nach der Schule."},
+      {"q":"Was bedeutet „doorkeeper“ auf Deutsch?","a":["der Pförtner","Ich nehme ...","der Textabschnitt","natürlich"],"c":0,"e":"doorkeeper heißt: der Pförtner / die Pförtnerin."},
+      {"q":"Was bedeutet „(to) shake, shook, shaken“ auf Deutsch?","a":["schütteln","bestellen","die Statue","gegenüber"],"c":0,"e":"(to) shake, shook, shaken heißt: schütteln; zittern."},
+      {"q":"Was bedeutet „towards“ auf Deutsch?","a":["in Richtung","der Kellner","das Tor","Ich nehme ..."],"c":0,"e":"towards heißt: nach, auf ... zu, in Richtung (von)."},
+      {"q":"Was bedeutet „natural“ auf Deutsch?","a":["natürlich","jm. jn. vorstellen","direkt nach der Schule","bestellen"],"c":0,"e":"natural heißt: natürlich, Natur-."},
+      {"q":"Was bedeutet „opposite“ auf Deutsch?","a":["gegenüber","der Textabschnitt","der Pförtner","der Kellner"],"c":0,"e":"opposite heißt: gegenüber (von); gegenüberliegend; entgegengesetzt; das Gegenteil."}
+    ]
   }
 ];
 
 /* Themen fassen Module zusammen (Ebene zwischen Fach und Modul) */
 var THEMEN = [
   {id:"reformation", title:"Reformation", fach:"geschichte", stufe:"7", desc:"Von Gutenberg über Luther bis zur Glaubensspaltung. Sechs kurze Module zum Lernen."},
-  {id:"ethisch-argumentieren", title:"Ethisch argumentieren", fach:"ethik", stufe:"8 · Gymnasium", desc:"Logik, Begründen, Prüfen und Diskutieren: Fünf Module zum Lehrplan Ethik Klasse 8 am Gymnasium."}
+  {id:"ethisch-argumentieren", title:"Ethisch argumentieren", fach:"ethik", stufe:"8 · Gymnasium", desc:"Logik, Begründen, Prüfen und Diskutieren: Fünf Module zum Lehrplan Ethik Klasse 8 am Gymnasium."},
+  {id:"lighthouse-vocab", title:"Lighthouse: Vocabulary", fach:"englisch", stufe:"Lighthouse", desc:"Vokabeln aus dem Schulbuch, Seite 211 bis 213, mit kurzen Beispielsätzen und Quiz."}
 ];
 
 /* ===== Hilfsfunktionen ===== */
-var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde", ethik:"Ethik"};
+function stufeTxt(s){ return esc(/^\d/.test(s) ? "Klasse " + s : s); }
+var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde", ethik:"Ethik", englisch:"Englisch"};
 var app = document.getElementById("app");
 /* Online-Speicher (Supabase): hier nach der Einrichtung eintragen, siehe setup.sql */
 var CONFIG = {url:"https://rorcvgomcufpdmigoyvf.supabase.co", key:"sb_publishable_52LO4V2NIfARRyFagtxvhg_45XOPnsp"};
@@ -450,7 +578,7 @@ function kidsOf(id){ return MODULES.filter(function(m){ return m.thema===id; });
 function modCard(m){
   var last = qDone(m), nq = qTot(m);
   return '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
-    + '<span class="tag">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span>'
+    + '<span class="tag">'+FACH[m.fach]+' · '+stufeTxt(m.stufe)+'</span>'
     + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
     + '<span class="prog"><span>'+(m.map ? 'Auf der Karte gefunden' : 'Letztes Quiz')+'</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
     + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+(m.map ? ' gefunden' : ' Fragen richtig'))+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
@@ -460,7 +588,7 @@ function themaCard(t){
   var kids = kidsOf(t.id), got = 0, tot = 0, played = 0;
   kids.forEach(function(m){ var d = qDone(m); tot += qTot(m); if (d!=null){ got += d; played++; } });
   return '<button class="mod" data-fach="'+t.fach+'" data-a="thema" data-v="'+t.id+'">'
-    + '<span class="tag">'+FACH[t.fach]+' · Klasse '+esc(t.stufe)+'</span>'
+    + '<span class="tag">'+FACH[t.fach]+' · '+stufeTxt(t.stufe)+'</span>'
     + '<h2>'+esc(t.title)+'</h2><p>'+esc(t.desc)+'</p>'
     + '<span class="prog"><span>Quiz gesamt (letzte Durchläufe)</span><span><b>'+got+' von '+tot+'</b></span></span>'
     + '<span class="bar" role="img" aria-label="'+got+' von '+tot+' Quizfragen richtig"><i style="width:'+(tot ? Math.round(got/tot*100) : 0)+'%"></i></span>'
@@ -469,7 +597,7 @@ function themaCard(t){
 function renderThema(){
   var t = themaOf(S.thema), kids = kidsOf(t.id);
   var h = topbar() + '<div class="head" data-fach="'+t.fach+'"><button class="back" data-a="home">← Alle Module</button>'
-    + '<span class="tag" style="color:var(--c)">'+FACH[t.fach]+' · Klasse '+esc(t.stufe)+'</span><h1>'+esc(t.title)+'</h1><p class="hint">'+esc(t.desc)+'</p></div>';
+    + '<span class="tag" style="color:var(--c)">'+FACH[t.fach]+' · '+stufeTxt(t.stufe)+'</span><h1>'+esc(t.title)+'</h1><p class="hint">'+esc(t.desc)+'</p></div>';
   h += '<div class="grid">'+kids.map(modCard).join("")+'</div>';
   app.innerHTML = h;
 }
@@ -505,7 +633,7 @@ function renderMod(){
   var m = mod(S.mod);
   var bk = m.thema ? '<button class="back" data-a="thema" data-v="'+m.thema+'">← '+esc(themaOf(m.thema).title)+'</button>' : '<button class="back" data-a="home">← Alle Module</button>';
   var h = topbar() + '<div class="head" data-fach="'+m.fach+'">'+bk
-    + '<span class="tag" style="color:var(--c)">'+FACH[m.fach]+' · Klasse '+esc(m.stufe)+'</span><h1>'+esc(m.title)+'</h1></div>';
+    + '<span class="tag" style="color:var(--c)">'+FACH[m.fach]+' · '+stufeTxt(m.stufe)+'</span><h1>'+esc(m.title)+'</h1></div>';
   if (m.map && !m.cards.length){
     /* Modul nur mit Kartenquiz: keine Lernkarten, direkter Einstieg */
     h += '<a class="extra" data-fach="'+m.fach+'" href="'+esc(m.map.url)+'"><b>Kartenquiz starten →</b><span>Bisher gefunden: '+qDone(m)+' von '+qTot(m)+' Begriffen</span></a>';
