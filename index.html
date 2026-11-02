@@ -411,29 +411,28 @@ var MODULES = [
       ["bike lane","der Radweg. lane allein heißt „die Gasse“ oder „die Spur“. Beispiel: Cycle on the bike lane, please. (Fahr bitte auf dem Radweg.)"],
       ["less","weniger. Das Gegenteil ist more (mehr). Beispiel: I eat less sugar now. (Ich esse jetzt weniger Zucker.)"]
     ],
-    quiz:[
-      {"q":"Was bedeutet die Endung -less?","a":["ohne","voll von","sehr","wieder"],"c":0,"e":"-less heißt „ohne“, zum Beispiel homeless = ohne Zuhause."},
-      {"q":"Was bedeutet die Endung -ful?","a":["voll von","ohne","weniger","nicht"],"c":0,"e":"-ful heißt „voll von“, zum Beispiel helpful = voller Hilfe."},
-      {"q":"Was bedeutet „careful“ auf Deutsch?","a":["vorsichtig","erfolgreich","wolkenlos","obdachlos"],"c":0,"e":"careful heißt: vorsichtig."},
-      {"q":"Was bedeutet „colourful“ auf Deutsch?","a":["bunt","geschmackvoll","farblos","geschmacklos"],"c":0,"e":"colourful heißt: farbenprächtig, bunt."},
-      {"q":"Was bedeutet „helpful“ auf Deutsch?","a":["hilfsbereit","nützlich","endlos","nutzlos"],"c":0,"e":"helpful heißt: hilfsbereit, hilfreich."},
-      {"q":"Was bedeutet „peaceful“ auf Deutsch?","a":["friedlich","leichtsinnig","hilflos","das Ziel"],"c":0,"e":"peaceful heißt: friedlich, friedfertig."},
-      {"q":"Was bedeutet „stressful“ auf Deutsch?","a":["anstrengend","wolkenlos","obdachlos","der Radweg"],"c":0,"e":"stressful heißt: anstrengend, stressig."},
-      {"q":"Was bedeutet „successful“ auf Deutsch?","a":["erfolgreich","farblos","geschmacklos","weniger"],"c":0,"e":"successful heißt: erfolgreich."},
-      {"q":"Was bedeutet „tasteful“ auf Deutsch?","a":["geschmackvoll","endlos","nutzlos","vorsichtig"],"c":0,"e":"tasteful heißt: geschmackvoll."},
-      {"q":"Was bedeutet „useful“ auf Deutsch?","a":["nützlich","hilflos","das Ziel","bunt"],"c":0,"e":"useful heißt: nützlich."},
-      {"q":"Was bedeutet „careless“ auf Deutsch?","a":["leichtsinnig","obdachlos","der Radweg","hilfsbereit"],"c":0,"e":"careless heißt: unvorsichtig, leichtsinnig."},
-      {"q":"Was bedeutet „cloudless“ auf Deutsch?","a":["wolkenlos","geschmacklos","weniger","friedlich"],"c":0,"e":"cloudless heißt: wolkenlos."},
-      {"q":"Was bedeutet „colourless“ auf Deutsch?","a":["farblos","nutzlos","vorsichtig","anstrengend"],"c":0,"e":"colourless heißt: farblos."},
-      {"q":"Was bedeutet „endless“ auf Deutsch?","a":["endlos","das Ziel","bunt","erfolgreich"],"c":0,"e":"endless heißt: endlos, unendlich."},
-      {"q":"Was bedeutet „helpless“ auf Deutsch?","a":["hilflos","der Radweg","hilfsbereit","geschmackvoll"],"c":0,"e":"helpless heißt: hilflos."},
-      {"q":"Was bedeutet „homeless“ auf Deutsch?","a":["obdachlos","weniger","friedlich","nützlich"],"c":0,"e":"homeless heißt: obdachlos."},
-      {"q":"Was bedeutet „tasteless“ auf Deutsch?","a":["geschmacklos","vorsichtig","anstrengend","leichtsinnig"],"c":0,"e":"tasteless heißt: geschmacklos."},
-      {"q":"Was bedeutet „useless“ auf Deutsch?","a":["nutzlos","bunt","erfolgreich","wolkenlos"],"c":0,"e":"useless heißt: nutzlos, unnütz."},
-      {"q":"Was bedeutet „goal“ auf Deutsch?","a":["das Ziel","hilfsbereit","geschmackvoll","farblos"],"c":0,"e":"goal heißt: das Ziel (Absicht; Lebensziel); das Tor (im Sport)."},
-      {"q":"Was bedeutet „bike lane“ auf Deutsch?","a":["der Radweg","friedlich","nützlich","endlos"],"c":0,"e":"bike lane heißt: der Radweg."},
-      {"q":"Was bedeutet „less“ auf Deutsch?","a":["weniger","anstrengend","leichtsinnig","hilflos"],"c":0,"e":"less heißt: weniger."}
-    ]
+    vok:[
+      {"en":"careful","q":"vorsichtig","de":"vorsichtig"},
+      {"en":"colourful","q":"bunt","de":"farbenprächtig, bunt"},
+      {"en":"helpful","q":"hilfsbereit","de":"hilfsbereit, hilfreich"},
+      {"en":"peaceful","q":"friedlich","de":"friedlich, friedfertig"},
+      {"en":"stressful","q":"anstrengend","de":"anstrengend, stressig"},
+      {"en":"successful","q":"erfolgreich","de":"erfolgreich"},
+      {"en":"tasteful","q":"geschmackvoll","de":"geschmackvoll"},
+      {"en":"useful","q":"nützlich","de":"nützlich"},
+      {"en":"careless","q":"leichtsinnig","de":"unvorsichtig, leichtsinnig"},
+      {"en":"cloudless","q":"wolkenlos","de":"wolkenlos"},
+      {"en":"colourless","q":"farblos","de":"farblos"},
+      {"en":"endless","q":"endlos","de":"endlos, unendlich"},
+      {"en":"helpless","q":"hilflos","de":"hilflos"},
+      {"en":"homeless","q":"obdachlos","de":"obdachlos"},
+      {"en":"tasteless","q":"geschmacklos","de":"geschmacklos"},
+      {"en":"useless","q":"nutzlos","de":"nutzlos, unnütz"},
+      {"en":"goal","q":"das Ziel","de":"das Ziel (Absicht; Lebensziel); das Tor (im Sport)"},
+      {"en":"bike lane","q":"der Radweg","de":"der Radweg"},
+      {"en":"less","q":"weniger","de":"weniger"}
+    ],
+    quiz:[]
   },
   {
     id:"eng-lh-212", thema:"lighthouse-vocab", lern:true, title:"Seite 212: Vocabulary", fach:"englisch", stufe:"Lighthouse",
@@ -455,24 +454,23 @@ var MODULES = [
       ["sesame","der Sesam. Beispiel: The roll has sesame on top. (Auf dem Brötchen ist Sesam.)"],
       ["few oder little?","Beide heißen „wenig“, aber man benutzt sie verschieden. few steht bei Dingen, die man zählen kann (few cars, wenige Autos). little steht bei Dingen, die man nicht zählen kann (little traffic, wenig Verkehr). Die Steigerung heißt bei few: fewer, the fewest. Bei little heißt sie: less, the least. Beispiel: There are fewer cars and less traffic today. (Heute gibt es weniger Autos und weniger Verkehr.)"]
     ],
-    quiz:[
-      {"q":"Was bedeutet „few“ auf Deutsch?","a":["wenige","der Wasserhahn","der Teller","der Sesam"],"c":0,"e":"few heißt: wenige."},
-      {"q":"Was bedeutet „air“ auf Deutsch?","a":["die Luft","kohlensäurehaltig","die Kichererbse","wenige"],"c":0,"e":"air heißt: die Luft."},
-      {"q":"Was bedeutet „pollution“ auf Deutsch?","a":["die Verschmutzung","weich","die Gurke","die Luft"],"c":0,"e":"pollution heißt: die (Umwelt-)Verschmutzung."},
-      {"q":"Was bedeutet „(to) lead, led, led“ auf Deutsch?","a":["führen, leiten","die Minze","die Olive","die Verschmutzung"],"c":0,"e":"(to) lead, led, led heißt: führen, leiten."},
-      {"q":"Was bedeutet „(to) make sb. sth.“ auf Deutsch?","a":["jn. zu etwas machen","der Teller","der Sesam","führen, leiten"],"c":0,"e":"(to) make sb. sth. heißt: jn. zu etwas machen."},
-      {"q":"Was bedeutet „tap“ auf Deutsch?","a":["der Wasserhahn","die Kichererbse","wenige","jn. zu etwas machen"],"c":0,"e":"tap heißt: der Wasserhahn."},
-      {"q":"Was bedeutet „sparkling“ auf Deutsch?","a":["kohlensäurehaltig","die Gurke","die Luft","der Wasserhahn"],"c":0,"e":"sparkling heißt: kohlensäurehaltig."},
-      {"q":"Was bedeutet „soft“ auf Deutsch?","a":["weich","die Olive","die Verschmutzung","kohlensäurehaltig"],"c":0,"e":"soft heißt: weich; (Stimme) leise."},
-      {"q":"Was bedeutet „mint“ auf Deutsch?","a":["die Minze","der Sesam","führen, leiten","weich"],"c":0,"e":"mint heißt: die (Pfeffer-)Minze."},
-      {"q":"Was bedeutet „plate“ auf Deutsch?","a":["der Teller","wenige","jn. zu etwas machen","die Minze"],"c":0,"e":"plate heißt: der Teller."},
-      {"q":"Was bedeutet „chickpea“ auf Deutsch?","a":["die Kichererbse","die Luft","der Wasserhahn","der Teller"],"c":0,"e":"chickpea heißt: die Kichererbse."},
-      {"q":"Was bedeutet „cucumber“ auf Deutsch?","a":["die Gurke","die Verschmutzung","kohlensäurehaltig","die Kichererbse"],"c":0,"e":"cucumber heißt: die Gurke (Salatgurke)."},
-      {"q":"Was bedeutet „olive“ auf Deutsch?","a":["die Olive","führen, leiten","weich","die Gurke"],"c":0,"e":"olive heißt: die Olive."},
-      {"q":"Was bedeutet „sesame“ auf Deutsch?","a":["der Sesam","jn. zu etwas machen","die Minze","die Olive"],"c":0,"e":"sesame heißt: der Sesam."},
-      {"q":"Welches Wort passt? „There are ___ cars in our street.“ (wenige Autos)","a":["few","little","less","least"],"c":0,"e":"Autos kann man zählen, deshalb few."},
-      {"q":"Welches Wort passt? „We have ___ money.“ (wenig Geld)","a":["little","few","fewer","fewest"],"c":0,"e":"Geld ist nicht zählbar, deshalb little."}
-    ]
+    vok:[
+      {"en":"few","q":"wenige","de":"wenige"},
+      {"en":"air","q":"die Luft","de":"die Luft"},
+      {"en":"pollution","q":"die Verschmutzung","de":"die (Umwelt-)Verschmutzung"},
+      {"en":"(to) lead, led, led","q":"führen, leiten","de":"führen, leiten","ans":["lead"]},
+      {"en":"(to) make sb. sth.","q":"jn. zu etwas machen","de":"jn. zu etwas machen","ans":["make sb sth","make"]},
+      {"en":"tap","q":"der Wasserhahn","de":"der Wasserhahn"},
+      {"en":"sparkling","q":"kohlensäurehaltig","de":"kohlensäurehaltig"},
+      {"en":"soft","q":"weich","de":"weich; (Stimme) leise"},
+      {"en":"mint","q":"die Minze","de":"die (Pfeffer-)Minze"},
+      {"en":"plate","q":"der Teller","de":"der Teller"},
+      {"en":"chickpea","q":"die Kichererbse","de":"die Kichererbse"},
+      {"en":"cucumber","q":"die Gurke","de":"die Gurke (Salatgurke)"},
+      {"en":"olive","q":"die Olive","de":"die Olive"},
+      {"en":"sesame","q":"der Sesam","de":"der Sesam"}
+    ],
+    quiz:[]
   }
 ];
 
@@ -525,7 +523,7 @@ function P(modId){
   return store.prog[modId] || (store.prog[modId] = {best:null,tries:0,cards:0});
 }
 /* Quiz-Fortschritt: Kartenquiz = gefundene Begriffe, sonst letzter Durchlauf */
-function qTot(m){ return m.map ? m.map.total : m.quiz.length; }
+function qTot(m){ return m.map ? m.map.total : m.vok ? m.vok.length : m.quiz.length; }
 function qDone(m){ var p = P(m.id); return m.map ? (p.found||[]).length : p.last; }
 function topbar(){
   var u = me();
@@ -545,9 +543,9 @@ function modCard(m){
   return '<button class="mod" data-fach="'+m.fach+'" data-a="open" data-v="'+m.id+'">'
     + '<span class="tag">'+FACH[m.fach]+' · '+stufeTxt(m.stufe)+'</span>'
     + '<h2>'+esc(m.title)+'</h2><p>'+esc(m.desc)+'</p>'
-    + '<span class="prog"><span>'+(m.map ? 'Auf der Karte gefunden' : 'Letztes Quiz')+'</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
-    + '<span class="bar" role="img" aria-label="'+(last==null ? 'Quiz noch nicht gespielt' : last+' von '+nq+(m.map ? ' gefunden' : ' Fragen richtig'))+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
-    + '<span class="meta">'+(m.cards.length ? '<span><b>'+m.cards.length+'</b> Karten</span>' : '')+'<span><b>'+nq+'</b> '+(m.map ? 'Begriffe' : 'Fragen')+'</span></span></button>';
+    + '<span class="prog"><span>'+(m.map ? 'Auf der Karte gefunden' : m.vok ? 'Letztes Schreiben' : 'Letztes Quiz')+'</span><span>'+(last==null ? 'noch nicht gespielt' : '<b>'+last+' von '+nq+'</b>')+'</span></span>'
+    + '<span class="bar" role="img" aria-label="'+(last==null ? 'noch nicht gespielt' : last+' von '+nq+(m.map ? ' gefunden' : m.vok ? ' Wörter richtig geschrieben' : ' Fragen richtig'))+'"><i style="width:'+(last==null ? 0 : Math.round(last/nq*100))+'%"></i></span>'
+    + '<span class="meta">'+(m.cards.length ? '<span><b>'+m.cards.length+'</b> Karten</span>' : '')+'<span><b>'+nq+'</b> '+(m.map ? 'Begriffe' : m.vok ? 'Vokabeln' : 'Fragen')+'</span></span></button>';
 }
 function themaCard(t){
   var kids = kidsOf(t.id), got = 0, tot = 0, played = 0;
@@ -608,10 +606,12 @@ function renderMod(){
   h += '<div class="tabs" role="tablist" data-fach="'+m.fach+'">'
     + '<button class="tab" role="tab" data-a="tab" data-v="cards" aria-selected="'+(S.tab==="cards")+'">'+(m.lern ? 'Lernkarten' : 'Karteikarten')+'</button>'
     + (m.map ? '<a class="tab" href="'+esc(m.map.url)+'" style="display:grid;place-items:center;text-decoration:none;color:inherit">Kartenquiz · '+qDone(m)+'/'+qTot(m)+' →</a>'
+             : m.vok ? '<button class="tab" role="tab" data-a="tab" data-v="lernen" aria-selected="'+(S.tab==="lernen")+'">Lernen</button>'
+               + '<button class="tab" role="tab" data-a="tab" data-v="schreiben" aria-selected="'+(S.tab==="schreiben")+'">Schreiben</button>'
              : '<button class="tab" role="tab" data-a="tab" data-v="quiz" aria-selected="'+(S.tab==="quiz")+'">Quiz</button>') + '</div>';
   h += '<div data-fach="'+m.fach+'" id="body"></div>';
   app.innerHTML = h;
-  if (S.tab==="cards") renderCards(); else renderQuiz();
+  if (S.tab==="cards") renderCards(); else if (m.vok) renderVok(); else renderQuiz();
 }
 
 /* ===== Karteikarten ===== */
@@ -690,6 +690,103 @@ function renderQuiz(){
   if (answered){ var w = document.getElementById("weiter"); if (w) w.focus(); }
 }
 
+/* ===== Vokabeltrainer =====
+   Lernen: Englisch→Deutsch und Deutsch→Englisch gemischt. Für jedes Wort und jede Richtung wird ein Stand (0 bis 3) gemerkt,
+   unsichere Paare kommen im nächsten Durchlauf häufiger dran. Schreiben: alle Wörter, das englische Wort wird getippt. */
+var BOX = [8,4,2,1];
+function vkOf(m){ var p = P(m.id); if (!p.vk) p.vk = {}; return p.vk; }
+function vkStat(m){ var vk = vkOf(m), e = 0, d = 0; m.vok.forEach(function(w,i){ if ((vk[i+"e"]||0)>=2) e++; if ((vk[i+"d"]||0)>=2) d++; }); return {e:e, d:d, n:m.vok.length}; }
+function vokRow(m){ var st = vkStat(m); return '<div class="prog"><span>Lernen sicher (E→D / D→E)</span><span>'+st.e+' / '+st.d+' von '+st.n+'</span></div>'; }
+function normEn(t){ return String(t).toLowerCase().replace(/[’´]/g,"'").replace(/[().,;\/]/g," ").replace(/\s+/g," ").trim().replace(/^to /,""); }
+function vQ(m, it){
+  var w = m.vok[it.i], e = it.d==="e", right = e ? w.q : w.en, others = [];
+  shuffle(m.vok.map(function(x,j){ return j; })).forEach(function(j){
+    if (j===it.i || others.length>=3) return;
+    var t = e ? m.vok[j].q : m.vok[j].en;
+    if (t!==right && others.indexOf(t)<0) others.push(t);
+  });
+  return {i:it.i, d:it.d, q:(e ? 'Was heißt „'+w.en+'“ auf Deutsch?' : 'Wie heißt „'+w.q+'“ auf Englisch?'),
+    opts:shuffle([{t:right,ok:true}].concat(others.map(function(t){ return {t:t,ok:false}; }))), e:w.en+' = '+w.de};
+}
+function newVok(){
+  var m = mod(S.mod);
+  if (S.tab==="schreiben"){
+    S.v = {kind:"schreiben", order:shuffle(m.vok.map(function(w,i){ return i; })), i:0, score:0, res:null, done:false, miss:[]};
+    return;
+  }
+  var vk = vkOf(m), pool = [], out = [], size, tot, r, k;
+  m.vok.forEach(function(w,i){ ["e","d"].forEach(function(d){ pool.push({i:i, d:d, w:BOX[Math.min(3, vk[i+d]||0)]}); }); });
+  size = Math.min(12, pool.length);
+  while (out.length<size){
+    tot = 0; pool.forEach(function(x){ tot += x.w; });
+    r = Math.random()*tot;
+    for (k=0; k<pool.length-1; k++){ r -= pool[k].w; if (r<0) break; }
+    out.push(pool.splice(k,1)[0]);
+  }
+  S.v = {kind:"lernen", qs:shuffle(out).map(function(it){ return vQ(m,it); }), i:0, score:0, pick:null, done:false, miss:[]};
+}
+function renderVok(){
+  var m = mod(S.mod), el = document.getElementById("body");
+  if (!S.v || S.v.kind!==S.tab) newVok();
+  if (S.v.kind==="lernen") renderLernen(m, S.v, el); else renderSchreiben(m, S.v, el);
+}
+var BTN = 'style="background:var(--c);border-color:var(--c);color:var(--on)"';
+function renderLernen(m, v, el){
+  var st = vkStat(m), stat = '<p class="hint">Sicher gelernt: Englisch→Deutsch '+st.e+' von '+st.n+' · Deutsch→Englisch '+st.d+' von '+st.n+'</p>';
+  if (v.done){
+    el.innerHTML = '<div class="res"><div class="score">'+v.score+'/'+v.qs.length+'</div><h2>'+(v.score===v.qs.length ? 'Fehlerfrei.' : 'Gut geübt. Was noch wackelt, kommt beim nächsten Mal öfter dran.')+'</h2>'
+      + (v.miss.length ? '<p class="hint">Noch nicht sicher: '+v.miss.map(esc).join(' · ')+'</p>' : '') + stat
+      + '<div class="row" style="width:100%"><button class="btn" data-a="tab" data-v="cards">Zu den Karten</button><button class="btn primary" data-a="vagain" '+BTN+'>Nächster Durchlauf</button></div></div>';
+    return;
+  }
+  var q = v.qs[v.i], answered = v.pick!==null;
+  var h = '<div class="quiz"><div class="prog"><span>Frage '+(v.i+1)+' von '+v.qs.length+'</span><span>Punkte: '+v.score+'</span></div>'
+    + '<div class="bar" aria-hidden="true"><i style="width:'+Math.round(v.i/v.qs.length*100)+'%"></i></div>'
+    + '<p class="hint">'+(q.d==="e" ? 'Englisch → Deutsch' : 'Deutsch → Englisch')+'</p>'
+    + '<div class="q">'+esc(q.q)+'</div><div class="opts">';
+  q.opts.forEach(function(o,i){
+    var cls = "opt";
+    if (answered){ if (o.ok) cls += " ok"; else if (i===v.pick) cls += " no"; }
+    h += '<button class="'+cls+'" data-a="vpick" data-v="'+i+'"'+(answered?' disabled':'')+'>'+esc(o.t)+'</button>';
+  });
+  h += '</div>';
+  if (answered){
+    h += '<div class="expl" role="status"><b>'+(q.opts[v.pick].ok ? 'Richtig.' : 'Leider falsch.')+'</b> '+esc(q.e)+'</div>'
+      + '<button class="btn primary" data-a="vnext" id="weiter">'+(v.i+1===v.qs.length ? 'Ergebnis ansehen' : 'Weiter')+'</button>';
+  }
+  el.innerHTML = h + '</div>';
+  if (answered){ var w = document.getElementById("weiter"); if (w) w.focus(); }
+}
+function renderSchreiben(m, v, el){
+  var n = v.order.length;
+  if (v.done){
+    var best = P(m.id).best;
+    el.innerHTML = '<div class="res"><div class="score">'+v.score+'/'+n+'</div><h2>'+(v.score===n ? 'Alle richtig geschrieben.' : 'Übe die Wörter unten noch einmal.')+'</h2><p class="hint">Bestwert: '+best+' von '+n+'</p>'
+      + (v.miss.length ? '<p class="hint">Zum Wiederholen: '+v.miss.map(function(w){ return esc(w.en); }).join(' · ')+'</p>' : '')
+      + '<div class="row" style="width:100%"><button class="btn" data-a="tab" data-v="cards">Zu den Karten</button><button class="btn primary" data-a="vagain" '+BTN+'>Nochmal</button></div></div>';
+    return;
+  }
+  var w = m.vok[v.order[v.i]], res = v.res;
+  var h = '<div class="quiz"><div class="prog"><span>Wort '+(v.i+1)+' von '+n+'</span><span>Richtig: '+v.score+'</span></div>'
+    + '<div class="bar" aria-hidden="true"><i style="width:'+Math.round(v.i/n*100)+'%"></i></div>'
+    + '<p class="hint">Schreibe das englische Wort.</p><div class="q">'+esc(w.de)+'</div>'
+    + '<input id="wans" class="fld" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Englisch" aria-label="Englisches Wort"'+(res ? ' disabled value="'+esc(res.given)+'"' : '')+'>';
+  if (!res) h += '<button class="btn primary" data-a="wcheck">Prüfen</button>';
+  else h += '<div class="expl" role="status"><b>'+(res.ok ? 'Richtig.' : 'Leider falsch.')+'</b> '+(res.ok ? esc(w.en) : 'Richtig ist: <b>'+esc(w.en)+'</b>')+'</div>'
+    + '<button class="btn primary" data-a="wnext" id="weiter">'+(v.i+1===n ? 'Ergebnis ansehen' : 'Weiter')+'</button>';
+  el.innerHTML = h + '</div>';
+  var f = document.getElementById(res ? "weiter" : "wans"); if (f) f.focus();
+}
+function vCheck(){
+  var v = S.v; if (!v || v.kind!=="schreiben" || v.res) return;
+  var m = mod(S.mod), w = m.vok[v.order[v.i]], given = val("wans"), g = normEn(given);
+  if (!g) return;
+  var ok = [w.en].concat(w.ans||[]).some(function(c){ return normEn(c)===g; });
+  v.res = {ok:ok, given:given};
+  if (ok) v.score++; else { v.miss.push(w); vkOf(m)[v.order[v.i]+"d"] = 0; }
+  P(S.mod).at = Date.now(); save(); renderVok();
+}
+
 /* ===== Nutzer ===== */
 function renderWho(){
   var neu = S.mode==="new";
@@ -713,8 +810,8 @@ function renderMe(){
       + (nc ? '<div class="prog"><span>'+(m.lern ? 'Karten gelesen' : 'Karten gewusst')+'</span><span>'+p.cards+' von '+nc+'</span></div><div class="bar"><i style="width:'+Math.round(p.cards/nc*100)+'%"></i></div>' : '')
       + (m.map
         ? '<div class="prog"><span>Auf der Karte gefunden</span><span>'+fd+' von '+nq+'</span></div><div class="bar"><i style="width:'+Math.round(fd/nq*100)+'%"></i></div>'
-        : '<div class="prog"><span>Quiz Bestwert</span><span>'+(p.best==null?'noch nicht gespielt':p.best+' von '+nq+' · '+p.tries+'×')+'</span></div><div class="bar"><i style="width:'+(p.best==null?0:Math.round(p.best/nq*100))+'%"></i></div>')
-      + '<button class="btn" data-a="open" data-v="'+m.id+'">Üben</button></div>';
+        : '<div class="prog"><span>'+(m.vok ? 'Schreiben Bestwert' : 'Quiz Bestwert')+'</span><span>'+(p.best==null?'noch nicht gespielt':p.best+' von '+nq+' · '+p.tries+'×')+'</span></div><div class="bar"><i style="width:'+(p.best==null?0:Math.round(p.best/nq*100))+'%"></i></div>')
+      + (m.vok ? vokRow(m) : '') + '<button class="btn" data-a="open" data-v="'+m.id+'">Üben</button></div>';
   });
   h += '</div>';
   if (S.delask){
@@ -787,7 +884,7 @@ function openThema(id){
 }
 function openMod(id, tab){
   if (!mod(id) || !me()) return;
-  S.view="mod"; S.mod=id; S.tab=tab||"cards"; newDeck(); newQuiz();
+  S.view="mod"; S.mod=id; S.tab=tab||"cards"; S.v=null; newDeck(); newQuiz();
   go(); window.scrollTo(0,0);
 }
 function home(){ S.view = me() ? "hub" : "who"; S.mod=null; S.delask=false; go(); window.scrollTo(0,0); }
@@ -811,7 +908,12 @@ app.addEventListener("click", function(ev){
     var u = me(); if (!u) return;
     delete store.users[ukey(u.name)]; store.cur = null; clearUser();
   }
-  else if (a==="tab"){ S.tab = v; if (v==="quiz" && (S.z.done)) newQuiz(); renderMod(); }
+  else if (a==="tab"){
+    var mt = mod(S.mod); S.tab = (mt.vok && v==="quiz") ? "lernen" : v;
+    if (S.tab==="lernen" || S.tab==="schreiben"){ if (!S.v || S.v.kind!==S.tab || S.v.done) newVok(); }
+    else if (v==="quiz" && (S.z.done)) newQuiz();
+    renderMod();
+  }
   else if (a==="flip"){ S.d.flip = !S.d.flip; renderCards(); }
   else if (a==="know"){ S.d.queue.shift(); S.d.known++; S.d.flip=false; var pc = P(S.mod); if (S.d.known>pc.cards){ pc.cards = S.d.known; save(); } renderCards(); }
   else if (a==="again"){ S.d.queue.push(S.d.queue.shift()); S.d.flip=false; renderCards(); }
@@ -832,9 +934,33 @@ app.addEventListener("click", function(ev){
     renderQuiz();
   }
   else if (a==="requiz"){ newQuiz(); renderQuiz(); }
+  else if (a==="vpick"){
+    var vv = S.v; if (!vv || vv.pick!==null) return;
+    var mv = mod(S.mod), qq = vv.qs[vv.i], vk = vkOf(mv), key = qq.i+qq.d;
+    vv.pick = +v;
+    if (qq.opts[vv.pick].ok){ vv.score++; vk[key] = Math.min(3, (vk[key]||0)+1); }
+    else { vk[key] = 0; if (vv.miss.indexOf(mv.vok[qq.i].en)<0) vv.miss.push(mv.vok[qq.i].en); }
+    P(S.mod).at = Date.now(); save(); renderVok();
+  }
+  else if (a==="vnext"){
+    var vn = S.v; vn.i++; vn.pick = null; if (vn.i>=vn.qs.length) vn.done = true;
+    renderVok();
+  }
+  else if (a==="vagain"){ newVok(); renderVok(); }
+  else if (a==="wcheck"){ vCheck(); }
+  else if (a==="wnext"){
+    var vw = S.v; vw.i++; vw.res = null;
+    if (vw.i>=vw.order.length){
+      vw.done = true; var pw = P(S.mod);
+      pw.tries++; if (pw.best==null || vw.score>pw.best) pw.best = vw.score;
+      pw.last = vw.score; pw.at = Date.now(); save();
+    }
+    renderVok();
+  }
 });
 app.addEventListener("keydown", function(ev){
   if (ev.key==="Enter" && (ev.target.id==="neuname" || ev.target.id==="pin" || ev.target.id==="pin2")){ ev.preventDefault(); submit(); }
+  else if (ev.key==="Enter" && ev.target.id==="wans"){ ev.preventDefault(); vCheck(); }
 });
 app.addEventListener("input", function(ev){
   if (ev.target.id==="suche"){ S.q = ev.target.value; go(); }

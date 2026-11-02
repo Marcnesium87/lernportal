@@ -1,0 +1,14 @@
+name = "lernportal"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lernportal"
+database_id = "28fb303a-9a84-44d5-827a-7b09c67e96b7"
