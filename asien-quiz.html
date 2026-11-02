@@ -318,7 +318,7 @@ let lpT=null;
 function lpToken(s){const k=String(s.cur.name).replace(/\s+/g,' ').trim().toLowerCase();const u=(s.users||{})[k];return u&&u.token||null}
 function lpPush(){
   lpT=null;const s=lpStore();if(!s)return;const t=lpToken(s);if(!t)return;
-  fetch(LP_API+'/api/save',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t,prog:s.prog||{}})})
+  fetch(LP_API+'/api/save',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t,prog:s.prog||{},events:lpFound(s).size?[{mod:'asien',title:'Asien Kartenquiz',kind:'karte',score:Math.min(lpFound(s).size,ITEMS.length),total:ITEMS.length,at:Date.now()}]:[]})})
     .then(r=>r.json()).then(r=>{if(r&&r.ok){const cur=lpStore();if(cur){lpAdd(cur,[...lpFound({prog:r.prog})]);lpSave(cur);lpShow()}}}).catch(()=>{});
 }
 addEventListener('pagehide',()=>{if(lpT)lpPush()});

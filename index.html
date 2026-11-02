@@ -529,14 +529,23 @@ function api(fn, body){
 }
 function setSync(t){ S.sync = t; var el = document.getElementById("sync"); if (el){ el.textContent = t; el.hidden = !t; } }
 function curUser(){ return store.cur ? store.users[ukey(store.cur.name)] : null; }
+/* Protokoll: Durchläufe und Stand der Lernkarten, wird beim Speichern an den Server geschickt */
+function logEv(m, kind, score, total){
+  var u = curUser(); if (!u) return;
+  var q = u.evq || (u.evq = []);
+  if (kind==="karten") u.evq = q = q.filter(function(e){ return !(e.mod===m.id && e.kind==="karten"); });
+  q.push({mod:m.id, title:m.title, kind:kind, score:score, total:total, at:Date.now()});
+  if (q.length>200) q.shift();
+}
 function refreshView(){ if (S.view==="hub" || S.view==="me") go(); }
 function push(){
   clearTimeout(saveTimer); saveTimer = null;
   var u = curUser(); if (!u) return;
   if (!u.token) return syncLocal(u);
-  var my = rev;
-  api("save", {token:u.token, prog:store.prog}).then(function(r){
+  var my = rev, evs = (u.evq||[]).slice(0,50);
+  api("save", {token:u.token, prog:store.prog, events:evs}).then(function(r){
     if (r && r.ok){
+      if (evs.length){ u.evq = (u.evq||[]).filter(function(e){ return evs.indexOf(e)<0; }); saveLocal(); if (u.evq.length) setTimeout(push, 300); }
       if (rev===my && store.cur && ukey(store.cur.name)===ukey(u.name)){ store.prog = r.prog; saveLocal(); refreshView(); }
       setSync("");
     } else if (r && r.error==="auth"){
@@ -669,7 +678,7 @@ function newDeck(){
 /* Lernkarten: kurze Infos zum Durchblättern, danach Quiz */
 function renderLern(){
   var m = mod(S.mod), d = S.d, el = document.getElementById("body"), c = m.cards[d.i], last = d.i===d.total-1;
-  var pc = P(S.mod); if (d.i+1>pc.cards){ pc.cards = d.i+1; save(); }
+  var pc = P(S.mod); if (d.i+1>pc.cards){ pc.cards = d.i+1; logEv(m, "karten", pc.cards, d.total); save(); }
   el.innerHTML = '<div class="deck"><div class="prog"><span>Karte '+(d.i+1)+' von '+d.total+'</span><span>Lernen</span></div>'
     + '<div class="bar" aria-hidden="true"><i style="width:'+Math.round((d.i+1)/d.total*100)+'%"></i></div>'
     + '<div class="learn" aria-live="polite">'+(c[2] ? '<span class="bonus">Bonuswissen</span>' : '')+'<span class="lbl">'+esc(c[0])+'</span><span class="txt">'+esc(c[1])+'</span></div>'
@@ -999,7 +1008,7 @@ app.addEventListener("click", function(ev){
     renderMod();
   }
   else if (a==="flip"){ S.d.flip = !S.d.flip; renderCards(); }
-  else if (a==="know"){ S.d.queue.shift(); S.d.known++; S.d.flip=false; var pc = P(S.mod); if (S.d.known>pc.cards){ pc.cards = S.d.known; save(); } renderCards(); }
+  else if (a==="know"){ S.d.queue.shift(); S.d.known++; S.d.flip=false; var pc = P(S.mod); if (S.d.known>pc.cards){ pc.cards = S.d.known; logEv(mod(S.mod), "karten", pc.cards, S.d.total); save(); } renderCards(); }
   else if (a==="again"){ S.d.queue.push(S.d.queue.shift()); S.d.flip=false; renderCards(); }
   else if (a==="redeck"){ newDeck(); renderCards(); }
   else if (a==="pick"){
@@ -1012,7 +1021,7 @@ app.addEventListener("click", function(ev){
     if (z2.i>=z2.qs.length){
       z2.done = true; var pr = P(S.mod);
       pr.tries++; if (pr.best==null || z2.score>pr.best) pr.best = z2.score;
-      pr.last = z2.score; pr.at = Date.now();
+      pr.last = z2.score; pr.at = Date.now(); logEv(mod(S.mod), "quiz", z2.score, z2.qs.length);
       save();
     }
     renderQuiz();
@@ -1027,7 +1036,8 @@ app.addEventListener("click", function(ev){
     P(S.mod).at = Date.now(); save(); renderVok();
   }
   else if (a==="vnext"){
-    var vn = S.v; vn.i++; vn.pick = null; if (vn.i>=vn.qs.length) vn.done = true;
+    var vn = S.v; vn.i++; vn.pick = null;
+    if (vn.i>=vn.qs.length){ vn.done = true; logEv(mod(S.mod), "lernen", vn.score, vn.qs.length); P(S.mod).at = Date.now(); save(); }
     renderVok();
   }
   else if (a==="vagain"){ newVok(); renderVok(); }
@@ -1037,7 +1047,7 @@ app.addEventListener("click", function(ev){
     if (vw.i>=vw.order.length){
       vw.done = true; var pw = P(S.mod);
       pw.tries++; if (pw.best==null || vw.score>pw.best) pw.best = vw.score;
-      pw.last = vw.score; pw.at = Date.now(); save();
+      pw.last = vw.score; pw.at = Date.now(); logEv(mod(S.mod), "schreiben", vw.score, vw.order.length); save();
     }
     renderVok();
   }

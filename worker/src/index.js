@@ -111,9 +111,46 @@ async function login(env, body) {
   return { error: fails >= 5 ? "locked" : "wrong" };
 }
 
+// Protokoll der Durchläufe. Quiz, Lernen und Schreiben sind einzelne Einträge,
+// Lernkarten und Kartenquiz zählen einmal pro Tag (höchster Stand).
+const KINDS = ["quiz", "lernen", "schreiben", "karten", "karte"];
+const DAYKIND = ["karten", "karte"];
+const dayOf = (ms) => new Date(ms).toLocaleDateString("sv-SE", { timeZone: "Europe/Berlin" });
+async function storeEvents(env, nameKey, events) {
+  if (!Array.isArray(events)) return;
+  const now = Date.now(), stmts = [];
+  for (const e of events.slice(0, 50)) {
+    if (!e || !KINDS.includes(e.kind)) continue;
+    const total = Math.floor(+e.total), score = Math.floor(+e.score);
+    if (!(total >= 1 && total <= 1000 && score >= 0 && score <= total)) continue;
+    const mod = String(e.mod || "").slice(0, 40);
+    if (!mod) continue;
+    const title = String(e.title || mod).replace(/[\u0000-\u001f<>]/g, "").slice(0, 80);
+    let at = Math.floor(+e.at);
+    if (!(at > now - 30 * 864e5 && at < now + 10 * 6e4)) at = now;
+    const vals = [nameKey, mod, title, e.kind, score, total, at, dayOf(at)];
+    stmts.push(DAYKIND.includes(e.kind)
+      ? env.DB.prepare("INSERT INTO events (name_key, mod, title, kind, score, total, at, day) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (name_key, mod, kind, day) WHERE kind IN ('karten','karte') DO UPDATE SET score = MAX(score, excluded.score), total = excluded.total, at = MAX(at, excluded.at), title = excluded.title").bind(...vals)
+      : env.DB.prepare("INSERT OR IGNORE INTO events (name_key, mod, title, kind, score, total, at, day) VALUES (?, ?, ?, ?, ?, ?, ?, ?)").bind(...vals));
+  }
+  if (stmts.length) await env.DB.batch(stmts);
+}
+
+// Übersicht für die Eltern: geschützt durch den geheimen Schlüssel ADMIN_KEY
+async function admin(env, body) {
+  const ok = env.ADMIN_KEY && (await sha256(String(body.key || ""))) === (await sha256(env.ADMIN_KEY));
+  if (!ok) { await new Promise((r) => setTimeout(r, 500)); return { error: "auth" }; }
+  const users = (await env.DB.prepare(
+    "SELECT u.name, u.hue, u.created_at, (SELECT MAX(at) FROM events e WHERE e.name_key = u.name_key) AS last_at FROM users u ORDER BY u.name COLLATE NOCASE").all()).results;
+  const events = (await env.DB.prepare(
+    "SELECT u.name AS name, e.mod, e.title, e.kind, e.score, e.total, e.at FROM events e JOIN users u ON u.name_key = e.name_key ORDER BY e.at DESC LIMIT 3000").all()).results;
+  return { ok: true, users, events };
+}
+
 async function save(env, body) {
   const u = await userByToken(env, body.token);
   if (!u) return { error: "auth" };
+  await storeEvents(env, u.name_key, body.events);
   const p = body.prog;
   if (!p || typeof p !== "object" || Array.isArray(p) || JSON.stringify(p).length > MAX_PROG) return { error: "data" };
   const merged = mergeProg(JSON.parse(u.prog || "{}"), p);
@@ -133,12 +170,13 @@ async function remove(env, body) {
   if (!u) return { error: "auth" };
   await env.DB.batch([
     env.DB.prepare("DELETE FROM tokens WHERE name_key = ?").bind(u.name_key),
+    env.DB.prepare("DELETE FROM events WHERE name_key = ?").bind(u.name_key),
     env.DB.prepare("DELETE FROM users WHERE name_key = ?").bind(u.name_key),
   ]);
   return { ok: true };
 }
 
-const ROUTES = { "/api/register": register, "/api/login": login, "/api/save": save, "/api/logout": logout, "/api/delete": remove };
+const ROUTES = { "/api/register": register, "/api/login": login, "/api/save": save, "/api/logout": logout, "/api/delete": remove, "/api/admin": admin };
 
 export default {
   async fetch(req, env) {
