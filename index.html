@@ -487,38 +487,37 @@ var THEMEN = [
 function stufeTxt(s){ return esc(/^\d/.test(s) ? "Klasse " + s : s); }
 var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde", ethik:"Ethik", englisch:"Englisch"};
 var app = document.getElementById("app");
-/* Online-Speicher (Supabase): hier nach der Einrichtung eintragen, siehe setup.sql */
-var CONFIG = {url:"https://rorcvgomcufpdmigoyvf.supabase.co", key:"sb_publishable_52LO4V2NIfARRyFagtxvhg_45XOPnsp"};
-
+/* Nutzer und Fortschritt liegen nur in diesem Browser (localStorage), nichts geht ins Netz. */
 var S = {view:"hub", mod:null, tab:"cards", q:"", fach:"alle", d:null, z:null, delask:false, mode:"login", busy:false, sync:""};
-var store = {cur:null, prog:{}};
-try { var raw = localStorage.getItem("lernportal-v3"); if (raw) { var o = JSON.parse(raw); if (o && o.cur && o.cur.name) store = o; } } catch(e) {}
+var store = {cur:null, prog:{}, users:{}};
+try { var raw = localStorage.getItem("lernportal-v3"); if (raw){ var o = JSON.parse(raw); if (o && typeof o==="object") store = o; } } catch(e) {}
 if (!store.prog) store.prog = {};
+if (!store.users) store.users = {};
 var saveTimer = null;
-function api(fn, body){
-  if (!CONFIG.url) return Promise.reject(new Error("config"));
-  return fetch(CONFIG.url.replace(/\/$/,"")+"/rest/v1/rpc/"+fn, {method:"POST", keepalive:true, headers:{"apikey":CONFIG.key,"Content-Type":"application/json"}, body:JSON.stringify(body)}).then(function(r){ return r.json(); });
+function ukey(n){ return String(n).replace(/\s+/g," ").trim().toLowerCase(); }
+/* Einfacher Hash: hält neugierige Geschwister ab, ist aber kein echter Schutz. */
+function pinHash(k, pin){
+  var t = "lp:"+k+":"+pin, h1 = 0xdeadbeef, h2 = 0x41c6ce57, i, ch;
+  for (i = 0; i < t.length; i++){ ch = t.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1>>>16), 2246822507) ^ Math.imul(h2 ^ (h2>>>13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1>>>0)).toString(36);
 }
-function setSync(t){ S.sync = t; var el = document.getElementById("sync"); if (el){ el.textContent = t; el.hidden = !t; } }
-function saveLocal(){ try { localStorage.setItem("lernportal-v3", JSON.stringify(store)); } catch(e) {} }
-function push(){
-  clearTimeout(saveTimer); saveTimer = null;
-  var c = store.cur; if (!c) return;
-  api("lp_save",{p_name:c.name,p_pin:c.pin,p_prog:store.prog}).then(function(r){
-    setSync(r && r.ok ? "" : "Fortschritt konnte nicht online gespeichert werden.");
-  }).catch(function(){ setSync("Offline: Fortschritt ist nur auf diesem Gerät gespeichert."); });
+/* Alter Stand (ein Nutzer mit PIN im Klartext) wird übernommen */
+if (store.cur && store.cur.name && !store.users[ukey(store.cur.name)]){
+  var mk = ukey(store.cur.name);
+  store.users[mk] = {name:store.cur.name, hue:store.cur.hue||8, pin:store.cur.pin ? pinHash(mk, store.cur.pin) : "", prog:store.prog, fails:0, lock:0};
 }
-function save(){ saveLocal(); if (store.cur){ clearTimeout(saveTimer); saveTimer = setTimeout(push, 700); } }
-function mergeProg(a,b){
-  var out = {}; a = a||{}; b = b||{};
-  Object.keys(a).concat(Object.keys(b)).forEach(function(k){
-    var x = a[k]||{}, y = b[k]||{};
-    var n = (y.at||0) > (x.at||0) ? y : x;
-    var fo = {}; (x.found||[]).concat(y.found||[]).forEach(function(i){ fo[i] = 1; });
-    out[k] = {best: x.best==null ? (y.best==null ? null : y.best) : (y.best==null ? x.best : Math.max(x.best,y.best)), tries:Math.max(x.tries||0,y.tries||0), cards:Math.max(x.cards||0,y.cards||0), last:n.last==null ? null : n.last, at:n.at||0, found:Object.keys(fo).map(Number)};
-  });
-  return out;
+if (store.cur) delete store.cur.pin;
+function saveLocal(){
+  try {
+    var c = store.cur, u = c && store.users[ukey(c.name)];
+    if (u) u.prog = store.prog;
+    localStorage.setItem("lernportal-v3", JSON.stringify(store));
+  } catch(e) {}
 }
+function save(){ saveLocal(); }
+saveLocal();
 function me(){ return store.cur; }
 function ini(u){ return u.name.charAt(0).toUpperCase(); }
 function P(modId){
@@ -695,14 +694,13 @@ function renderQuiz(){
 function renderWho(){
   var neu = S.mode==="new";
   var h = '<div class="topbar"><span class="brand">Lernportal</span></div><div class="head"><h1 class="plain">'+(neu?'Neuen Nutzer anlegen':'Wer lernt heute?')+'</h1></div>';
-  if (!CONFIG.url) h += '<p class="err" role="alert">Die Online-Speicherung ist noch nicht eingerichtet (CONFIG in der Datei ausfüllen).</p>';
   h += '<div class="form"><input id="neuname" class="fld" type="text" maxlength="20" placeholder="Name" aria-label="Name" autocomplete="off">'
     + '<input id="pin" class="fld" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="PIN (4 bis 6 Ziffern)" aria-label="PIN" autocomplete="off">'
     + (neu ? '<input id="pin2" class="fld" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="PIN wiederholen" aria-label="PIN wiederholen" autocomplete="off">' : '')
     + '<button class="btn primary" id="go" data-a="submit" style="flex:none">'+(neu?'Anlegen':'Anmelden')+'</button>'
     + '<button class="btn" data-a="mode" style="flex:none">'+(neu?'Ich habe schon einen Nutzer':'Neuen Nutzer anlegen')+'</button></div>'
     + '<p class="err" id="err" role="alert"></p>'
-    + '<p class="foot">Der Fortschritt wird online gespeichert. Mit Name und PIN kannst du auf jedem Gerät weiterlernen. Merk dir deine PIN gut, sie lässt sich nicht zurücksetzen.</p>';
+    + '<p class="foot">Dein Fortschritt wird nur in diesem Browser auf diesem Gerät gespeichert. Merk dir deine PIN gut, sie lässt sich nicht zurücksetzen. Wenn die Browserdaten gelöscht werden, ist der Fortschritt weg.</p>';
   app.innerHTML = h;
 }
 function renderMe(){
@@ -725,48 +723,41 @@ function renderMe(){
   } else {
     h += '<div class="row"><button class="btn" data-a="logout">Abmelden</button><button class="btn danger" data-a="delask">Nutzer löschen</button></div>';
   }
-  h += '<p class="foot">Der Fortschritt wird online gespeichert und ist nach der Anmeldung auf jedem Gerät da.</p>';
+  h += '<p class="foot">Dein Fortschritt wird nur in diesem Browser auf diesem Gerät gespeichert.</p>';
   app.innerHTML = h;
 }
 function val(id){ var e = document.getElementById(id); return e ? e.value : ""; }
 function fail(msg, id){ var e = document.getElementById("err"); if (e) e.textContent = msg; var f = id && document.getElementById(id); if (f) f.focus(); }
 var ERR = {exists:"Diesen Namen gibt es schon. Melde dich damit an oder wähle einen anderen.", wrong:"Name oder PIN stimmt nicht.", locked:"Zu viele Fehlversuche. Bitte in 5 Minuten noch einmal versuchen.", name:"Der Name muss 1 bis 20 Zeichen haben.", pin:"Die PIN besteht aus 4 bis 6 Ziffern."};
 function submit(){
-  if (S.busy) return;
   var name = val("neuname").replace(/\s+/g," ").trim(), pin = val("pin"), neu = S.mode==="new";
   if (!name) return fail("Bitte einen Namen eingeben.","neuname");
+  if (name.length > 20) return fail(ERR.name,"neuname");
   if (!/^\d{4,6}$/.test(pin)) return fail(ERR.pin,"pin");
   if (neu && pin!==val("pin2")) return fail("Die beiden PINs sind verschieden.","pin2");
-  if (!CONFIG.url) return fail("Die Online-Speicherung ist noch nicht eingerichtet.");
-  S.busy = true; fail("");
-  var b = document.getElementById("go"); b.disabled = true; b.textContent = "Einen Moment …";
-  api(neu ? "lp_register" : "lp_login", {p_name:name, p_pin:pin}).then(function(r){
-    S.busy = false;
-    if (r && r.ok){
-      store.cur = {name:r.name, hue:r.hue, pin:pin}; store.prog = r.prog || {}; S.mode = "login"; S.sync = "";
-      saveLocal(); afterLogin();
-    } else {
-      b.disabled = false; b.textContent = neu ? "Anlegen" : "Anmelden";
-      fail(ERR[r && r.error] || "Das hat nicht geklappt. Bitte noch einmal versuchen.");
+  var k = ukey(name), u = store.users[k];
+  if (neu){
+    if (u) return fail(ERR.exists,"neuname");
+    var hues = [8,28,150,190,215,265,320];
+    u = store.users[k] = {name:name, hue:hues[Object.keys(store.users).length % 7], pin:pinHash(k,pin), prog:{}, fails:0, lock:0};
+  } else {
+    if (!u) return fail(ERR.wrong,"neuname");
+    if (u.lock && u.lock > Date.now()) return fail(ERR.locked);
+    if (u.pin !== pinHash(k,pin)){
+      u.fails = (u.fails||0) + 1;
+      if (u.fails >= 5){ u.fails = 0; u.lock = Date.now() + 300000; }
+      saveLocal();
+      return fail(u.lock > Date.now() ? ERR.locked : ERR.wrong, "pin");
     }
-  }).catch(function(){
-    S.busy = false; b.disabled = false; b.textContent = neu ? "Anlegen" : "Anmelden";
-    fail("Keine Verbindung. Bitte das Internet prüfen.");
-  });
+    u.fails = 0; u.lock = 0;
+  }
+  store.cur = {name:u.name, hue:u.hue}; store.prog = u.prog || {}; S.mode = "login"; S.sync = "";
+  saveLocal(); afterLogin();
 }
 function clearUser(){
-  clearTimeout(saveTimer); saveTimer = null;
+  saveLocal();
   store.cur = null; store.prog = {}; S.sync = ""; S.delask = false; S.view = "who"; S.mode = "login";
   saveLocal(); go(); window.scrollTo(0,0);
-}
-function syncIn(){
-  var c = store.cur; if (!c) return;
-  api("lp_login", {p_name:c.name, p_pin:c.pin}).then(function(r){
-    if (r && r.ok){
-      store.prog = mergeProg(r.prog, store.prog); saveLocal(); push();
-      if (S.view==="hub" || S.view==="me") go();
-    } else if (r && (r.error==="wrong")) clearUser();
-  }).catch(function(){ setSync("Offline: Fortschritt ist nur auf diesem Gerät gespeichert."); });
 }
 function afterLogin(){
   var id = (location.hash||"").replace("#","");
@@ -813,14 +804,12 @@ app.addEventListener("click", function(ev){
   else if (a==="me"){ S.view="me"; S.delask=false; go(); window.scrollTo(0,0); }
   else if (a==="submit"){ submit(); }
   else if (a==="mode"){ S.mode = S.mode==="new" ? "login" : "new"; renderWho(); }
-  else if (a==="logout"){ push(); clearUser(); }
+  else if (a==="logout"){ clearUser(); }
   else if (a==="delask"){ S.delask = true; renderMe(); }
   else if (a==="delcancel"){ S.delask = false; renderMe(); }
   else if (a==="deluser"){
     var u = me(); if (!u) return;
-    api("lp_delete", {p_name:u.name, p_pin:u.pin}).then(function(r){
-      if (r && r.ok) clearUser(); else setSync("Löschen hat nicht geklappt.");
-    }).catch(function(){ setSync("Keine Verbindung. Löschen hat nicht geklappt."); });
+    delete store.users[ukey(u.name)]; store.cur = null; clearUser();
   }
   else if (a==="tab"){ S.tab = v; if (v==="quiz" && (S.z.done)) newQuiz(); renderMod(); }
   else if (a==="flip"){ S.d.flip = !S.d.flip; renderCards(); }
@@ -847,7 +836,6 @@ app.addEventListener("click", function(ev){
 app.addEventListener("keydown", function(ev){
   if (ev.key==="Enter" && (ev.target.id==="neuname" || ev.target.id==="pin" || ev.target.id==="pin2")){ ev.preventDefault(); submit(); }
 });
-document.addEventListener("visibilitychange", function(){ if (document.visibilityState==="hidden" && saveTimer) push(); });
 app.addEventListener("input", function(ev){
   if (ev.target.id==="suche"){ S.q = ev.target.value; go(); }
 });
@@ -861,7 +849,6 @@ if (!me()){ S.view = "who"; renderWho(); }
 else {
   var start = (location.hash||"").replace("#","");
   if (!(start && openHash(start))) renderHub();
-  syncIn();
 }
 </script>
 

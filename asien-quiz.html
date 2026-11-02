@@ -294,10 +294,7 @@ function startDrag(e,it){
   document.addEventListener('pointermove',move);document.addEventListener('pointerup',up);
   document.addEventListener('pointercancel',up);
 }
-// ---- Lernportal: gefundene Begriffe pro Nutzer speichern (gleiche Domain wie das Portal)
-const LP={url:"https://rorcvgomcufpdmigoyvf.supabase.co",key:"sb_publishable_52LO4V2NIfARRyFagtxvhg_45XOPnsp"};
-let lpT=null;
-const lpCall=(fn,body)=>fetch(LP.url+'/rest/v1/rpc/'+fn,{method:'POST',keepalive:true,headers:{apikey:LP.key,'Content-Type':'application/json'},body:JSON.stringify(body)}).then(r=>r.json());
+// ---- Lernportal: gefundene Begriffe pro Nutzer im Browser speichern (gleiche Domain wie das Portal)
 function lpStore(){try{const s=JSON.parse(localStorage.getItem('lernportal-v3'));return s&&s.cur&&s.cur.name?s:null}catch(e){return null}}
 function lpSave(s){try{localStorage.setItem('lernportal-v3',JSON.stringify(s))}catch(e){}}
 function lpFound(s){return new Set(((s.prog||{}).asien||{}).found||[])}
@@ -313,27 +310,8 @@ function lpAdd(s,ids){
 function track(id){
   const s=lpStore();if(!s||lpFound(s).has(id))return;
   lpAdd(s,[id]);lpSave(s);lpShow();
-  clearTimeout(lpT);lpT=setTimeout(lpPush,700);
 }
-// Immer auf dem Online-Stand aufbauen, damit nichts von anderen Geräten überschrieben wird.
-function lpPush(){
-  lpT=null;const s=lpStore();if(!s)return;
-  lpCall('lp_login',{p_name:s.cur.name,p_pin:s.cur.pin}).then(r=>{
-    if(!r||!r.ok)throw 0;
-    const base=r.prog||{};const tmp={prog:base};
-    lpAdd(tmp,[...lpFound(s)]);
-    const cur=lpStore();if(cur){lpAdd(cur,[...lpFound(tmp)]);lpSave(cur)}
-    return lpCall('lp_save',{p_name:s.cur.name,p_pin:s.cur.pin,p_prog:base});
-  }).then(r=>{if(r&&r.ok)lpShow();else throw 0}).catch(()=>lpShow('online speichern fehlgeschlagen'));
-}
-addEventListener('pagehide',()=>{if(lpT)lpPush()});
 lpShow();
-(function(){const s=lpStore();if(!s)return;
-  lpCall('lp_login',{p_name:s.cur.name,p_pin:s.cur.pin}).then(r=>{
-    if(!r||!r.ok)return;const cur=lpStore();if(!cur)return;
-    const tmp={prog:r.prog||{}};lpAdd(cur,[...lpFound(tmp)]);lpSave(cur);lpShow();
-  }).catch(()=>{});
-})();
 setMode(1);view();
 </script>
 </body>
