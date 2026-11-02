@@ -43,6 +43,9 @@ function mergeProg(a, b) {
     const found = [...new Set([...(x.found || []), ...(y.found || [])])];
     const best = x.best == null ? (y.best == null ? null : y.best) : (y.best == null ? x.best : Math.max(x.best, y.best));
     out[k] = { best, tries: Math.max(x.tries || 0, y.tries || 0), cards: Math.max(x.cards || 0, y.cards || 0), last: n.last == null ? null : n.last, at: n.at || 0, found };
+    // Vokabel-Stand (Lernen) kommt vom neueren Eintrag
+    const vk = (y.at || 0) > (x.at || 0) ? (y.vk || x.vk) : (x.vk || y.vk);
+    if (vk) out[k].vk = vk;
   }
   return out;
 }
