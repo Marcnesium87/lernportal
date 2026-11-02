@@ -310,8 +310,19 @@ function lpAdd(s,ids){
 function track(id){
   const s=lpStore();if(!s||lpFound(s).has(id))return;
   lpAdd(s,[id]);lpSave(s);lpShow();
+  clearTimeout(lpT);lpT=setTimeout(lpPush,700);
 }
-lpShow();
+// Online speichern, falls der Nutzer ein Online-Konto hat (der Server führt die Stände zusammen)
+const LP_API='https://lernportal.lernportal-lernen.workers.dev';
+let lpT=null;
+function lpToken(s){const k=String(s.cur.name).replace(/\s+/g,' ').trim().toLowerCase();const u=(s.users||{})[k];return u&&u.token||null}
+function lpPush(){
+  lpT=null;const s=lpStore();if(!s)return;const t=lpToken(s);if(!t)return;
+  fetch(LP_API+'/api/save',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t,prog:s.prog||{}})})
+    .then(r=>r.json()).then(r=>{if(r&&r.ok){const cur=lpStore();if(cur){lpAdd(cur,[...lpFound({prog:r.prog})]);lpSave(cur);lpShow()}}}).catch(()=>{});
+}
+addEventListener('pagehide',()=>{if(lpT)lpPush()});
+lpShow();lpPush();
 setMode(1);view();
 </script>
 </body>

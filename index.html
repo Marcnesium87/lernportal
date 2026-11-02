@@ -514,8 +514,54 @@ function saveLocal(){
     localStorage.setItem("lernportal-v3", JSON.stringify(store));
   } catch(e) {}
 }
-function save(){ saveLocal(); }
+var rev = 0;
+function save(){ rev++; saveLocal(); if (curUser()){ clearTimeout(saveTimer); saveTimer = setTimeout(push, 700); } }
 saveLocal();
+/* ===== Online-Speicher (Cloudflare Worker + D1) =====
+   Alles läuft zuerst lokal. Ist der Server erreichbar, wird der Fortschritt zusätzlich online gespeichert
+   und mit anderen Geräten zusammengeführt (der Server führt die Stände zusammen). */
+var API = "https://lernportal.lernportal-lernen.workers.dev";
+var OFFLINE = "Offline: Der Fortschritt ist auf diesem Gerät gespeichert und wird später online abgelegt.";
+function api(fn, body){
+  var ctl = window.AbortController ? new AbortController() : null, tm = ctl ? setTimeout(function(){ ctl.abort(); }, 12000) : null;
+  return fetch(API+"/api/"+fn, {method:"POST", keepalive:true, signal:ctl ? ctl.signal : undefined, headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)})
+    .then(function(r){ clearTimeout(tm); return r.json(); }, function(e){ clearTimeout(tm); throw e; });
+}
+function setSync(t){ S.sync = t; var el = document.getElementById("sync"); if (el){ el.textContent = t; el.hidden = !t; } }
+function curUser(){ return store.cur ? store.users[ukey(store.cur.name)] : null; }
+function refreshView(){ if (S.view==="hub" || S.view==="me") go(); }
+function push(){
+  clearTimeout(saveTimer); saveTimer = null;
+  var u = curUser(); if (!u) return;
+  if (!u.token) return syncLocal(u);
+  var my = rev;
+  api("save", {token:u.token, prog:store.prog}).then(function(r){
+    if (r && r.ok){
+      if (rev===my && store.cur && ukey(store.cur.name)===ukey(u.name)){ store.prog = r.prog; saveLocal(); refreshView(); }
+      setSync("");
+    } else if (r && r.error==="auth"){
+      u.token = null; saveLocal(); setSync("Bitte einmal abmelden und neu anmelden, damit der Fortschritt online gespeichert wird.");
+    } else setSync("Der Fortschritt konnte nicht online gespeichert werden.");
+  }).catch(function(){ setSync(OFFLINE); });
+}
+/* Nutzer, der nur auf diesem Gerät angelegt wurde: beim nächsten Kontakt online anmelden oder anlegen */
+function syncLocal(u){
+  if (!u.pendingPin || S.syncing) return;
+  S.syncing = true;
+  function done(r){
+    u.name = r.name; u.hue = r.hue; u.token = r.token; delete u.pendingPin;
+    if (store.cur && ukey(store.cur.name)===ukey(u.name)){ store.cur.name = r.name; store.cur.hue = r.hue; }
+    S.syncing = false; saveLocal(); push();
+  }
+  api("register", {name:u.name, pin:u.pendingPin}).then(function(r){
+    if (r && r.ok) return done(r);
+    if (r && r.error==="exists") return api("login", {name:u.name, pin:u.pendingPin}).then(function(l){
+      if (l && l.ok) done(l);
+      else { S.syncing = false; setSync("Der Name „"+u.name+"“ ist online schon vergeben. Der Fortschritt bleibt auf diesem Gerät."); }
+    });
+    S.syncing = false;
+  }).catch(function(){ S.syncing = false; setSync(OFFLINE); });
+}
 function me(){ return store.cur; }
 function ini(u){ return u.name.charAt(0).toUpperCase(); }
 function P(modId){
@@ -797,7 +843,7 @@ function renderWho(){
     + '<button class="btn primary" id="go" data-a="submit" style="flex:none">'+(neu?'Anlegen':'Anmelden')+'</button>'
     + '<button class="btn" data-a="mode" style="flex:none">'+(neu?'Ich habe schon einen Nutzer':'Neuen Nutzer anlegen')+'</button></div>'
     + '<p class="err" id="err" role="alert"></p>'
-    + '<p class="foot">Dein Fortschritt wird nur in diesem Browser auf diesem Gerät gespeichert. Merk dir deine PIN gut, sie lässt sich nicht zurücksetzen. Wenn die Browserdaten gelöscht werden, ist der Fortschritt weg.</p>';
+    + '<p class="foot">Dein Fortschritt wird online gespeichert und ist nach der Anmeldung auf jedem Gerät da. Ohne Verbindung lernst du trotzdem weiter. Merk dir deine PIN gut, sie lässt sich nicht zurücksetzen.</p>';
   app.innerHTML = h;
 }
 function renderMe(){
@@ -820,36 +866,68 @@ function renderMe(){
   } else {
     h += '<div class="row"><button class="btn" data-a="logout">Abmelden</button><button class="btn danger" data-a="delask">Nutzer löschen</button></div>';
   }
-  h += '<p class="foot">Dein Fortschritt wird nur in diesem Browser auf diesem Gerät gespeichert.</p>';
+  h += '<p class="foot">Dein Fortschritt wird online gespeichert und ist nach der Anmeldung auf jedem Gerät da.</p>';
   app.innerHTML = h;
 }
 function val(id){ var e = document.getElementById(id); return e ? e.value : ""; }
 function fail(msg, id){ var e = document.getElementById("err"); if (e) e.textContent = msg; var f = id && document.getElementById(id); if (f) f.focus(); }
 var ERR = {exists:"Diesen Namen gibt es schon. Melde dich damit an oder wähle einen anderen.", wrong:"Name oder PIN stimmt nicht.", locked:"Zu viele Fehlversuche. Bitte in 5 Minuten noch einmal versuchen.", name:"Der Name muss 1 bis 20 Zeichen haben.", pin:"Die PIN besteht aus 4 bis 6 Ziffern."};
 function submit(){
+  if (S.busy) return;
   var name = val("neuname").replace(/\s+/g," ").trim(), pin = val("pin"), neu = S.mode==="new";
   if (!name) return fail("Bitte einen Namen eingeben.","neuname");
   if (name.length > 20) return fail(ERR.name,"neuname");
   if (!/^\d{4,6}$/.test(pin)) return fail(ERR.pin,"pin");
   if (neu && pin!==val("pin2")) return fail("Die beiden PINs sind verschieden.","pin2");
-  var k = ukey(name), u = store.users[k];
-  if (neu){
-    if (u) return fail(ERR.exists,"neuname");
-    var hues = [8,28,150,190,215,265,320];
-    u = store.users[k] = {name:name, hue:hues[Object.keys(store.users).length % 7], pin:pinHash(k,pin), prog:{}, fails:0, lock:0};
-  } else {
-    if (!u) return fail(ERR.wrong,"neuname");
-    if (u.lock && u.lock > Date.now()) return fail(ERR.locked);
-    if (u.pin !== pinHash(k,pin)){
-      u.fails = (u.fails||0) + 1;
-      if (u.fails >= 5){ u.fails = 0; u.lock = Date.now() + 300000; }
-      saveLocal();
-      return fail(u.lock > Date.now() ? ERR.locked : ERR.wrong, "pin");
-    }
-    u.fails = 0; u.lock = 0;
+  var k = ukey(name);
+  if (neu && store.users[k]) return fail(ERR.exists,"neuname");
+  S.busy = true; fail("");
+  var b = document.getElementById("go"); if (b){ b.disabled = true; b.textContent = "Einen Moment …"; }
+  function finish(){ S.busy = false; var g = document.getElementById("go"); if (g){ g.disabled = false; g.textContent = neu ? "Anlegen" : "Anmelden"; } }
+  function enter(u){
+    store.cur = {name:u.name, hue:u.hue}; store.prog = u.prog || {}; S.mode = "login"; S.sync = "";
+    saveLocal(); finish(); afterLogin(); push();
   }
-  store.cur = {name:u.name, hue:u.hue}; store.prog = u.prog || {}; S.mode = "login"; S.sync = "";
-  saveLocal(); afterLogin();
+  /* Prüfung auf diesem Gerät (Server nicht erreichbar oder Nutzer nur lokal vorhanden) */
+  function localLogin(offline){
+    var lu = store.users[k];
+    if (!lu){ finish(); return fail(offline ? "Keine Verbindung. Dieser Nutzer ist auf diesem Gerät noch nicht bekannt." : ERR.wrong, "neuname"); }
+    if (lu.lock && lu.lock > Date.now()){ finish(); return fail(ERR.locked); }
+    if (lu.pin !== pinHash(k,pin)){
+      lu.fails = (lu.fails||0) + 1;
+      if (lu.fails >= 5){ lu.fails = 0; lu.lock = Date.now() + 300000; }
+      saveLocal(); finish();
+      return fail(lu.lock > Date.now() ? ERR.locked : ERR.wrong, "pin");
+    }
+    lu.fails = 0; lu.lock = 0;
+    if (!lu.token) lu.pendingPin = pin;
+    enter(lu);
+  }
+  api(neu ? "register" : "login", {name:name, pin:pin}).then(function(r){
+    if (r && r.ok){
+      var lu = store.users[k] || (store.users[k] = {prog:{}});
+      lu.name = r.name; lu.hue = r.hue; lu.pin = pinHash(k,pin); lu.token = r.token; lu.fails = 0; lu.lock = 0; delete lu.pendingPin;
+      if (!Object.keys(lu.prog||{}).length) lu.prog = r.prog || {};
+      return enter(lu);
+    }
+    var e = r && r.error;
+    if (e==="wrong" && !neu) return localLogin(false);
+    finish();
+    if (e==="exists") return fail(ERR.exists,"neuname");
+    if (e==="locked") return fail(ERR.locked);
+    if (e==="name") return fail(ERR.name,"neuname");
+    if (e==="pin") return fail(ERR.pin,"pin");
+    if (e==="full") return fail("Das Portal ist voll. Bitte bei den Eltern melden.");
+    fail("Das hat nicht geklappt. Bitte noch einmal versuchen.");
+  }).catch(function(){
+    if (neu){
+      /* Offline: Konto zuerst nur auf diesem Gerät anlegen, wird später online angemeldet */
+      var hues = [8,28,150,190,215,265,320];
+      store.users[k] = {name:name, hue:hues[Object.keys(store.users).length % 7], pin:pinHash(k,pin), prog:{}, fails:0, lock:0, pendingPin:pin};
+      return enter(store.users[k]);
+    }
+    localLogin(true);
+  });
 }
 function clearUser(){
   saveLocal();
@@ -906,7 +984,13 @@ app.addEventListener("click", function(ev){
   else if (a==="delcancel"){ S.delask = false; renderMe(); }
   else if (a==="deluser"){
     var u = me(); if (!u) return;
-    delete store.users[ukey(u.name)]; store.cur = null; clearUser();
+    var lu = curUser();
+    function removeLocal(){ delete store.users[ukey(u.name)]; store.cur = null; clearUser(); }
+    if (lu && lu.token){
+      api("delete", {token:lu.token}).then(function(r){
+        if (r && r.ok) removeLocal(); else setSync("Löschen hat nicht geklappt.");
+      }).catch(function(){ setSync("Keine Verbindung. Löschen hat nicht geklappt."); });
+    } else removeLocal();
   }
   else if (a==="tab"){
     var mt = mod(S.mod); S.tab = (mt.vok && v==="quiz") ? "lernen" : v;
@@ -962,6 +1046,8 @@ app.addEventListener("keydown", function(ev){
   if (ev.key==="Enter" && (ev.target.id==="neuname" || ev.target.id==="pin" || ev.target.id==="pin2")){ ev.preventDefault(); submit(); }
   else if (ev.key==="Enter" && ev.target.id==="wans"){ ev.preventDefault(); vCheck(); }
 });
+document.addEventListener("visibilitychange", function(){ if (document.visibilityState==="hidden" && saveTimer) push(); });
+window.addEventListener("online", function(){ push(); });
 app.addEventListener("input", function(ev){
   if (ev.target.id==="suche"){ S.q = ev.target.value; go(); }
 });
@@ -975,6 +1061,7 @@ if (!me()){ S.view = "who"; renderWho(); }
 else {
   var start = (location.hash||"").replace("#","");
   if (!(start && openHash(start))) renderHub();
+  push();
 }
 </script>
 
