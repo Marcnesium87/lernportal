@@ -19,6 +19,7 @@
   --erdkunde:#0E6A62; --on-erdkunde:#FFFFFF;
   --ethik:#5B3FA0; --on-ethik:#FFFFFF;
   --englisch:#9A4A00; --on-englisch:#FFFFFF;
+  --deutsch:#1F5FA8; --on-deutsch:#FFFFFF;
   --good:#1E7B3A; --bad:#B3261E; --focus:#2B5BD7;
   --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
   --font-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -30,6 +31,7 @@
     --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
     --ethik:#B7A4F0; --on-ethik:#1D1236;
     --englisch:#F0A560; --on-englisch:#2A1300;
+    --deutsch:#8DB8F2; --on-deutsch:#0A1A33;
     --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
   }
 }
@@ -39,6 +41,7 @@
   --erdkunde:#4CC2B5; --on-erdkunde:#05211E;
     --ethik:#B7A4F0; --on-ethik:#1D1236;
     --englisch:#F0A560; --on-englisch:#2A1300;
+    --deutsch:#8DB8F2; --on-deutsch:#0A1A33;
   --good:#5FD08A; --bad:#FF8A80; --focus:#8FB0FF; color-scheme:dark;
 }
 body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
@@ -47,6 +50,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size
 [data-fach="erdkunde"]{--c:var(--erdkunde);--on:var(--on-erdkunde)}
 [data-fach="ethik"]{--c:var(--ethik);--on:var(--on-ethik)}
 [data-fach="englisch"]{--c:var(--englisch);--on:var(--on-englisch)}
+[data-fach="deutsch"]{--c:var(--deutsch);--on:var(--on-deutsch)}
 .wrap{max-width:960px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
 h1,h2,h3{font-family:var(--font-display);line-height:1.1;margin:0;text-wrap:balance}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -471,6 +475,96 @@ var MODULES = [
       {"en":"sesame","q":"der Sesam","de":"der Sesam"}
     ],
     quiz:[]
+  },
+  {
+    id:"de6-erzaehlen", thema:"deutsch-6", lern:true, title:"Mündlich erzählen, Feedback, Texte erschließen, Verben", fach:"deutsch", stufe:"6",
+    desc:"Logisch und lebendig erzählen, Feedback geben und annehmen, Texte erschließen und die Zeitformen des Verbs.",
+    cards:[
+      ["Mündlich erzählen: der rote Faden","Eine gute Erzählung hat einen Aufbau. In der Einleitung sagst du, wer dabei war, wo und wann es passiert ist. Im Hauptteil erzählst du, was geschah, und steuerst auf den Höhepunkt zu, den spannendsten Moment. Im Schluss sagst du, wie es ausging. So verlieren die Zuhörer nicht den Faden."],
+      ["Logische Reihenfolge","Erzähle die Ereignisse so, wie sie nacheinander passiert sind. Wörter wie zuerst, dann, danach, plötzlich, kurz darauf und schließlich helfen dabei. Sie zeigen den Zuhörern, wo sie gerade in der Geschichte sind. Wenn du etwas vergessen hast, kannst du es nachholen: „Das habe ich vorhin noch vergessen …“"],
+      ["Lebendig erzählen","Du erzählst lebendig, wenn du deine Stimme einsetzt: laut und leise, schnell und langsam. Mimik (Gesicht) und Gestik (Hände) unterstützen das Erzählte. Wörtliche Rede („Da rief sie: …“) und treffende Verben machen die Geschichte anschaulich. Sprich in ganzen Sätzen und schau die Zuhörer an."],
+      ["Feedback geben","Feedback ist eine Rückmeldung zu dem, was jemand gemacht hat. Gutes Feedback ist freundlich, konkret und hilfreich. Nenne zuerst, was gelungen ist, und mache dann Vorschläge. Sprich in Ich-Botschaften. Beispiel: „Mir hat gefallen, dass du laut und deutlich gesprochen hast. Ich hätte mir am Schluss noch mehr Spannung gewünscht.“ Das ist besser als „Das war langweilig.“"],
+      ["Feedback annehmen","Wenn du Feedback bekommst, hörst du erst einmal zu und lässt die anderen ausreden. Du musst dich nicht rechtfertigen. Du darfst nachfragen, wenn du etwas nicht verstanden hast. Am Ende bedankst du dich, denn jemand hat sich Gedanken über deine Arbeit gemacht. Danach entscheidest du, was du davon beim nächsten Mal ausprobierst."],
+      ["Strategien der Texterschließung","Mit Strategien verstehst du einen Text besser. Vor dem Lesen: Schau dir Überschrift und Bilder an und überlege, was du schon weißt. Beim Lesen: Lies den Text genau, markiere Schlüsselwörter und kläre unbekannte Wörter, zum Beispiel durch Nachschlagen. Nach dem Lesen: Gliedere den Text in Abschnitte, gib jedem eine Zwischenüberschrift und fasse den Inhalt kurz in eigenen Worten zusammen."],
+      ["Schlüsselwörter und Zusammenfassen","Schlüsselwörter sind die wichtigsten Wörter eines Abschnitts. Wenn du sie markierst, findest du die Kernaussage schneller. Eine Zusammenfassung enthält nur das Wichtigste, steht im Präsens und ist viel kürzer als der Originaltext. Du schreibst sie mit eigenen Worten und lässt Nebensächliches weg."],
+      ["Das Verb","Das Verb ist eine Wortart. Es sagt, was jemand tut (laufen, lesen), was geschieht (regnen, wachsen) oder in welchem Zustand etwas ist (sein, schlafen). Die Grundform heißt Infinitiv (spielen). Im Satz wird das Verb an die Person angepasst: ich spiele, du spielst, er spielt. Das nennt man Konjugieren oder Beugen."],
+      ["Die Zeitformen (Tempora)","Mit der Zeitform zeigst du, wann etwas geschieht. Präsens (Gegenwart): ich spiele. Präteritum (einfache Vergangenheit): ich spielte. Perfekt (vollendete Gegenwart): ich habe gespielt. Plusquamperfekt (Vorvergangenheit): ich hatte gespielt. Futur I (Zukunft): ich werde spielen."],
+      ["Perfekt und Plusquamperfekt bilden","Das Perfekt wird aus haben oder sein im Präsens und dem Partizip II gebildet: ich habe gespielt, ich bin gelaufen. Das Plusquamperfekt wird aus haben oder sein im Präteritum und dem Partizip II gebildet: ich hatte gespielt, ich war gelaufen. Mit sein steht es meistens bei Verben der Bewegung oder Veränderung (gehen, fallen, einschlafen)."],
+      ["Welche Zeitform wann?","Mündlich erzählst du Vergangenes meist im Perfekt: „Gestern habe ich einen Hund gesehen.“ Schriftliche Erzählungen und Berichte stehen im Präteritum: „Gestern sah ich einen Hund.“ Das Plusquamperfekt braucht man, wenn etwas schon vorher passiert war: „Nachdem ich gegessen hatte, ging ich los.“"],
+      ["Regelmäßige und unregelmäßige Verben","Regelmäßige (schwache) Verben ändern ihren Stamm nicht: spielen – spielte – gespielt. Unregelmäßige (starke) Verben ändern den Stammvokal: gehen – ging – gegangen, singen – sang – gesungen. Die Formen unregelmäßiger Verben muss man lernen. Das Partizip II erkennst du oft an der Vorsilbe ge-.",1]
+    ],
+    quiz:[
+      {q:"Was gehört in die Einleitung einer mündlichen Erzählung?",a:["Wer dabei war, wo und wann es geschah","Der Höhepunkt der Geschichte","Das Ende der Geschichte","Eine Zusammenfassung des Textes"],c:0,e:"Die Einleitung stellt Personen, Ort und Zeit vor. Der Höhepunkt kommt im Hauptteil, das Ende im Schluss."},
+      {q:"Welche Wörter helfen, eine logische Reihenfolge zu zeigen?",a:["zuerst, dann, danach, schließlich","weil, obwohl, damit","laut, leise, schnell","ich, du, er, sie"],c:0,e:"Diese Wörter zeigen, was zuerst und was später passiert."},
+      {q:"Fallbeispiel: Lena hat ihre Geschichte vorgetragen. Welches Feedback ist am besten?",a:["Mir hat der spannende Anfang gefallen. Beim Schluss wünsche ich mir mehr Details.","Das war schlecht.","Du kannst das nicht.","Ich hätte es ganz anders gemacht."],c:0,e:"Gutes Feedback ist konkret und freundlich, es nennt Gelungenes und macht einen Vorschlag."},
+      {q:"Fallbeispiel: Du bekommst Feedback und verstehst einen Punkt nicht. Was tust du?",a:["Ich frage nach, was genau gemeint ist.","Ich unterbreche und erkläre, warum ich recht habe.","Ich ignoriere es.","Ich sage nichts und bin beleidigt."],c:0,e:"Beim Annehmen von Feedback hörst du zu und fragst nach, wenn etwas unklar ist."},
+      {q:"Was machst du beim Erschließen eines Textes NACH dem Lesen?",a:["Abschnitte gliedern und den Inhalt zusammenfassen","Nur die Überschrift anschauen","Den Text auswendig lernen","Alle Wörter markieren"],c:0,e:"Nach dem Lesen gliederst du den Text, findest Zwischenüberschriften und fasst ihn zusammen."},
+      {q:"Wie heißt die Grundform eines Verbs?",a:["Infinitiv","Partizip","Imperativ","Präteritum"],c:0,e:"Beispiel: spielen ist der Infinitiv. Im Satz wird das Verb gebeugt: ich spiele."},
+      {q:"In welcher Zeitform steht: „Wir haben gestern Fußball gespielt.“?",a:["Perfekt","Präteritum","Plusquamperfekt","Futur I"],c:0,e:"haben + Partizip II (gespielt) ergibt das Perfekt."},
+      {q:"Fallbeispiel: Wie sagst du den Satz „Er ging nach Hause.“ im Plusquamperfekt?",a:["Er war nach Hause gegangen.","Er ist nach Hause gegangen.","Er wird nach Hause gehen.","Er geht nach Hause."],c:0,e:"Plusquamperfekt = war/hatte + Partizip II. Bei gehen steht sein: er war gegangen."},
+      {q:"Fallbeispiel: Welcher Satz ist richtig gebildet? „Nachdem wir gegessen …, gingen wir los.“",a:["hatten","haben","werden","sind"],c:0,e:"Etwas, das vor dem anderen passiert ist, steht im Plusquamperfekt: nachdem wir gegessen hatten."},
+      {q:"Bonus: Wie heißt die Vergangenheitsform von „gehen“ im Präteritum?",a:["ging","gehte","gegangen","geht"],c:0,e:"gehen ist ein unregelmäßiges (starkes) Verb: gehen – ging – gegangen."}
+    ]
+  },
+  {
+    id:"de6-konflikte", thema:"deutsch-6", lern:true, title:"Konflikte lösen und Wörter mit besonderer Schreibung", fach:"deutsch", stufe:"6",
+    desc:"Was ein Konflikt ist, wie man ihn im Gespräch löst, und die wichtigsten Rechtschreibregeln dazu.",
+    cards:[
+      ["Was ist ein Konflikt?","Ein Konflikt entsteht, wenn Menschen unterschiedliche Meinungen, Wünsche oder Interessen haben und diese nicht zusammenpassen. Ein Konflikt ist nicht dasselbe wie ein Streit. Der Streit ist eine Art, mit einem Konflikt umzugehen, und oft keine gute. Konflikte kommen überall vor und lassen sich lösen."],
+      ["Ursachen von Konflikten","Konflikte entstehen zum Beispiel durch Missverständnisse, durch unterschiedliche Interessen (beide wollen denselben Platz), durch unfaire Behandlung, verletzte Gefühle oder durch Regeln, die nicht eingehalten werden. Wenn man die Ursache kennt, kann man den Konflikt besser lösen."],
+      ["Einen Konflikt untersuchen","Um einen Konflikt zu verstehen, fragst du: Wer ist beteiligt? Was ist passiert? Wie sieht jeder die Sache? Wie fühlt sich jeder? Was braucht oder will jeder? Hinter einer Forderung steckt oft ein Bedürfnis. Wenn zwei Kinder dieselbe Orange wollen, will vielleicht eines den Saft und das andere die Schale zum Backen. Dann kann man beides erfüllen."],
+      ["Gesprächsregeln","Für ein Konfliktgespräch gelten Regeln: Jeder darf ausreden. Alle hören zu. Man bleibt sachlich und beleidigt niemanden. Man schaut sich an und spricht über das Problem, nicht über Schuld. Oft hilft eine neutrale Person, die das Gespräch leitet."],
+      ["Ich-Botschaften","Eine Ich-Botschaft sagt, wie es dir geht, ohne den anderen anzugreifen: „Ich fühle mich ausgeschlossen, wenn ihr ohne mich spielt.“ Eine Du-Botschaft macht dem anderen einen Vorwurf: „Du bist gemein!“ Darauf folgt meist eine Verteidigung und der Streit wird größer. Mit Ich-Botschaften wird zugehört."],
+      ["Lösungen für Konflikte","Bei einem Kompromiss geben beide etwas nach und treffen sich in der Mitte. Bei einem Konsens einigen sich alle auf eine Lösung, mit der jeder einverstanden ist. Wenn man allein nicht weiterkommt, hilft eine Schlichtung (Mediation): Eine neutrale Person führt durch das Gespräch, sie entscheidet aber nicht. Das Ziel ist eine Lösung, bei der niemand verliert."],
+      ["Ablauf eines Konfliktgesprächs","1. Jeder schildert seine Sicht, die anderen hören zu. 2. Jeder sagt, wie er sich fühlt und was er braucht. 3. Man sammelt gemeinsam Lösungsideen. 4. Man wählt eine Lösung aus und vereinbart, wer was tut. 5. Man prüft nach einiger Zeit, ob es klappt."],
+      ["Dehnung: langer Vokal","Lange Vokale schreibt man auf verschiedene Weisen. Mit Dehnungs-h: Zahl, Bahn, fahren, Uhr. Mit doppeltem Vokal: Saal, Meer, Boot. Mit ie für langes i: Liebe, Spiel, Tier. Oft steht auch nur der einfache Vokal: Tal, Hof, Rad. Wenn du unsicher bist, hilft die Wortfamilie oder das Wörterbuch."],
+      ["Schärfung: kurzer Vokal","Nach einem kurzen, betonten Vokal steht meist ein doppelter Konsonant: Kette, kommen, Wasser, Ball. Statt kk schreibt man ck (Brücke), statt zz schreibt man tz (Katze). Mit dem Verlängern kannst du es prüfen: Man spricht Schiff mit kurzem i und schreibt ff."],
+      ["s, ss oder ß?","Nach einem langen Vokal oder einem Doppellaut (au, ei, eu) schreibt man ß, wenn der Laut scharf klingt: Straße, Fuß, heiß, Grüße. Nach einem kurzen Vokal schreibt man ss: Fluss, Kuss, müssen, essen. Das einfache s steht, wenn der Laut weich (summend) klingt: Rose, lesen, Hase."],
+      ["das oder dass?","Das mit einem s ist ein Artikel (das Haus) oder ein Pronomen (das ist schön, das Buch, das ich lese). Du kannst es durch dieses, jenes oder welches ersetzen. Dass mit zwei s ist eine Konjunktion und leitet einen Nebensatz ein: Ich weiß, dass du kommst. Du kannst es nicht ersetzen. Vor dass steht fast immer ein Komma."],
+      ["ä oder e, äu oder eu?","Bei ä und äu hilft das Ableiten: Suche ein verwandtes Wort mit a oder au. Hände kommt von Hand, also ä. Bäume kommt von Baum, also äu. Wenn es kein verwandtes Wort mit a gibt, schreibt man e (Eltern, Ende). Einige Ausnahmen muss man sich merken, zum Beispiel Bär."],
+      ["Strategien beim Rechtschreiben","Es gibt drei hilfreiche Strategien. Mitsprechen: Sprich das Wort in Silben. Ableiten: Suche verwandte Wörter (Wortfamilie). Verlängern: Bilde die Mehrzahl oder steigere, um zu hören, wie das Wort endet: Hund – Hunde (also d am Ende), Tag – Tage (also g). Außerdem gibt es Merkwörter, die man sich einprägen muss, zum Beispiel Vogel, Vater, Fahrrad.",1]
+    ],
+    quiz:[
+      {q:"Was ist ein Konflikt?",a:["Unterschiedliche Meinungen oder Interessen, die nicht zusammenpassen","Immer eine Prügelei","Eine Hausaufgabe","Eine Rechtschreibregel"],c:0,e:"Ein Konflikt entsteht, wenn Wünsche oder Meinungen gegeneinanderstehen. Er ist nicht dasselbe wie ein Streit."},
+      {q:"Fallbeispiel: Zwei Kinder wollen beide den letzten Ball. Welche Frage hilft beim Untersuchen des Konflikts?",a:["Was braucht jedes Kind und warum?","Wer ist stärker?","Wer war zuerst da und darf alles bestimmen?","Wer ist schuld?"],c:0,e:"Wenn man die Bedürfnisse kennt, findet man oft eine Lösung, die beiden passt."},
+      {q:"Welche Aussage ist eine Ich-Botschaft?",a:["Ich ärgere mich, wenn ich beim Spielen nicht mitmachen darf.","Du bist immer so gemein.","Alle sind gegen mich.","Das ist doch deine Schuld."],c:0,e:"Die Ich-Botschaft beschreibt das eigene Gefühl und macht keinen Vorwurf."},
+      {q:"Was ist ein Kompromiss?",a:["Beide geben etwas nach und treffen sich in der Mitte","Einer gewinnt, der andere verliert","Niemand spricht mehr darüber","Der Lehrer entscheidet allein"],c:0,e:"Beim Kompromiss kommen beide Seiten einander entgegen."},
+      {q:"Fallbeispiel: Zwei Freunde streiten und kommen allein nicht weiter. Was hilft?",a:["Eine neutrale Person schlichtet das Gespräch.","Sie reden nie wieder miteinander.","Sie schreien lauter.","Sie warten, bis es von selbst weg ist."],c:0,e:"Bei einer Schlichtung führt eine neutrale Person durchs Gespräch, ohne zu entscheiden."},
+      {q:"Wie schreibt man richtig?",a:["Der Fluss ist breit.","Der Fluß ist breit.","Der Flus ist breit.","Der Flusss ist breit."],c:0,e:"Nach kurzem Vokal schreibt man ss: Fluss. ß steht nur nach langem Vokal oder Doppellaut (Fuß, heiß)."},
+      {q:"Fallbeispiel: Welcher Satz ist richtig?",a:["Ich hoffe, dass du kommst.","Ich hoffe, das du kommst.","Ich hoffe das, du kommst.","Ich hoffe das du kommst."],c:0,e:"dass ist hier Konjunktion und leitet den Nebensatz ein. Du kannst es nicht durch dieses oder welches ersetzen."},
+      {q:"Wie findest du heraus, ob man „Bäume“ mit ä oder e schreibt?",a:["Ableiten: Baum, also äu","Auswürfeln","Zählen der Buchstaben","Man schreibt immer e"],c:0,e:"Verwandtes Wort Baum enthält au, deshalb schreibt man äu."},
+      {q:"Welches Wort hat ein Dehnungs-h?",a:["Zahl","Ball","Kette","Katze"],c:0,e:"In Zahl wird das a lang gesprochen. Das h dehnt den Vokal."},
+      {q:"Bonus: Wie hilft das Verlängern bei „Hun_“?",a:["Mehrzahl Hunde, also d","Mehrzahl Hunge, also g","Mehrzahl Hunte, also t","Es hilft nicht"],c:0,e:"Wenn man verlängert (Hunde), hört man das d."}
+    ]
+  },
+  {
+    id:"de6-bericht", thema:"deutsch-6", lern:true, title:"Berichten und Satzglieder", fach:"deutsch", stufe:"6",
+    desc:"Wie ein Bericht aufgebaut ist, welche Sprache er braucht, und die Satzglieder samt Proben.",
+    cards:[
+      ["Was ist ein Bericht?","Ein Bericht informiert sachlich und der Wahrheit entsprechend über ein Ereignis, das schon vorbei ist, zum Beispiel einen Unfall, eine Klassenfahrt oder ein Schulfest. Der Leser soll genau erfahren, was geschehen ist, auch wenn er nicht dabei war. Deshalb gibt es im Bericht keine Fantasie und keine Übertreibung."],
+      ["Die W-Fragen","Ein Bericht beantwortet die W-Fragen: Wer war beteiligt? Was ist passiert? Wann geschah es? Wo geschah es? Wie ist es abgelaufen? Warum ist es passiert? Welche Folgen gab es? Die wichtigsten Angaben (wer, was, wann, wo) gehören gleich an den Anfang."],
+      ["Aufbau eines Berichts","Die Einleitung nennt das Wichtigste: Wer, was, wann und wo. Im Hauptteil schilderst du den Ablauf in der richtigen zeitlichen Reihenfolge. Der Schluss nennt die Folgen oder das Ergebnis, zum Beispiel wer geholfen hat oder wie es ausging. Eine Überschrift sagt kurz, worum es geht."],
+      ["Sprachliche Mittel des Berichts","Ein Bericht steht im Präteritum, weil das Ereignis vorbei ist. Er ist sachlich: Er hat keine wörtliche Rede, keine Gefühlswörter und keine Übertreibungen („unglaublich schrecklich“). Du verwendest genaue Angaben (um 10 Uhr, auf dem Schulhof) und Verbindungswörter wie zuerst, danach, anschließend, deshalb, nachdem. Die eigene Meinung gehört nicht in den Bericht."],
+      ["Bericht oder Erzählung?","Eine Erzählung soll spannend sein: Sie hat einen Höhepunkt, benutzt wörtliche Rede und Gefühle und darf ausgedacht sein. Ein Bericht soll informieren: Er ist sachlich, wahr und geordnet. Beide stehen schriftlich oft im Präteritum, aber nur die Erzählung ist lebendig und spannend ausgeschmückt."],
+      ["Was sind Satzglieder?","Ein Satz besteht aus Satzgliedern. Ein Satzglied kann aus einem Wort oder aus mehreren Wörtern bestehen, die zusammengehören. Mit der Umstellprobe findest du sie: Was sich zusammen an eine andere Stelle im Satz schieben lässt, ist ein Satzglied. „Am Montag fuhren wir zum Zoo.“ – „Wir fuhren am Montag zum Zoo.“"],
+      ["Prädikat und Subjekt","Das Prädikat ist das Verb im Satz. Es steht in der Aussage immer an zweiter Stelle. Es kann aus mehreren Teilen bestehen: Sie ruft ihren Freund an. Das Subjekt fragst du so: Wer oder was tut etwas? „Die Klasse besichtigt das Museum.“ Wer besichtigt? Die Klasse. Das ist das Subjekt."],
+      ["Objekte","Das Objekt ergänzt das Verb. Das Akkusativobjekt fragst du mit „Wen oder was?“: Ich sehe den Hund. Das Dativobjekt fragst du mit „Wem?“: Ich helfe meinem Freund. Beide Objekte stehen oft zusammen: Ich gebe meinem Bruder (wem?) das Buch (was?)."],
+      ["Adverbiale Bestimmungen","Adverbiale Bestimmungen sagen etwas über die Umstände. Ort: wo, wohin, woher? (im Park) Zeit: wann, wie lange? (am Montag) Art und Weise: wie? (schnell, mit dem Bus) Grund: warum? (wegen des Regens). Sie sind besonders im Bericht wichtig, denn sie beantworten die W-Fragen."],
+      ["Frageprobe und Umstellprobe","Mit der Umstellprobe verschiebst du Wörter, die zusammengehören, gemeinsam. Mit der Frageprobe ermittelst du, welches Satzglied es ist: Wer oder was? gibt das Subjekt. Wen oder was? das Akkusativobjekt. Wem? das Dativobjekt. Wo? Wann? Wie? Warum? die adverbialen Bestimmungen."],
+      ["Attribut","Ein Attribut ist kein eigenes Satzglied, sondern gehört zu einem Nomen und beschreibt es näher. Es steht oft davor: der kleine Hund. Das Attribut wird bei der Umstellprobe mit dem Nomen verschoben: Der kleine Hund bellt. – Es bellt der kleine Hund.",1]
+    ],
+    quiz:[
+      {q:"Was ist das Ziel eines Berichts?",a:["Sachlich über ein Ereignis informieren","Spannend unterhalten","Seine Meinung sagen","Etwas Ausgedachtes erzählen"],c:0,e:"Ein Bericht informiert wahrheitsgemäß und sachlich."},
+      {q:"Welche Fragen sollte die Einleitung eines Berichts beantworten?",a:["Wer, was, wann, wo","Warum und wie viele Folgen","Wie fühlt sich jemand?","Was passiert als Nächstes?"],c:0,e:"Die wichtigsten Angaben gehören gleich an den Anfang."},
+      {q:"In welcher Zeitform steht ein Bericht normalerweise?",a:["Präteritum","Futur I","Präsens","Plusquamperfekt"],c:0,e:"Ein Bericht beschreibt Vergangenes und steht im Präteritum."},
+      {q:"Fallbeispiel: Welcher Satz passt in einen Bericht über einen Unfall?",a:["Um 8 Uhr stieß ein Radfahrer an der Kreuzung mit einem Auto zusammen.","Es war eine total schreckliche und unglaubliche Katastrophe!","„Hilfe!“, rief der Radfahrer laut.","Ich finde, dass Radfahrer immer aufpassen sollten."],c:0,e:"Der Satz ist sachlich, genau und im Präteritum. Die anderen enthalten Gefühle, wörtliche Rede oder eine Meinung."},
+      {q:"Fallbeispiel: Welcher Satz ist für einen Bericht NICHT geeignet?",a:["Es war so unglaublich peinlich, ich wäre am liebsten im Boden versunken.","Die Klasse 6a fuhr am Dienstag nach Dresden.","Nach dem Museumsbesuch aßen die Kinder zu Mittag.","Der Ausflug dauerte bis 15 Uhr."],c:0,e:"Gefühle und übertriebene Ausdrücke gehören in eine Erzählung, nicht in einen Bericht."},
+      {q:"Wie viele Satzglieder hat: „Am Montag fuhren wir mit dem Bus zum Zoo.“?",a:["5","3","4","7"],c:0,e:"Am Montag | fuhren | wir | mit dem Bus | zum Zoo."},
+      {q:"Fallbeispiel: Welches Satzglied ist „mit dem Bus“ im Satz „Am Montag fuhren wir mit dem Bus zum Zoo.“?",a:["Adverbiale Bestimmung der Art und Weise","Subjekt","Akkusativobjekt","Prädikat"],c:0,e:"Frage: Wie fuhren wir? Mit dem Bus. Das ist eine adverbiale Bestimmung der Art und Weise."},
+      {q:"Wonach fragst du das Subjekt?",a:["Wer oder was?","Wem?","Wo?","Wann?"],c:0,e:"Beispiel: Die Katze schläft. Wer schläft? Die Katze."},
+      {q:"Wie findest du Satzglieder heraus?",a:["Mit der Umstellprobe","Mit dem Wörterbuch","Mit dem Würfeln","Mit der Zeichensetzung"],c:0,e:"Was sich gemeinsam umstellen lässt, ist ein Satzglied."},
+      {q:"Bonus: Was ist ein Attribut?",a:["Ein Wort, das ein Nomen näher beschreibt","Ein Verb im Satz","Ein Subjekt","Ein Satzzeichen"],c:0,e:"Beispiel: der kleine Hund. Das Attribut gehört zum Nomen und ist kein eigenes Satzglied."}
+    ]
   }
 ];
 
@@ -478,12 +572,13 @@ var MODULES = [
 var THEMEN = [
   {id:"reformation", title:"Reformation", fach:"geschichte", stufe:"7", desc:"Von Gutenberg über Luther bis zur Glaubensspaltung. Sechs kurze Module zum Lernen."},
   {id:"ethisch-argumentieren", title:"Ethisch argumentieren", fach:"ethik", stufe:"8 · Gymnasium", desc:"Logik, Begründen, Prüfen und Diskutieren: Fünf Module zum Lehrplan Ethik Klasse 8 am Gymnasium."},
-  {id:"lighthouse-vocab", title:"Lighthouse: Vocabulary", fach:"englisch", stufe:"Lighthouse", desc:"Vokabeln aus dem Schulbuch, Seite 211 und 212, mit kurzen Beispielsätzen und Quiz."}
+  {id:"lighthouse-vocab", title:"Lighthouse: Vocabulary", fach:"englisch", stufe:"Lighthouse", desc:"Vokabeln aus dem Schulbuch, Seite 211 und 212, mit kurzen Beispielsätzen und Quiz."},
+  {id:"deutsch-6", title:"Deutsch Klasse 6: Grundlagen", fach:"deutsch", stufe:"6", desc:"Begriffe und Regeln aus dem Stoffverteilungsplan: Erzählen, Konflikte lösen und Berichten, mit Fallbeispielen."}
 ];
 
 /* ===== Hilfsfunktionen ===== */
 function stufeTxt(s){ return esc(/^\d/.test(s) ? "Klasse " + s : s); }
-var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde", ethik:"Ethik", englisch:"Englisch"};
+var FACH = {geschichte:"Geschichte", erdkunde:"Erdkunde", ethik:"Ethik", englisch:"Englisch", deutsch:"Deutsch"};
 var app = document.getElementById("app");
 /* Nutzer und Fortschritt liegen nur in diesem Browser (localStorage), nichts geht ins Netz. */
 var S = {view:"hub", mod:null, tab:"cards", q:"", fach:"alle", d:null, z:null, delask:false, mode:"login", busy:false, sync:""};
